@@ -289,7 +289,7 @@ const ContactSection = () => {
                           href="mailto:Sarwikudupi@gmail.com" 
                           className="text-primary hover:underline block"
                         >
-                          Sarwikudupi@gmail.com
+                          Satwikudupi@gmail.com
                         </a>
                         <a 
                           href="mailto:satwikudupi2018@gmail.com" 
@@ -576,8 +576,9 @@ const ContactSection = () => {
                     </a>
                     <a 
                       href={whatsappUrl}
-                      target="_blank"
-                      rel="noopener noreferrer"
+                      target="9834300849"
+                      rel="98343009849"
+                      
                       className="flex-1 inline-flex items-center justify-center gap-2 bg-green-500 hover:bg-green-600 text-white py-3 rounded-lg font-medium transition-colors"
                     >
                       <MessageCircle className="w-4 h-4" />
