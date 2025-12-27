@@ -1,13 +1,43 @@
-// Update this page (the content is just a fallback if you fail to update the page)
+import { Helmet } from 'react-helmet-async';
+import Navbar from '@/components/Navbar';
+import HeroSection from '@/components/HeroSection';
+import AboutSection from '@/components/AboutSection';
+import ExperienceSection from '@/components/ExperienceSection';
+import EducationSection from '@/components/EducationSection';
+import SkillsSection from '@/components/SkillsSection';
+import CertificationsSection from '@/components/CertificationsSection';
+import ProjectsSection from '@/components/ProjectsSection';
+import ContactSection from '@/components/ContactSection';
+import Footer from '@/components/Footer';
 
 const Index = () => {
   return (
-    <div className="flex min-h-screen items-center justify-center bg-background">
-      <div className="text-center">
-        <h1 className="mb-4 text-4xl font-bold">Welcome to Your Blank App</h1>
-        <p className="text-xl text-muted-foreground">Start building your amazing project here!</p>
+    <>
+      <Helmet>
+        <title>Satwik Udupi | Agricultural Engineer | GIS & Hydrology Expert</title>
+        <meta 
+          name="description" 
+          content="Agricultural Engineer specializing in GIS, Hydrology, HEC-HMS, HEC-RAS, ArcGIS/QGIS. Expert in sustainable land and water management solutions in Maharashtra, India." 
+        />
+        <meta name="keywords" content="GIS hydrology engineer Maharashtra, HEC-HMS, HEC-RAS, ArcGIS, QGIS, watershed management, flood mapping, agricultural engineering" />
+        <link rel="canonical" href="https://satwikudupi.com" />
+      </Helmet>
+
+      <div className="min-h-screen bg-background">
+        <Navbar />
+        <main>
+          <HeroSection />
+          <AboutSection />
+          <ExperienceSection />
+          <EducationSection />
+          <SkillsSection />
+          <CertificationsSection />
+          <ProjectsSection />
+          <ContactSection />
+        </main>
+        <Footer />
       </div>
-    </div>
+    </>
   );
 };
 
