@@ -2,7 +2,7 @@
 
 ## Project info
 
-**URL**: (https://github.com/Satwik-1234/satwikkludupi.git)
+**URL**: (https://satwikkludupi.lovable.app)
 
 ## How can I edit this code?
 
