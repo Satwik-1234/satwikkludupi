@@ -1,14 +1,10 @@
 import { motion, useInView } from 'framer-motion';
-import { useRef, useState } from 'react';
+import { useRef } from 'react';
 import { 
   Mail, MapPin, Linkedin, Phone, MessageCircle, Calendar, 
-  Upload, Waves, Map, FileSpreadsheet, Mountain, Cog,
-  Clock, IndianRupee, CheckCircle2
+  Waves, Map, FileSpreadsheet, Mountain, Cog, ExternalLink, FileText
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Textarea } from '@/components/ui/textarea';
-import { useToast } from '@/hooks/use-toast';
 
 const services = [
   {
@@ -61,77 +57,14 @@ const techStack = [
   { name: 'Agisoft Metashape', category: 'Photogrammetry' }
 ];
 
-const projectTypes = [
-  { id: 'flood', label: 'Flood Risk Mapping (HEC-RAS)' },
-  { id: 'watershed', label: 'Watershed Analysis & Hydrological Modelling (HEC-HMS)' },
-  { id: 'erosion', label: 'Soil Erosion Assessment (RUSLE/GEE)' },
-  { id: 'gis', label: 'GIS Spatial Analysis' },
-  { id: 'cad', label: 'CAD/CFD Simulations' }
-];
-
-const timelineOptions = ['Urgent', '1-2 weeks', '1 month', 'Flexible'];
-const budgetOptions = ['₹10k-50k', '₹50k-2L', 'Custom'];
-
 const ContactSection = () => {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "-100px" });
-  const { toast } = useToast();
-  
-  const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    projectDescription: '',
-    selectedTypes: [] as string[],
-    timeline: '',
-    budget: '',
-    files: null as FileList | null
-  });
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  const [isDragging, setIsDragging] = useState(false);
-
-  const handleTypeToggle = (typeId: string) => {
-    setFormData(prev => ({
-      ...prev,
-      selectedTypes: prev.selectedTypes.includes(typeId)
-        ? prev.selectedTypes.filter(t => t !== typeId)
-        : [...prev.selectedTypes, typeId]
-    }));
-  };
-
-  const handleDrop = (e: React.DragEvent) => {
-    e.preventDefault();
-    setIsDragging(false);
-    if (e.dataTransfer.files.length > 0) {
-      setFormData(prev => ({ ...prev, files: e.dataTransfer.files }));
-    }
-  };
-
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setIsSubmitting(true);
-    
-    await new Promise(resolve => setTimeout(resolve, 1000));
-    
-    toast({
-      title: "Quote Request Received!",
-      description: "Thank you! I'll respond within 24 hours with a detailed quote.",
-    });
-    
-    setFormData({ 
-      name: '', 
-      email: '', 
-      projectDescription: '',
-      selectedTypes: [],
-      timeline: '',
-      budget: '',
-      files: null
-    });
-    setIsSubmitting(false);
-  };
 
   const phoneNumber = '+919834300849';
   const whatsappUrl = `https://wa.me/${phoneNumber.replace('+', '')}?text=Hi%20Satwik,%20I'm%20interested%20in%20your%20GIS/Hydrology%20services`;
   const calendlyUrl = 'https://calendly.com/satwikudupi';
+  const googleFormUrl = 'https://forms.gle/SCyQeFigrgsPft9D9';
 
   return (
     <>
@@ -376,261 +309,126 @@ const ContactSection = () => {
                 </div>
               </motion.div>
 
-              {/* Project Quote Form */}
+              {/* Engaging CTA Section */}
               <motion.div
                 initial={{ opacity: 0, x: 30 }}
                 animate={isInView ? { opacity: 1, x: 0 } : {}}
                 transition={{ duration: 0.5, delay: 0.5 }}
+                className="space-y-6"
               >
-                <form onSubmit={handleSubmit} className="glass-card p-8 space-y-6">
-                  <div>
-                    <h3 className="text-xl font-display font-bold mb-1">Quick Project Quote</h3>
-                    <p className="text-sm text-muted-foreground">What can I help with today?</p>
-                  </div>
-                  
-                  {/* Name & Email */}
-                  <div className="grid sm:grid-cols-2 gap-4">
-                    <div>
-                      <label className="text-sm font-medium text-foreground mb-2 block">
-                        Your Name
-                      </label>
-                      <Input
-                        placeholder="John Doe"
-                        value={formData.name}
-                        onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                        required
-                        className="bg-muted/50 border-border/50 focus:border-primary"
-                      />
+                {/* Main CTA Card */}
+                <div className="glass-card p-8 text-center relative overflow-hidden">
+                  <div className="absolute inset-0 bg-gradient-to-br from-primary/10 via-transparent to-secondary/10" />
+                  <div className="relative z-10">
+                    <div className="w-20 h-20 rounded-full bg-gradient-accent flex items-center justify-center mx-auto mb-6">
+                      <FileText className="w-10 h-10 text-primary-foreground" />
                     </div>
-                    <div>
-                      <label className="text-sm font-medium text-foreground mb-2 block">
-                        Your Email
-                      </label>
-                      <Input
-                        type="email"
-                        placeholder="john@example.com"
-                        value={formData.email}
-                        onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                        required
-                        className="bg-muted/50 border-border/50 focus:border-primary"
-                      />
-                    </div>
-                  </div>
-
-                  {/* Project Type */}
-                  <div>
-                    <label className="text-sm font-medium text-foreground mb-3 block">
-                      Project Type
-                    </label>
-                    <div className="space-y-2">
-                      {projectTypes.map((type) => (
-                        <label 
-                          key={type.id}
-                          className={`flex items-center gap-3 p-3 rounded-lg border cursor-pointer transition-all ${
-                            formData.selectedTypes.includes(type.id)
-                              ? 'border-primary bg-primary/10'
-                              : 'border-border/50 hover:border-primary/50'
-                          }`}
-                        >
-                          <input
-                            type="checkbox"
-                            checked={formData.selectedTypes.includes(type.id)}
-                            onChange={() => handleTypeToggle(type.id)}
-                            className="sr-only"
-                          />
-                          <div className={`w-5 h-5 rounded border-2 flex items-center justify-center ${
-                            formData.selectedTypes.includes(type.id)
-                              ? 'border-primary bg-primary'
-                              : 'border-muted-foreground'
-                          }`}>
-                            {formData.selectedTypes.includes(type.id) && (
-                              <CheckCircle2 className="w-4 h-4 text-primary-foreground" />
-                            )}
-                          </div>
-                          <span className="text-sm">{type.label}</span>
-                        </label>
-                      ))}
-                    </div>
-                  </div>
-
-                  {/* File Upload */}
-                  <div>
-                    <label className="text-sm font-medium text-foreground mb-2 block">
-                      Upload Data (Optional)
-                    </label>
-                    <div
-                      onDragOver={(e) => { e.preventDefault(); setIsDragging(true); }}
-                      onDragLeave={() => setIsDragging(false)}
-                      onDrop={handleDrop}
-                      className={`border-2 border-dashed rounded-lg p-6 text-center transition-all ${
-                        isDragging 
-                          ? 'border-primary bg-primary/10' 
-                          : 'border-border/50 hover:border-primary/50'
-                      }`}
-                    >
-                      <Upload className="w-8 h-8 text-muted-foreground mx-auto mb-2" />
-                      <p className="text-sm text-muted-foreground">
-                        Drag & Drop DEM/Shapefile/Rainfall Data
-                      </p>
-                      <p className="text-xs text-muted-foreground mt-1">
-                        or{' '}
-                        <label className="text-primary cursor-pointer hover:underline">
-                          browse files
-                          <input
-                            type="file"
-                            multiple
-                            className="sr-only"
-                            onChange={(e) => setFormData(prev => ({ ...prev, files: e.target.files }))}
-                          />
-                        </label>
-                      </p>
-                      {formData.files && formData.files.length > 0 && (
-                        <p className="text-sm text-primary mt-2">
-                          {formData.files.length} file(s) selected
-                        </p>
-                      )}
-                    </div>
-                  </div>
-
-                  {/* Timeline & Budget */}
-                  <div className="grid sm:grid-cols-2 gap-4">
-                    <div>
-                      <label className="text-sm font-medium text-foreground mb-2 flex items-center gap-1">
-                        <Clock className="w-4 h-4" /> Timeline
-                      </label>
-                      <div className="flex flex-wrap gap-2">
-                        {timelineOptions.map((option) => (
-                          <button
-                            key={option}
-                            type="button"
-                            onClick={() => setFormData(prev => ({ ...prev, timeline: option }))}
-                            className={`px-3 py-1.5 text-sm rounded-full border transition-all ${
-                              formData.timeline === option
-                                ? 'border-primary bg-primary text-primary-foreground'
-                                : 'border-border/50 hover:border-primary/50'
-                            }`}
-                          >
-                            {option}
-                          </button>
-                        ))}
-                      </div>
-                    </div>
-                    <div>
-                      <label className="text-sm font-medium text-foreground mb-2 flex items-center gap-1">
-                        <IndianRupee className="w-4 h-4" /> Budget
-                      </label>
-                      <div className="flex flex-wrap gap-2">
-                        {budgetOptions.map((option) => (
-                          <button
-                            key={option}
-                            type="button"
-                            onClick={() => setFormData(prev => ({ ...prev, budget: option }))}
-                            className={`px-3 py-1.5 text-sm rounded-full border transition-all ${
-                              formData.budget === option
-                                ? 'border-primary bg-primary text-primary-foreground'
-                                : 'border-border/50 hover:border-primary/50'
-                            }`}
-                          >
-                            {option}
-                          </button>
-                        ))}
-                      </div>
-                    </div>
-                  </div>
-
-                  {/* Project Description */}
-                  <div>
-                    <label className="text-sm font-medium text-foreground mb-2 block">
-                      Describe Your Needs
-                    </label>
-                    <Textarea
-                      placeholder="Brief description of your project requirements..."
-                      value={formData.projectDescription}
-                      onChange={(e) => setFormData({ ...formData, projectDescription: e.target.value })}
-                      maxLength={200}
-                      rows={3}
-                      className="bg-muted/50 border-border/50 focus:border-primary resize-none"
-                    />
-                    <p className="text-xs text-muted-foreground mt-1 text-right">
-                      {formData.projectDescription.length}/200
+                    <h3 className="text-2xl font-display font-bold mb-3">
+                      Ready to Start Your <span className="gradient-text">Project?</span>
+                    </h3>
+                    <p className="text-muted-foreground mb-6 max-w-md mx-auto">
+                      Fill out the quick project quote form and I'll get back to you within 24 hours with a detailed proposal.
                     </p>
+                    <Button
+                      asChild
+                      size="lg"
+                      className="bg-gradient-accent text-primary-foreground font-semibold px-8 py-6 text-lg hover:scale-105 transition-transform"
+                    >
+                      <a href={googleFormUrl} target="_blank" rel="noopener noreferrer">
+                        <ExternalLink className="w-5 h-5 mr-2" />
+                        Get a Project Quote
+                      </a>
+                    </Button>
                   </div>
+                </div>
 
-                  {/* Submit Button */}
-                  <Button 
-                    type="submit" 
-                    disabled={isSubmitting}
-                    className="w-full bg-gradient-accent text-primary-foreground shadow-button hover:opacity-90 py-6 text-lg"
+                {/* Quick Action Cards */}
+                <div className="grid sm:grid-cols-2 gap-4">
+                  <a
+                    href={whatsappUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="glass-card p-6 text-center hover:border-green-500/50 transition-all group cursor-pointer"
                   >
-                    {isSubmitting ? 'Submitting...' : 'GET FREE QUOTE'}
-                  </Button>
-
-                  {/* Action Buttons */}
-                  <div className="flex gap-3">
-                    <a 
-                      href={`tel:${phoneNumber}`}
-                      className="flex-1 inline-flex items-center justify-center gap-2 bg-muted hover:bg-muted/80 text-foreground py-3 rounded-lg font-medium transition-colors"
-                    >
-                      <Phone className="w-4 h-4" />
-                      Book Call
-                    </a>
-                    <a 
-                      href={whatsappUrl}
-                      target="9834300849"
-                      rel="98343009849"
-                      
-                      className="flex-1 inline-flex items-center justify-center gap-2 bg-green-500 hover:bg-green-600 text-white py-3 rounded-lg font-medium transition-colors"
-                    >
-                      <MessageCircle className="w-4 h-4" />
-                      WhatsApp
-                    </a>
-                  </div>
-
-                  {/* Availability Status */}
-                  <div className="flex items-center justify-between pt-4 border-t border-border/50 text-sm">
-                    <div className="flex items-center gap-2">
-                      <span className="w-2 h-2 bg-green-500 rounded-full animate-pulse" />
-                      <span className="text-muted-foreground">Currently Available For:</span>
-                      <span className="font-medium text-foreground">Freelance | Consulting</span>
+                    <div className="w-14 h-14 rounded-full bg-green-500/20 flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform">
+                      <MessageCircle className="w-7 h-7 text-green-500" />
                     </div>
+                    <h4 className="font-bold text-foreground mb-2">Chat on WhatsApp</h4>
+                    <p className="text-sm text-muted-foreground">Quick questions? Message me directly</p>
+                  </a>
+
+                  <a
+                    href={`tel:${phoneNumber}`}
+                    className="glass-card p-6 text-center hover:border-primary/50 transition-all group cursor-pointer"
+                  >
+                    <div className="w-14 h-14 rounded-full bg-primary/20 flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform">
+                      <Phone className="w-7 h-7 text-primary" />
+                    </div>
+                    <h4 className="font-bold text-foreground mb-2">Call Directly</h4>
+                    <p className="text-sm text-muted-foreground">+91 9834300849</p>
+                  </a>
+                </div>
+
+                {/* Why Work With Me */}
+                <div className="glass-card p-6">
+                  <h4 className="font-display font-bold mb-4 text-center">Why Work With Me?</h4>
+                  <div className="space-y-3">
+                    {[
+                      'End-to-end project delivery from data collection to final maps',
+                      'Expertise in HEC-RAS, HEC-HMS, ArcGIS Pro & Google Earth Engine',
+                      'Quick turnaround with 24-hour response guarantee',
+                      'Affordable rates with transparent pricing'
+                    ].map((item, index) => (
+                      <div key={index} className="flex items-start gap-3">
+                        <div className="w-5 h-5 rounded-full bg-gradient-accent flex items-center justify-center flex-shrink-0 mt-0.5">
+                          <span className="text-xs text-primary-foreground font-bold">✓</span>
+                        </div>
+                        <p className="text-sm text-muted-foreground">{item}</p>
+                      </div>
+                    ))}
                   </div>
-                  <p className="text-xs text-muted-foreground flex items-center gap-1">
-                    <Mail className="w-3 h-3" />
-                    Response Time: Within 24 Hours
-                  </p>
-                </form>
+                </div>
+
+                {/* Schedule Consultation */}
+                <div className="glass-card p-6 text-center">
+                  <Calendar className="w-10 h-10 text-primary mx-auto mb-3" />
+                  <h4 className="font-bold mb-2">Prefer a Video Call?</h4>
+                  <p className="text-sm text-muted-foreground mb-4">Schedule a free 15-minute consultation</p>
+                  <Button asChild variant="outline" className="w-full">
+                    <a href={calendlyUrl} target="_blank" rel="noopener noreferrer">
+                      Book on Calendly
+                    </a>
+                  </Button>
+                </div>
               </motion.div>
             </div>
           </motion.div>
         </div>
       </section>
 
-      {/* Sticky CTA Banner */}
-      <motion.div
-        initial={{ y: 100, opacity: 0 }}
-        animate={{ y: 0, opacity: 1 }}
-        transition={{ delay: 2, duration: 0.5 }}
-        className="fixed bottom-0 left-0 right-0 z-50 bg-background/95 backdrop-blur-md border-t border-border/50 py-3 px-4 md:hidden"
-      >
-        <div className="flex gap-2 max-w-md mx-auto">
-          <a 
-            href={`tel:${phoneNumber}`}
-            className="flex-1 inline-flex items-center justify-center gap-2 bg-primary text-primary-foreground py-3 rounded-lg font-medium"
-          >
-            <Phone className="w-4 h-4" />
-            Call
-          </a>
-          <a 
+      {/* Sticky Mobile CTA */}
+      <div className="fixed bottom-0 left-0 right-0 lg:hidden bg-background/95 backdrop-blur-xl border-t border-border/50 p-4 z-40">
+        <div className="flex gap-3">
+          <a
             href={whatsappUrl}
             target="_blank"
             rel="noopener noreferrer"
-            className="flex-1 inline-flex items-center justify-center gap-2 bg-green-500 text-white py-3 rounded-lg font-medium"
+            className="flex-1 inline-flex items-center justify-center gap-2 bg-green-500 text-white py-3 px-4 rounded-lg font-medium"
           >
-            <MessageCircle className="w-4 h-4" />
+            <MessageCircle className="w-5 h-5" />
             WhatsApp
           </a>
+          <a
+            href={googleFormUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="flex-1 inline-flex items-center justify-center gap-2 bg-gradient-accent text-primary-foreground py-3 px-4 rounded-lg font-medium"
+          >
+            <FileText className="w-5 h-5" />
+            Get Quote
+          </a>
         </div>
-      </motion.div>
+      </div>
     </>
   );
 };

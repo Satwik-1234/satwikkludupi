@@ -1,6 +1,13 @@
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Menu, X } from 'lucide-react';
+import { Menu, X, Sun, Moon, Type } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from '@/components/ui/dropdown-menu';
 
 const navItems = [
   { label: 'About', href: '#about' },
@@ -9,12 +16,22 @@ const navItems = [
   { label: 'Skills', href: '#skills' },
   { label: 'Certifications', href: '#certifications' },
   { label: 'Projects', href: '#projects' },
+  { label: 'Previous Work', href: '#map-gallery' },
   { label: 'Contact', href: '#contact' },
+];
+
+const textSizes = [
+  { label: 'Small', value: 'small', class: 'text-sm' },
+  { label: 'Medium', value: 'medium', class: 'text-base' },
+  { label: 'Large', value: 'large', class: 'text-lg' },
+  { label: 'Extra Large', value: 'xlarge', class: 'text-xl' },
 ];
 
 const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [isDarkMode, setIsDarkMode] = useState(true);
+  const [textSize, setTextSize] = useState('medium');
 
   useEffect(() => {
     const handleScroll = () => {
@@ -24,10 +41,33 @@ const Navbar = () => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+  useEffect(() => {
+    // Apply text size to html element
+    const html = document.documentElement;
+    html.classList.remove('text-size-small', 'text-size-medium', 'text-size-large', 'text-size-xlarge');
+    html.classList.add(`text-size-${textSize}`);
+  }, [textSize]);
+
+  useEffect(() => {
+    // Apply dark/light mode
+    const html = document.documentElement;
+    if (isDarkMode) {
+      html.classList.remove('light');
+      html.classList.add('dark');
+    } else {
+      html.classList.remove('dark');
+      html.classList.add('light');
+    }
+  }, [isDarkMode]);
+
   const handleNavClick = (href: string) => {
     setIsMobileMenuOpen(false);
     const element = document.querySelector(href);
     element?.scrollIntoView({ behavior: 'smooth' });
+  };
+
+  const toggleTheme = () => {
+    setIsDarkMode(!isDarkMode);
   };
 
   return (
@@ -62,20 +102,57 @@ const Navbar = () => {
                 <button
                   key={item.label}
                   onClick={() => handleNavClick(item.href)}
-                  className="px-4 py-2 text-sm font-medium text-muted-foreground hover:text-foreground hover:bg-muted/50 rounded-lg transition-colors"
+                  className="px-3 py-2 text-sm font-medium text-muted-foreground hover:text-foreground hover:bg-muted/50 rounded-lg transition-colors"
                 >
                   {item.label}
                 </button>
               ))}
             </div>
 
-            {/* Mobile Menu Button */}
-            <button
-              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-              className="lg:hidden p-2 text-foreground"
-            >
-              {isMobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
-            </button>
+            {/* Accessibility Controls */}
+            <div className="flex items-center gap-2">
+              {/* Text Size Dropdown */}
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <Button variant="ghost" size="icon" className="text-muted-foreground hover:text-foreground">
+                    <Type className="w-5 h-5" />
+                  </Button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent align="end">
+                  {textSizes.map((size) => (
+                    <DropdownMenuItem
+                      key={size.value}
+                      onClick={() => setTextSize(size.value)}
+                      className={textSize === size.value ? 'bg-primary/10 text-primary' : ''}
+                    >
+                      <span className={size.class}>{size.label}</span>
+                    </DropdownMenuItem>
+                  ))}
+                </DropdownMenuContent>
+              </DropdownMenu>
+
+              {/* Theme Toggle */}
+              <Button 
+                variant="ghost" 
+                size="icon" 
+                onClick={toggleTheme}
+                className="text-muted-foreground hover:text-foreground"
+              >
+                {isDarkMode ? (
+                  <Sun className="w-5 h-5" />
+                ) : (
+                  <Moon className="w-5 h-5" />
+                )}
+              </Button>
+
+              {/* Mobile Menu Button */}
+              <button
+                onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+                className="lg:hidden p-2 text-foreground"
+              >
+                {isMobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+              </button>
+            </div>
           </div>
         </div>
       </motion.nav>

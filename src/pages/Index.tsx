@@ -10,6 +10,7 @@ import ProjectsSection from '@/components/ProjectsSection';
 import MapGallerySection from '@/components/MapGallerySection';
 import ContactSection from '@/components/ContactSection';
 import Footer from '@/components/Footer';
+import hydrologyBackground from '@/assets/hydrology-background.jpg';
 
 const Index = () => {
   return (
@@ -24,20 +25,33 @@ const Index = () => {
         <link rel="canonical" href="https://satwikudupi.com" />
       </Helmet>
 
-      <div className="min-h-screen bg-background">
-        <Navbar />
-        <main>
-          <HeroSection />
-          <AboutSection />
-          <ExperienceSection />
-          <EducationSection />
-          <SkillsSection />
-          <CertificationsSection />
-          <ProjectsSection />
-          <MapGallerySection />
-          <ContactSection />
-        </main>
-        <Footer />
+      <div className="min-h-screen bg-background relative">
+        {/* Background Image */}
+        <div 
+          className="fixed inset-0 z-0 opacity-10 pointer-events-none"
+          style={{
+            backgroundImage: `url(${hydrologyBackground})`,
+            backgroundSize: 'cover',
+            backgroundPosition: 'center',
+            backgroundRepeat: 'no-repeat',
+          }}
+        />
+        
+        <div className="relative z-10">
+          <Navbar />
+          <main>
+            <HeroSection />
+            <AboutSection />
+            <ExperienceSection />
+            <EducationSection />
+            <SkillsSection />
+            <CertificationsSection />
+            <ProjectsSection />
+            <MapGallerySection />
+            <ContactSection />
+          </main>
+          <Footer />
+        </div>
       </div>
     </>
   );
