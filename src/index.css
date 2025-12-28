@@ -65,6 +65,69 @@
     --sidebar-border: 217 30% 20%;
     --sidebar-ring: 217 91% 60%;
   }
+
+  .light {
+    --background: 210 40% 98%;
+    --foreground: 222 47% 11%;
+
+    --card: 0 0% 100%;
+    --card-foreground: 222 47% 11%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 222 47% 11%;
+
+    --primary: 217 91% 50%;
+    --primary-foreground: 210 40% 98%;
+
+    --secondary: 168 76% 36%;
+    --secondary-foreground: 210 40% 98%;
+
+    --muted: 210 40% 92%;
+    --muted-foreground: 215 20% 40%;
+
+    --accent: 180 60% 40%;
+    --accent-foreground: 210 40% 98%;
+
+    --destructive: 0 84% 50%;
+    --destructive-foreground: 210 40% 98%;
+
+    --border: 217 30% 85%;
+    --input: 217 30% 85%;
+    --ring: 217 91% 50%;
+
+    --hydro-deep: 210 40% 98%;
+    --hydro-ocean: 217 70% 90%;
+    --hydro-blue: 217 91% 50%;
+    --hydro-teal: 168 76% 36%;
+    --hydro-cyan: 180 60% 40%;
+    --hydro-glow: 200 100% 50%;
+
+    --gradient-hero: linear-gradient(135deg, hsl(210 40% 98%) 0%, hsl(217 70% 95%) 50%, hsl(168 50% 95%) 100%);
+    --gradient-card: linear-gradient(180deg, hsl(0 0% 100% / 0.9) 0%, hsl(210 40% 98% / 0.95) 100%);
+    --gradient-accent: linear-gradient(135deg, hsl(217 91% 50%) 0%, hsl(168 76% 45%) 100%);
+    --gradient-glow: radial-gradient(ellipse at center, hsl(200 100% 50% / 0.1) 0%, transparent 70%);
+
+    --shadow-glow: 0 0 60px hsl(200 100% 50% / 0.15);
+    --shadow-card: 0 8px 32px hsl(222 47% 11% / 0.1);
+    --shadow-button: 0 4px 20px hsl(217 91% 50% / 0.25);
+  }
+}
+
+/* Text size classes */
+.text-size-small {
+  font-size: 14px;
+}
+
+.text-size-medium {
+  font-size: 16px;
+}
+
+.text-size-large {
+  font-size: 18px;
+}
+
+.text-size-xlarge {
+  font-size: 20px;
 }
 
 @layer base {
