@@ -1,27 +1,38 @@
+import { useState } from 'react';
 import { motion } from 'framer-motion';
-import { Linkedin, Download, ChevronDown } from 'lucide-react';
+import { Linkedin, FileDown, ChevronDown, ChevronUp } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import heroImage from '@/assets/hero-watershed.jpg';
 
 const HeroSection = () => {
+  const [showResumeOptions, setShowResumeOptions] = useState(false);
+
   const scrollToAbout = () => {
     document.getElementById('about')?.scrollIntoView({ behavior: 'smooth' });
   };
 
+  const resumeLinks = [
+    {
+      label: 'Latest Version',
+      url: 'https://drive.google.com/file/d/1QKJ2Jedd6gD6DlIUq_5cKwgcCxyfzex5/view?usp=sharing',
+      highlight: true
+    },
+    {
+      label: 'Previous Version',
+      url: 'https://drive.google.com/file/d/1fQkKLO9cvtzinM8TW27u6cWow8OS3sXN/view?usp=sharing',
+      highlight: false
+    }
+  ];
+
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
-      {/* Background Image with Overlay */}
-      <div 
-        className="absolute inset-0 bg-cover bg-center bg-no-repeat"
-        style={{ backgroundImage: `url(${heroImage})` }}
-      >
-        <div className="absolute inset-0 bg-gradient-to-b from-background/80 via-background/60 to-background" />
-        <div className="absolute inset-0 bg-gradient-glow opacity-50" />
-      </div>
-
-      {/* Animated Water Effect */}
-      <div className="absolute inset-0 opacity-20">
-        <div className="absolute inset-0 wave-bg animate-wave" />
+      {/* Glassmorphism Background */}
+      <div className="absolute inset-0 bg-gradient-to-br from-background via-hydro-ocean/30 to-background" />
+      
+      {/* Animated Gradient Orbs */}
+      <div className="absolute inset-0 overflow-hidden">
+        <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-primary/20 rounded-full blur-3xl animate-float" />
+        <div className="absolute bottom-1/4 right-1/4 w-80 h-80 bg-secondary/20 rounded-full blur-3xl animate-float" style={{ animationDelay: '-3s' }} />
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-accent/10 rounded-full blur-3xl" />
       </div>
 
       {/* Content */}
@@ -38,7 +49,7 @@ const HeroSection = () => {
             transition={{ delay: 0.2, duration: 0.6 }}
             className="w-36 h-36 md:w-44 md:h-44 mx-auto mb-8 rounded-full bg-gradient-accent p-1 shadow-glow"
           >
-            <div className="w-full h-full rounded-full bg-card flex items-center justify-center overflow-hidden">
+            <div className="w-full h-full rounded-full bg-card/80 backdrop-blur-xl flex items-center justify-center overflow-hidden border border-border/30">
               <span className="text-5xl md:text-6xl font-display font-bold gradient-text">SU</span>
             </div>
           </motion.div>
@@ -48,7 +59,7 @@ const HeroSection = () => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.4, duration: 0.6 }}
-            className="text-4xl md:text-6xl lg:text-7xl font-display font-bold mb-4"
+            className="text-4xl md:text-6xl lg:text-7xl font-display font-bold mb-4 tracking-tight"
           >
             Satwik <span className="gradient-text">Udupi</span>
           </motion.h1>
@@ -58,7 +69,7 @@ const HeroSection = () => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.5, duration: 0.6 }}
-            className="text-lg md:text-xl text-muted-foreground mb-2 font-body"
+            className="text-lg md:text-xl text-muted-foreground mb-2 font-body font-medium tracking-wide"
           >
             Agricultural Engineer | GIS & Hydrology Specialist
           </motion.p>
@@ -68,7 +79,7 @@ const HeroSection = () => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.6, duration: 0.6 }}
-            className="text-xl md:text-2xl font-display font-medium gradient-text mb-4"
+            className="text-xl md:text-2xl font-display font-semibold gradient-text mb-4"
           >
             Delivering Sustainable Land & Water Solutions
           </motion.p>
@@ -78,7 +89,7 @@ const HeroSection = () => {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.7, duration: 0.6 }}
-            className="text-sm md:text-base text-muted-foreground mb-8 max-w-2xl mx-auto"
+            className="text-sm md:text-base text-muted-foreground mb-8 max-w-2xl mx-auto font-body"
           >
             Expert in HEC-HMS, HEC-RAS, ArcGIS/QGIS, Google Earth Engine, CAD/CFD
           </motion.p>
@@ -92,22 +103,57 @@ const HeroSection = () => {
           >
             <Button 
               size="lg" 
-              className="bg-gradient-accent text-primary-foreground shadow-button hover:opacity-90 transition-opacity min-w-[180px]"
+              className="bg-gradient-accent text-primary-foreground shadow-button hover:opacity-90 transition-all min-w-[180px] font-semibold"
               asChild
             >
-              <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer">
+              <a href="https://www.linkedin.com/in/satwik-udupi-37304a231" target="_blank" rel="noopener noreferrer">
                 <Linkedin className="w-5 h-5 mr-2" />
                 Connect on LinkedIn
               </a>
             </Button>
-            <Button 
-              size="lg" 
-              variant="outline"
-              className="border-primary/50 bg-primary/10 hover:bg-primary/20 text-foreground min-w-[180px]"
-            >
-              <Download className="w-5 h-5 mr-2" />
-              Download CV
-            </Button>
+            
+            {/* Resume Dropdown */}
+            <div className="relative">
+              <Button 
+                size="lg" 
+                variant="outline"
+                className="border-border/50 bg-card/50 backdrop-blur-xl hover:bg-card/80 text-foreground min-w-[180px] font-semibold"
+                onClick={() => setShowResumeOptions(!showResumeOptions)}
+              >
+                <FileDown className="w-5 h-5 mr-2" />
+                Resume
+                {showResumeOptions ? (
+                  <ChevronUp className="w-4 h-4 ml-2" />
+                ) : (
+                  <ChevronDown className="w-4 h-4 ml-2" />
+                )}
+              </Button>
+              
+              {showResumeOptions && (
+                <motion.div
+                  initial={{ opacity: 0, y: -10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  className="absolute top-full left-0 right-0 mt-2 bg-card/90 backdrop-blur-xl border border-border/50 rounded-lg overflow-hidden shadow-card z-20"
+                >
+                  {resumeLinks.map((resume, index) => (
+                    <a
+                      key={index}
+                      href={resume.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className={`block px-4 py-3 text-sm font-medium transition-colors ${
+                        resume.highlight 
+                          ? 'bg-primary/10 text-primary hover:bg-primary/20 border-l-2 border-primary' 
+                          : 'text-muted-foreground hover:bg-muted/50 hover:text-foreground'
+                      }`}
+                    >
+                      {resume.highlight && <span className="text-xs bg-primary/20 text-primary px-2 py-0.5 rounded mr-2">NEW</span>}
+                      {resume.label}
+                    </a>
+                  ))}
+                </motion.div>
+              )}
+            </div>
           </motion.div>
         </motion.div>
 

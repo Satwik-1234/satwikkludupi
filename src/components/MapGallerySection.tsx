@@ -99,7 +99,7 @@ const MapGallerySection = () => {
     <section 
       ref={sectionRef}
       id="previous-work" 
-      className="py-20 md:py-32 relative overflow-hidden"
+      className="py-16 md:py-20 relative overflow-hidden"
     >
       {/* Background glow */}
       <div className="absolute inset-0 bg-gradient-to-b from-background via-[hsl(217_70%_8%)] to-background" />

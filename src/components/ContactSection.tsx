@@ -68,7 +68,7 @@ const ContactSection = () => {
 
   return (
     <>
-      <section id="contact" className="py-24 relative">
+      <section id="contact" className="py-16 relative">
         <div className="container mx-auto px-4">
           <motion.div
             ref={ref}
@@ -389,17 +389,6 @@ const ContactSection = () => {
                   </div>
                 </div>
 
-                {/* Schedule Consultation */}
-                <div className="glass-card p-6 text-center">
-                  <Calendar className="w-10 h-10 text-primary mx-auto mb-3" />
-                  <h4 className="font-bold mb-2">Prefer a Video Call?</h4>
-                  <p className="text-sm text-muted-foreground mb-4">Schedule a free 15-minute consultation</p>
-                  <Button asChild variant="outline" className="w-full">
-                    <a href={calendlyUrl} target="_blank" rel="noopener noreferrer">
-                      Book on Calendly
-                    </a>
-                  </Button>
-                </div>
               </motion.div>
             </div>
           </motion.div>
