@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Source+Sans+3:wght@300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Inter:wght@300;400;500;600;700&display=swap');
 
 @tailwind base;
 @tailwind components;
@@ -53,8 +53,8 @@
     --shadow-card: 0 8px 32px hsl(222 47% 4% / 0.5);
     --shadow-button: 0 4px 20px hsl(217 91% 60% / 0.3);
 
-    --font-display: 'Outfit', sans-serif;
-    --font-body: 'Source Sans 3', sans-serif;
+    --font-display: 'Plus Jakarta Sans', sans-serif;
+    --font-body: 'Inter', sans-serif;
 
     --sidebar-background: 222 47% 8%;
     --sidebar-foreground: 200 20% 95%;
@@ -151,8 +151,8 @@
 
 @layer components {
   .glass-card {
-    @apply bg-card/60 backdrop-blur-xl border border-border/50 rounded-xl;
-    box-shadow: var(--shadow-card);
+    @apply bg-card/40 backdrop-blur-2xl border border-border/30 rounded-2xl;
+    box-shadow: var(--shadow-card), inset 0 1px 0 0 hsl(var(--border) / 0.1);
   }
 
   .gradient-text {

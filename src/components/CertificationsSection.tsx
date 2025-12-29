@@ -55,7 +55,7 @@ const CertificationsSection = () => {
     : certifications.filter(c => c.category === activeFilter);
 
   return (
-    <section id="certifications" className="py-24 relative">
+    <section id="certifications" className="py-16 relative">
       <div className="container mx-auto px-4">
         <motion.div
           ref={ref}
