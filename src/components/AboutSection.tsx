@@ -57,17 +57,17 @@ const AboutSection = () => {
                   Shivaji University and the Forest department, Government of Maharashtra.
                 </p>
                 <p className="text-muted-foreground leading-relaxed">
-                  My hands-on experience includes developing hydrological models, performing spatial analysis, 
-                  and supporting field data collection using DGPS and other advanced instruments. Driven by 
-                  curiosity and a commitment to innovation, I continually seek to expand my technical toolkit 
-                  and apply creative problem-solving to real-world environmental challenges.
+                  Results-driven Agricultural Engineer specializing in geospatial analysis using ArcGIS, QGIS, Google Earth Engine, ERDAS IMAGINE, and Agisoft Metashape for RUSLE soil erosion modeling, dam breach simulations (Koyna Dam PMF/PMP), and watershed delineation. 
+                  Proven in 1D/2D HEC-RAS flood inundation mapping, rainfall-runoff calibration, NDVI/NDWI vegetation indexing, and SolidWorks design of agricultural equipment like graders and sprinklers. 
+                  B.Tech CGPA 8.27 from Sahyadri College; interned at Sahyadri Tiger Reserve (GIS wildlife mapping), Centre for Climate Change Studies (Panchganga Basin hydrology), and Indo German Tool Room (ANSYS FEA/CFD). 
+                  Excelled in multi-criteria flood zonation via AHP, DGPS surveying, and climate-resilient water conservation projects to enhance sustainability and productivity
                 </p>
               </div>
 
               {/* Location */}
               <div className="flex items-center gap-2 text-muted-foreground">
                 <MapPin className="w-5 h-5 text-primary" />
-                <span>Junnar, Maharashtra, India</span>
+                <span>Karad, Maharashtra, India</span>
               </div>
             </motion.div>
 

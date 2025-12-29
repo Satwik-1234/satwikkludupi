@@ -37,8 +37,9 @@ const education = [
     degree: "HSC",
     field: "Science",
     institution: "Shri Venkateshwara Shikshan Trust Ramchandra Masu Mahadik College",
-    location: "Peth Walwa",
+    location: "Peth Walwa, Snagli, Maharashtra ",
     duration: "Feb 2018 - Feb 2020",
+     grade: "Frist Class",
     achievements: [
       "JEE Paper 2: 90 Percentile",
       "MHT-CET 2021: 93 Percentile"

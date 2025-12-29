@@ -7,7 +7,7 @@ const experiences = [
     title: "Project Associate",
     company: "Shramjivi Janata Sahayyak Mandal",
     type: "Full-time",
-    duration: "Sep 2025 - Present · 4 mos",
+    duration: "Sep 2025 - Dec 2025 · 4 mos",
     location: "Junnar, Maharashtra, India",
     project: "Resilient River Ghod Project",
     highlights: [

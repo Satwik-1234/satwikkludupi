@@ -55,6 +55,8 @@ const techStack = [
   { name: 'SolidWorks', category: 'CAD' },
   { name: 'ANSYS', category: 'CFD/FEA' },
   { name: 'Agisoft Metashape', category: 'Photogrammetry' }
+  { name: 'WebODM', category: 'Photogrammetry' }
+  { name: 'Google Collab', category: 'Programming' }
 ];
 
 const ContactSection = () => {
@@ -219,10 +221,10 @@ const ContactSection = () => {
                       <div>
                         <p className="font-semibold text-foreground">Email</p>
                         <a 
-                          href="mailto:Sarwikudupi@gmail.com" 
+                          href="mailto:Satwikudupi@gmail.com" 
                           className="text-primary hover:underline block"
                         >
-                          Satwikudupi@gmail.com
+                          Pravaha Tattva Solutions
                         </a>
                         <a 
                           href="mailto:satwikudupi2018@gmail.com" 
