@@ -67,7 +67,7 @@ const AboutSection = () => {
               {/* Location */}
               <div className="flex items-center gap-2 text-muted-foreground">
                 <MapPin className="w-5 h-5 text-primary" />
-                <span>Junnar, Maharashtra, India</span>
+                <span>Karad, Maharashtra, India</span>
               </div>
             </motion.div>
 

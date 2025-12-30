@@ -1,4 +1,4 @@
-import { Linkedin, Mail, Heart, Phone, MessageCircle, Waves } from 'lucide-react';
+import { Linkedin, Mail, Heart, Phone, MessageCircle, Waves, Github } from 'lucide-react';
 
 const navLinks = [
   { label: 'About', href: '#about' },
@@ -19,13 +19,14 @@ const handleNavClick = (href: string) => {
 const Footer = () => {
   const phoneNumber = '+919834300849';
   const whatsappUrl = `https://wa.me/${phoneNumber.replace('+', '')}?text=Hi%20Satwik,%20I'm%20interested%20in%20your%20GIS/Hydrology%20services`;
+  const githubUrl = 'https://github.com/Satwik-1234';
 
   return (
-    <footer className="pt-16 pb-8 border-t border-border/50 relative overflow-hidden">
+    <footer className="pt-12 pb-8 border-t border-border/50 relative overflow-hidden">
       {/* River Illustration Background */}
       <div className="absolute inset-0 pointer-events-none overflow-hidden">
         <svg 
-          className="absolute bottom-0 left-0 w-full h-32 opacity-10"
+          className="absolute bottom-0 left-0 w-full h-24 opacity-10"
           viewBox="0 0 1440 120" 
           preserveAspectRatio="none"
         >
@@ -54,28 +55,25 @@ const Footer = () => {
 
       <div className="container mx-auto px-4 relative z-10">
         {/* River Message */}
-        <div className="text-center mb-12">
-          <div className="inline-flex items-center gap-3 mb-4">
-            <Waves className="w-8 h-8 text-primary animate-pulse" />
-            <span className="text-2xl font-display font-bold gradient-text">
+        <div className="text-center mb-10">
+          <div className="inline-flex items-center gap-3 mb-3">
+            <Waves className="w-6 h-6 text-primary" />
+            <span className="text-xl font-display font-bold gradient-text">
               Looking forward to delivering your water solutions!
             </span>
-            <Waves className="w-8 h-8 text-primary animate-pulse" />
+            <Waves className="w-6 h-6 text-primary" />
           </div>
-          <div className="section-divider" />
+          <p className="text-sm text-muted-foreground">Pravaha Tattva Solutions • Founded by Satwik Udupi</p>
         </div>
 
         {/* Navigation Links */}
-        <div className="mb-10">
-          <h4 className="text-sm font-semibold text-muted-foreground mb-4 text-center uppercase tracking-wider">
-            Quick Links
-          </h4>
-          <div className="flex flex-wrap justify-center gap-2 md:gap-4">
+        <div className="mb-8">
+          <div className="flex flex-wrap justify-center gap-1 md:gap-2">
             {navLinks.map((link) => (
               <button
                 key={link.label}
                 onClick={() => handleNavClick(link.href)}
-                className="px-4 py-2 text-sm text-muted-foreground hover:text-primary hover:bg-primary/10 rounded-lg transition-colors"
+                className="px-3 py-1.5 text-sm text-muted-foreground hover:text-primary hover:bg-primary/10 rounded-lg transition-colors"
               >
                 {link.label}
               </button>
@@ -84,44 +82,53 @@ const Footer = () => {
         </div>
 
         {/* Contact Quick Access */}
-        <div className="flex flex-wrap justify-center gap-4 mb-10">
+        <div className="flex flex-wrap justify-center gap-3 mb-8">
           <a 
             href="https://www.linkedin.com/in/satwik-udupi-37304a231" 
             target="_blank" 
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-muted/50 text-muted-foreground hover:text-primary hover:bg-primary/10 transition-colors"
+            className="inline-flex items-center gap-2 px-3 py-1.5 rounded-lg bg-muted/50 text-muted-foreground hover:text-primary hover:bg-primary/10 transition-colors text-sm"
           >
-            <Linkedin className="w-5 h-5" />
-            <span className="text-sm font-medium">LinkedIn</span>
+            <Linkedin className="w-4 h-4" />
+            <span>LinkedIn</span>
+          </a>
+          <a 
+            href={githubUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-2 px-3 py-1.5 rounded-lg bg-muted/50 text-muted-foreground hover:text-primary hover:bg-primary/10 transition-colors text-sm"
+          >
+            <Github className="w-4 h-4" />
+            <span>GitHub</span>
           </a>
           <a 
             href="mailto:satwikudupi@gmail.com"
-            className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-muted/50 text-muted-foreground hover:text-primary hover:bg-primary/10 transition-colors"
+            className="inline-flex items-center gap-2 px-3 py-1.5 rounded-lg bg-muted/50 text-muted-foreground hover:text-primary hover:bg-primary/10 transition-colors text-sm"
           >
-            <Mail className="w-5 h-5" />
-            <span className="text-sm font-medium">Email</span>
+            <Mail className="w-4 h-4" />
+            <span>Email</span>
           </a>
           <a 
             href={`tel:${phoneNumber}`}
-            className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-muted/50 text-muted-foreground hover:text-primary hover:bg-primary/10 transition-colors"
+            className="inline-flex items-center gap-2 px-3 py-1.5 rounded-lg bg-muted/50 text-muted-foreground hover:text-primary hover:bg-primary/10 transition-colors text-sm"
           >
-            <Phone className="w-5 h-5" />
-            <span className="text-sm font-medium">Call</span>
+            <Phone className="w-4 h-4" />
+            <span>Call</span>
           </a>
           <a 
             href={whatsappUrl}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-muted/50 text-muted-foreground hover:text-green-500 hover:bg-green-500/10 transition-colors"
+            className="inline-flex items-center gap-2 px-3 py-1.5 rounded-lg bg-muted/50 text-muted-foreground hover:text-green-500 hover:bg-green-500/10 transition-colors text-sm"
           >
-            <MessageCircle className="w-5 h-5" />
-            <span className="text-sm font-medium">WhatsApp</span>
+            <MessageCircle className="w-4 h-4" />
+            <span>WhatsApp</span>
           </a>
         </div>
 
         {/* Bottom Bar */}
-        <div className="border-t border-border/30 pt-6">
-          <div className="flex flex-col md:flex-row items-center justify-between gap-4">
+        <div className="border-t border-border/30 pt-5">
+          <div className="flex flex-col md:flex-row items-center justify-between gap-3">
             <div className="flex items-center gap-2 text-muted-foreground text-sm">
               <span>© 2025 Satwik Udupi. Made with</span>
               <Heart className="w-4 h-4 text-red-500 fill-red-500" />
@@ -129,7 +136,7 @@ const Footer = () => {
             </div>
 
             <div className="text-xs text-muted-foreground text-center md:text-right">
-              Agricultural Engineer | GIS & Hydrology | Delivering Sustainable Land & Water Solutions
+              Agricultural Engineer | GIS & Hydrology Professional
             </div>
           </div>
         </div>

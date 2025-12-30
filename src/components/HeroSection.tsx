@@ -71,7 +71,7 @@ const HeroSection = () => {
             transition={{ delay: 0.5, duration: 0.6 }}
             className="text-lg md:text-xl text-muted-foreground mb-2 font-body font-medium tracking-wide"
           >
-            Agricultural Engineer | GIS & Hydrology Specialist
+            Agricultural Engineer | GIS & Hydrology Professional
           </motion.p>
 
           {/* Tagline */}
@@ -91,7 +91,7 @@ const HeroSection = () => {
             transition={{ delay: 0.7, duration: 0.6 }}
             className="text-sm md:text-base text-muted-foreground mb-8 max-w-2xl mx-auto font-body"
           >
-            Expert in HEC-HMS, HEC-RAS, ArcGIS/QGIS, Google Earth Engine, CAD/CFD
+            Fluent in HEC-HMS, HEC-RAS, ArcGIS/QGIS, Google Earth Engine, CAD/CFD
           </motion.p>
 
           {/* CTA Buttons */}
