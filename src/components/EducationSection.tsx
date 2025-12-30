@@ -39,6 +39,7 @@ const education = [
     institution: "Shri Venkateshwara Shikshan Trust Ramchandra Masu Mahadik College",
     location: "Peth Walwa",
     duration: "Feb 2018 - Feb 2020",
+    grade: "First Class",
     achievements: [
       "JEE Paper 2: 90 Percentile",
       "MHT-CET 2021: 93 Percentile"
