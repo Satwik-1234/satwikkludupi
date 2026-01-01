@@ -1,104 +1,37 @@
 import { motion, useInView } from 'framer-motion';
 import { useRef } from 'react';
-import { 
-  Map, Waves, Cog, BarChart3, Camera, Code 
-} from 'lucide-react';
 
-interface Skill {
-  name: string;
-  level: 'Expert' | 'Advanced' | 'Proficient';
-}
-
-interface SkillCategory {
-  name: string;
-  icon: typeof Map;
-  color: string;
-  skills: Skill[];
-}
-
-const skillCategories: SkillCategory[] = [
+const skillCategories = [
   {
     name: "GIS & Remote Sensing",
-    icon: Map,
-    color: "from-blue-500 to-cyan-500",
-    skills: [
-      { name: "ArcGIS Pro/Desktop", level: "Expert" },
-      { name: "QGIS", level: "Expert" },
-      { name: "Google Earth Engine", level: "Advanced" },
-      { name: "Google Earth Pro", level: "Expert" },
-      { name: "ArcMap", level: "Expert" },
-    ]
+    skills: ["ArcGIS Pro", "QGIS", "Google Earth Engine", "Google Earth Pro", "ArcMap"]
   },
   {
     name: "Hydrological Modeling",
-    icon: Waves,
-    color: "from-teal-500 to-emerald-500",
-    skills: [
-      { name: "HEC-HMS", level: "Expert" },
-      { name: "HEC-RAS", level: "Expert" },
-      { name: "Floodplain Mapping", level: "Advanced" },
-      { name: "RUSLE Modeling", level: "Advanced" },
-      { name: "Watershed Analysis", level: "Expert" },
-    ]
+    skills: ["HEC-HMS", "HEC-RAS", "Floodplain Mapping", "RUSLE Modeling", "Watershed Analysis"]
   },
   {
     name: "CAD/CAE/CFD",
-    icon: Cog,
-    color: "from-orange-500 to-amber-500",
-    skills: [
-      { name: "SolidWorks", level: "Advanced" },
-      { name: "ANSYS Workbench", level: "Advanced" },
-      { name: "FEA Analysis", level: "Proficient" },
-      { name: "CFD Simulation", level: "Proficient" },
-      { name: "NX CAD", level: "Proficient" },
-    ]
+    skills: ["SolidWorks", "ANSYS Workbench", "FEA Analysis", "CFD Simulation", "NX CAD"]
   },
   {
     name: "Data & Analysis",
-    icon: BarChart3,
-    color: "from-purple-500 to-pink-500",
-    skills: [
-      { name: "Spatial Analysis", level: "Expert" },
-      { name: "NDVI/NDWI Analysis", level: "Expert" },
-      { name: "Statistical Analysis", level: "Advanced" },
-      { name: "Data Visualization", level: "Advanced" },
-      { name: "Satellite Imagery", level: "Expert" },
-    ]
+    skills: ["Spatial Analysis", "NDVI/NDWI", "Statistical Analysis", "Data Visualization", "Satellite Imagery"]
   },
   {
     name: "Photogrammetry",
-    icon: Camera,
-    color: "from-indigo-500 to-blue-500",
-    skills: [
-      { name: "Agisoft Metashape", level: "Advanced" },
-      { name: "WebODM", level: "Proficient" },
-      { name: "DSM Generation", level: "Advanced" },
-      { name: "Orthomosaic Creation", level: "Advanced" },
-      { name: "Point Cloud Processing", level: "Proficient" },
-    ]
+    skills: ["Agisoft Metashape", "WebODM", "DSM Generation", "Orthomosaic", "Point Cloud"]
   },
   {
     name: "Programming & Tools",
-    icon: Code,
-    color: "from-green-500 to-teal-500",
-    skills: [
-      { name: "Google Colab", level: "Advanced" },
-      { name: "Python", level: "Proficient" },
-      { name: "Java Libraries", level: "Proficient" },
-      { name: "DGPS Survey", level: "Expert" },
-      { name: "LISEM", level: "Proficient" },
-    ]
+    skills: ["Google Colab", "Python", "Java Libraries", "DGPS Survey", "LISEM"]
   }
 ];
 
-const getLevelColor = (level: string) => {
-  switch (level) {
-    case 'Expert': return 'bg-primary text-primary-foreground';
-    case 'Advanced': return 'bg-secondary text-secondary-foreground';
-    case 'Proficient': return 'bg-muted text-muted-foreground';
-    default: return 'bg-muted text-muted-foreground';
-  }
-};
+const additionalSkills = [
+  "SRTM DEM", "Sentinel-2", "Landsat", "CHIRPS Data",
+  "Camera Trap Analysis", "Irrigation Systems", "Drip & Sprinkler Design"
+];
 
 const SkillsSection = () => {
   const ref = useRef(null);
@@ -106,7 +39,7 @@ const SkillsSection = () => {
 
   return (
     <section id="skills" className="py-16 relative">
-      <div className="absolute inset-0 bg-gradient-to-b from-transparent via-muted/10 to-transparent" />
+      <div className="absolute inset-0 bg-gradient-to-b from-transparent via-muted/5 to-transparent" />
       
       <div className="container mx-auto px-4 relative z-10">
         <motion.div
@@ -123,71 +56,77 @@ const SkillsSection = () => {
             <div className="section-divider" />
           </div>
 
-          {/* Skills Grid - Clean 3x2 layout */}
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {/* Skills Grid - Clean Circles */}
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-6 mb-12">
             {skillCategories.map((category, categoryIndex) => (
               <motion.div
                 key={category.name}
-                initial={{ opacity: 0, y: 30 }}
-                animate={isInView ? { opacity: 1, y: 0 } : {}}
+                initial={{ opacity: 0, scale: 0.8 }}
+                animate={isInView ? { opacity: 1, scale: 1 } : {}}
                 transition={{ duration: 0.5, delay: 0.1 + categoryIndex * 0.08 }}
-                className="glass-card p-6 hover:border-primary/30 transition-all"
+                className="flex flex-col items-center"
               >
-                {/* Category Header */}
-                <div className="flex items-center gap-3 mb-5">
-                  <div className={`w-10 h-10 rounded-lg bg-gradient-to-br ${category.color} flex items-center justify-center shadow-lg`}>
-                    <category.icon className="w-5 h-5 text-white" />
+                {/* Circle with skills */}
+                <div className="relative w-32 h-32 md:w-36 md:h-36 group">
+                  {/* Outer ring */}
+                  <div className="absolute inset-0 rounded-full border-2 border-primary/20 group-hover:border-primary/40 transition-colors" />
+                  
+                  {/* Inner circle */}
+                  <div className="absolute inset-2 rounded-full bg-gradient-to-br from-muted/50 to-muted/20 backdrop-blur-sm border border-border/30 flex items-center justify-center group-hover:from-primary/10 group-hover:to-primary/5 transition-all">
+                    <span className="text-xs md:text-sm font-semibold text-center px-3 text-foreground/90 leading-tight">
+                      {category.name}
+                    </span>
                   </div>
-                  <h3 className="font-display font-bold text-foreground">
-                    {category.name}
-                  </h3>
+                  
+                  {/* Skill dots around circle */}
+                  {category.skills.slice(0, 5).map((_, i) => {
+                    const angle = (i * 72 - 90) * (Math.PI / 180);
+                    const radius = 58;
+                    const x = Math.cos(angle) * radius;
+                    const y = Math.sin(angle) * radius;
+                    return (
+                      <motion.div
+                        key={i}
+                        className="absolute w-2 h-2 rounded-full bg-primary/60"
+                        style={{
+                          left: `calc(50% + ${x}px - 4px)`,
+                          top: `calc(50% + ${y}px - 4px)`,
+                        }}
+                        initial={{ scale: 0 }}
+                        animate={isInView ? { scale: 1 } : {}}
+                        transition={{ delay: 0.3 + categoryIndex * 0.1 + i * 0.05 }}
+                      />
+                    );
+                  })}
                 </div>
 
-                {/* Skills List */}
-                <div className="space-y-2">
-                  {category.skills.map((skill) => (
-                    <div 
-                      key={skill.name}
-                      className="flex items-center justify-between py-2 border-b border-border/30 last:border-0"
-                    >
-                      <span className="text-sm text-foreground/90">{skill.name}</span>
-                      <span className={`text-xs px-2 py-0.5 rounded-full font-medium ${getLevelColor(skill.level)}`}>
-                        {skill.level}
-                      </span>
-                    </div>
+                {/* Skills list below circle */}
+                <div className="mt-4 text-center">
+                  {category.skills.map((skill, i) => (
+                    <p key={i} className="text-xs text-muted-foreground leading-relaxed">
+                      {skill}
+                    </p>
                   ))}
                 </div>
               </motion.div>
             ))}
           </div>
 
-          {/* Additional Skills - Compact Tags */}
+          {/* Additional Skills - Minimal Tags */}
           <motion.div
-            initial={{ opacity: 0, y: 30 }}
+            initial={{ opacity: 0, y: 20 }}
             animate={isInView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.5, delay: 0.6 }}
-            className="mt-10 text-center"
+            className="flex flex-wrap justify-center gap-2 max-w-3xl mx-auto"
           >
-            <h4 className="text-sm font-semibold mb-4 text-muted-foreground uppercase tracking-wider">
-              Also Proficient In
-            </h4>
-            <div className="flex flex-wrap justify-center gap-2 max-w-4xl mx-auto">
-              {[
-                "SRTM DEM", "Sentinel-2", "Landsat", "CHIRPS Data",
-                "Camera Trap Analysis", "Tractor Maintenance", "Irrigation Systems",
-                "Drip & Sprinkler Design", "Lift Irrigation"
-              ].map((skill, i) => (
-                <motion.span
-                  key={skill}
-                  initial={{ opacity: 0, scale: 0.9 }}
-                  animate={isInView ? { opacity: 1, scale: 1 } : {}}
-                  transition={{ duration: 0.3, delay: 0.7 + i * 0.03 }}
-                  className="px-3 py-1.5 rounded-full bg-muted/50 text-muted-foreground text-sm hover:bg-primary/10 hover:text-primary transition-colors"
-                >
-                  {skill}
-                </motion.span>
-              ))}
-            </div>
+            {additionalSkills.map((skill, i) => (
+              <span
+                key={skill}
+                className="px-3 py-1 rounded-full bg-muted/30 text-muted-foreground text-xs border border-border/20 hover:bg-primary/10 hover:text-primary hover:border-primary/20 transition-colors"
+              >
+                {skill}
+              </span>
+            ))}
           </motion.div>
         </motion.div>
       </div>
