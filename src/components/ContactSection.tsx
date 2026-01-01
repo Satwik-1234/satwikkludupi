@@ -1,8 +1,9 @@
 import { motion, useInView } from 'framer-motion';
 import { useRef } from 'react';
+import { Link } from 'react-router-dom';
 import { 
   Mail, MapPin, Linkedin, Phone, MessageCircle, 
-  Waves, Map, FileSpreadsheet, Mountain, Cog, ExternalLink, FileText, Github
+  Waves, Map, FileSpreadsheet, Mountain, Cog, ExternalLink, FileText, Github, Briefcase
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import hydrologyBg from '@/assets/hydrology-background.jpg';
@@ -359,6 +360,18 @@ const ContactSection = () => {
                     <p className="text-xs text-muted-foreground">View my code & projects</p>
                   </a>
                 </div>
+
+                {/* Pravaha Tattva CTA */}
+                <Link
+                  to="/pravaha-tattva"
+                  className="glass-card p-5 text-center hover:border-primary/50 transition-all group block"
+                >
+                  <div className="w-12 h-12 rounded-full bg-gradient-accent flex items-center justify-center mx-auto mb-3 group-hover:scale-110 transition-transform">
+                    <Briefcase className="w-6 h-6 text-primary-foreground" />
+                  </div>
+                  <h4 className="font-bold text-foreground mb-1 text-sm">Pravaha Tattva Solutions</h4>
+                  <p className="text-xs text-muted-foreground">Explore my consultancy services</p>
+                </Link>
 
                 {/* Why Work With Me */}
                 <div className="glass-card p-5">

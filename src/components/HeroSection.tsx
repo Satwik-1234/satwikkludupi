@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { motion } from 'framer-motion';
-import { Linkedin, FileDown, ChevronDown, ChevronUp } from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { Linkedin, FileDown, ChevronDown, ChevronUp, Briefcase } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 
 const HeroSection = () => {
@@ -99,7 +100,7 @@ const HeroSection = () => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.8, duration: 0.6 }}
-            className="flex flex-col sm:flex-row gap-4 justify-center items-center"
+            className="flex flex-col sm:flex-row gap-4 justify-center items-center flex-wrap"
           >
             <Button 
               size="lg" 
@@ -154,6 +155,19 @@ const HeroSection = () => {
                 </motion.div>
               )}
             </div>
+
+            {/* Pravaha Tattva Button */}
+            <Button 
+              size="lg" 
+              variant="outline"
+              className="border-primary/50 bg-primary/10 hover:bg-primary/20 text-primary min-w-[180px] font-semibold"
+              asChild
+            >
+              <Link to="/pravaha-tattva">
+                <Briefcase className="w-5 h-5 mr-2" />
+                My Consultancy
+              </Link>
+            </Button>
           </motion.div>
         </motion.div>
 
