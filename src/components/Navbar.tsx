@@ -17,6 +17,7 @@ const navItems = [
   { label: 'Certifications', href: '#certifications' },
   { label: 'Projects', href: '#projects' },
   { label: 'Previous Work', href: '#map-gallery' },
+  { label: 'Services', href: '/pravaha-tattva', isExternal: true },
   { label: 'Contact', href: '#contact' },
 ];
 
@@ -60,8 +61,12 @@ const Navbar = () => {
     }
   }, [isDarkMode]);
 
-  const handleNavClick = (href: string) => {
+  const handleNavClick = (href: string, isExternal?: boolean) => {
     setIsMobileMenuOpen(false);
+    if (isExternal) {
+      window.location.href = href;
+      return;
+    }
     const element = document.querySelector(href);
     element?.scrollIntoView({ behavior: 'smooth' });
   };
@@ -101,7 +106,7 @@ const Navbar = () => {
               {navItems.map((item) => (
                 <button
                   key={item.label}
-                  onClick={() => handleNavClick(item.href)}
+                  onClick={() => handleNavClick(item.href, (item as any).isExternal)}
                   className="px-3 py-2 text-sm font-medium text-muted-foreground hover:text-foreground hover:bg-muted/50 rounded-lg transition-colors"
                 >
                   {item.label}
@@ -171,7 +176,7 @@ const Navbar = () => {
                 {navItems.map((item) => (
                   <button
                     key={item.label}
-                    onClick={() => handleNavClick(item.href)}
+                    onClick={() => handleNavClick(item.href, (item as any).isExternal)}
                     className="px-4 py-3 text-left font-medium text-muted-foreground hover:text-foreground hover:bg-muted/50 rounded-lg transition-colors"
                   >
                     {item.label}
