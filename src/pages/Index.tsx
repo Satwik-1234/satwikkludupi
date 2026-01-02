@@ -10,7 +10,6 @@ import ProjectsSection from '@/components/ProjectsSection';
 import MapGallerySection from '@/components/MapGallerySection';
 import ContactSection from '@/components/ContactSection';
 import Footer from '@/components/Footer';
-import PravahaTattvaSection from '@/components/PravahaTattvaSection';
 
 const Index = () => {
   return (
@@ -36,7 +35,6 @@ const Index = () => {
           <CertificationsSection />
           <ProjectsSection />
           <MapGallerySection />
-          <PravahaTattvaSection />
           <ContactSection />
         </main>
         <Footer />
