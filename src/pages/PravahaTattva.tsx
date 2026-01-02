@@ -1,6 +1,7 @@
 import { Helmet } from 'react-helmet-async';
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
+import { Suspense, lazy } from 'react';
 import { 
   ArrowLeft, Waves, Mountain, Map, FileSpreadsheet, Cog, 
   Plane, Camera, Scan, Phone, Mail, MessageCircle, ExternalLink,
@@ -9,54 +10,75 @@ import {
 import { Button } from '@/components/ui/button';
 import droneImage from '@/assets/drone-mapping.png';
 
+// Service images
+import floodplainImg from '@/assets/services/floodplain-mapping.png';
+import rainfallRunoffImg from '@/assets/services/rainfall-runoff.png';
+import soilErosionImg from '@/assets/services/soil-erosion.png';
+import gisAnalysisImg from '@/assets/services/gis-analysis.png';
+import cfdAnalysisImg from '@/assets/services/cfd-analysis.png';
+import dronePhotogrammetryImg from '@/assets/services/drone-photogrammetry.png';
+import droneMappingImg from '@/assets/services/drone-mapping.png';
+import multispectralImg from '@/assets/services/multispectral.png';
+
+// Lazy load 3D drone scene
+const DroneScene = lazy(() => import('@/components/DroneScene'));
+
 const services = [
   {
     icon: Waves,
     title: 'Flood Risk Mapping',
     description: 'Comprehensive floodplain inundation mapping, risk zonation, and hazard assessment using HEC-RAS hydraulic modeling.',
-    features: ['Flood extent mapping', 'Depth & velocity analysis', 'Risk zone classification']
+    features: ['Flood extent mapping', 'Depth & velocity analysis', 'Risk zone classification'],
+    image: floodplainImg
   },
   {
     icon: Mountain,
     title: 'Watershed Analysis',
     description: 'Hydrological modeling and rainfall-runoff analysis using HEC-HMS for effective water resource planning.',
-    features: ['Basin delineation', 'Runoff estimation', 'Peak flow analysis']
+    features: ['Basin delineation', 'Runoff estimation', 'Peak flow analysis'],
+    image: rainfallRunoffImg
   },
   {
     icon: Map,
     title: 'Soil Erosion Assessment',
     description: 'RUSLE-based soil loss estimation and conservation planning for sustainable land management.',
-    features: ['Erosion hotspot mapping', 'Conservation planning', 'Priority area identification']
+    features: ['Erosion hotspot mapping', 'Conservation planning', 'Priority area identification'],
+    image: soilErosionImg
   },
   {
     icon: FileSpreadsheet,
     title: 'GIS Spatial Analysis',
     description: 'Land use/land cover mapping, change detection, and comprehensive spatial data analysis.',
-    features: ['LULC classification', 'Change detection', 'Thematic mapping']
+    features: ['LULC classification', 'Change detection', 'Thematic mapping'],
+    image: gisAnalysisImg
   },
   {
     icon: Cog,
     title: 'CAD/CFD Simulations',
     description: 'Precision machinery design and computational fluid dynamics for agricultural applications.',
-    features: ['3D modeling', 'Flow simulation', 'Design optimization']
+    features: ['3D modeling', 'Flow simulation', 'Design optimization'],
+    image: cfdAnalysisImg
   },
   {
     icon: Plane,
     title: 'Drone Mapping',
     description: 'UAV-based aerial surveys with photogrammetry processing for high-resolution orthomosaics.',
-    features: ['Orthomosaic generation', 'DEM/DSM creation', 'Volumetric analysis']
+    features: ['Orthomosaic generation', 'DEM/DSM creation', 'Volumetric analysis'],
+    image: dronePhotogrammetryImg
   },
   {
     icon: Scan,
     title: 'LiDAR Processing',
     description: 'High-precision elevation models and terrain analysis from LiDAR point cloud data.',
-    features: ['Point cloud processing', 'Terrain modeling', 'Feature extraction']
+    features: ['Point cloud processing', 'Terrain modeling', 'Feature extraction'],
+    image: droneMappingImg
   },
   {
     icon: Camera,
     title: 'Multispectral Analysis',
     description: 'Vegetation health assessment and crop monitoring using multispectral imaging.',
-    features: ['NDVI analysis', 'Crop health mapping', 'Stress detection']
+    features: ['NDVI analysis', 'Crop health mapping', 'Stress detection'],
+    image: multispectralImg
   }
 ];
 
@@ -249,8 +271,34 @@ const PravahaTattva = () => {
           </div>
         </section>
 
-        {/* Services Section */}
-        <section className="py-20 relative">
+        {/* Services Section with 3D Drone */}
+        <section className="py-20 relative overflow-hidden">
+          {/* 3D Drone Background */}
+          <div className="absolute inset-0 pointer-events-none">
+            <div className="absolute inset-0 bg-gradient-radial from-primary/5 via-transparent to-transparent" />
+          </div>
+          
+          {/* Interactive 3D Drone */}
+          <div className="container mx-auto px-4 mb-16">
+            <Suspense fallback={
+              <div className="h-[420px] rounded-2xl bg-gradient-to-b from-[#0b1c2d] to-[#020b14] flex items-center justify-center">
+                <div className="text-cyan-400/50 animate-pulse">Loading 3D Drone...</div>
+              </div>
+            }>
+              <motion.div
+                initial={{ opacity: 0, scale: 0.95 }}
+                whileInView={{ opacity: 1, scale: 1 }}
+                viewport={{ once: true }}
+                className="h-[420px] rounded-2xl bg-gradient-to-b from-[#0b1c2d] to-[#020b14] overflow-hidden border border-cyan-500/20"
+              >
+                <DroneScene className="w-full h-full cursor-pointer" />
+              </motion.div>
+            </Suspense>
+            <p className="text-center text-xs text-muted-foreground mt-3">
+              Interactive 3D Drone Model — Hover to interact
+            </p>
+          </div>
+
           <div className="container mx-auto px-4">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
@@ -268,29 +316,65 @@ const PravahaTattva = () => {
               </p>
             </motion.div>
 
-            <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+            {/* Large Service Cards with Background Images */}
+            <div className="grid md:grid-cols-2 gap-6">
               {services.map((service, index) => (
                 <motion.div
                   key={service.title}
-                  initial={{ opacity: 0, y: 20 }}
+                  initial={{ opacity: 0, y: 30 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
                   transition={{ duration: 0.5, delay: index * 0.1 }}
-                  className="glass-card p-6 hover:border-primary/30 transition-all group"
+                  className="group relative h-[400px] rounded-2xl overflow-hidden cursor-pointer"
                 >
-                  <div className="w-12 h-12 rounded-lg bg-gradient-accent flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
-                    <service.icon className="w-6 h-6 text-primary-foreground" />
+                  {/* Background Image */}
+                  <div 
+                    className="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-110"
+                    style={{ backgroundImage: `url(${service.image})` }}
+                  />
+                  
+                  {/* Gradient Overlay */}
+                  <div className="absolute inset-0 bg-gradient-to-t from-background via-background/60 to-transparent opacity-80 group-hover:opacity-90 transition-opacity duration-300" />
+                  
+                  {/* Glow effect on hover */}
+                  <div className="absolute inset-0 bg-primary/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                  
+                  {/* Content - Centered */}
+                  <div className="absolute inset-0 flex flex-col items-center justify-center text-center p-8">
+                    {/* Icon */}
+                    <motion.div 
+                      className="w-16 h-16 rounded-2xl bg-gradient-accent flex items-center justify-center mb-6 shadow-lg shadow-primary/30"
+                      whileHover={{ scale: 1.1, rotate: 5 }}
+                      transition={{ type: 'spring', stiffness: 300 }}
+                    >
+                      <service.icon className="w-8 h-8 text-primary-foreground" />
+                    </motion.div>
+                    
+                    {/* Title */}
+                    <h3 className="text-2xl font-display font-bold text-foreground mb-3 group-hover:text-primary transition-colors">
+                      {service.title}
+                    </h3>
+                    
+                    {/* Description */}
+                    <p className="text-foreground/80 mb-6 max-w-sm leading-relaxed">
+                      {service.description}
+                    </p>
+                    
+                    {/* Features */}
+                    <div className="flex flex-wrap justify-center gap-2">
+                      {service.features.map((feature) => (
+                        <span 
+                          key={feature} 
+                          className="px-3 py-1 text-xs bg-card/80 backdrop-blur border border-border/50 rounded-full text-muted-foreground"
+                        >
+                          {feature}
+                        </span>
+                      ))}
+                    </div>
                   </div>
-                  <h3 className="font-bold text-foreground mb-2">{service.title}</h3>
-                  <p className="text-sm text-muted-foreground mb-4">{service.description}</p>
-                  <ul className="space-y-1">
-                    {service.features.map((feature) => (
-                      <li key={feature} className="text-xs text-muted-foreground flex items-center gap-2">
-                        <CheckCircle className="w-3 h-3 text-primary" />
-                        {feature}
-                      </li>
-                    ))}
-                  </ul>
+                  
+                  {/* Corner accent */}
+                  <div className="absolute top-4 right-4 w-2 h-2 rounded-full bg-primary animate-pulse" />
                 </motion.div>
               ))}
             </div>
