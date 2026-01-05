@@ -1,6 +1,7 @@
 import { motion, useInView } from 'framer-motion';
 import { useRef, useState } from 'react';
 import { ExternalLink, Award, Calendar } from 'lucide-react';
+import hydrologyBg from '@/assets/hydrology-background.jpg';
 
 interface Certification {
   name: string;
@@ -55,8 +56,15 @@ const CertificationsSection = () => {
     : certifications.filter(c => c.category === activeFilter);
 
   return (
-    <section id="certifications" className="py-16 relative">
-      <div className="container mx-auto px-4">
+    <section id="certifications" className="py-24 relative overflow-hidden">
+      {/* Background Image */}
+      <div 
+        className="absolute inset-0 bg-cover bg-center bg-fixed"
+        style={{ backgroundImage: `url(${hydrologyBg})` }}
+      />
+      <div className="absolute inset-0 bg-background/92 backdrop-blur-sm" />
+      
+      <div className="container mx-auto px-4 relative z-10">
         <motion.div
           ref={ref}
           initial={{ opacity: 0, y: 40 }}
@@ -65,7 +73,15 @@ const CertificationsSection = () => {
         >
           {/* Section Header */}
           <div className="text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-display font-bold mb-4">
+            <motion.span
+              initial={{ opacity: 0, y: 20 }}
+              animate={isInView ? { opacity: 1, y: 0 } : {}}
+              transition={{ duration: 0.5 }}
+              className="inline-block px-4 py-1.5 rounded-full bg-accent/10 border border-accent/20 text-accent text-sm font-medium mb-4"
+            >
+              Professional Growth
+            </motion.span>
+            <h2 className="text-4xl md:text-5xl font-display font-bold mb-4">
               Licenses & <span className="gradient-text">Certifications</span>
             </h2>
             <div className="section-divider mb-6" />

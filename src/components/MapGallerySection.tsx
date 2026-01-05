@@ -1,6 +1,7 @@
 import { useState, useRef, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { X, ChevronLeft, ChevronRight, Download, MessageCircle, Phone } from 'lucide-react';
+import hydrologyBg from '@/assets/hydrology-background.jpg';
 
 // Import all map images
 import controlledReleaseMap from '@/assets/maps/controlled-release-map.jpg';
@@ -99,11 +100,14 @@ const MapGallerySection = () => {
     <section 
       ref={sectionRef}
       id="previous-work" 
-      className="py-16 md:py-20 relative overflow-hidden"
+      className="py-24 relative overflow-hidden"
     >
-      {/* Background glow */}
-      <div className="absolute inset-0 bg-gradient-to-b from-background via-[hsl(217_70%_8%)] to-background" />
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[600px] rounded-full bg-primary/5 blur-3xl" />
+      {/* Background Image */}
+      <div 
+        className="absolute inset-0 bg-cover bg-center bg-fixed"
+        style={{ backgroundImage: `url(${hydrologyBg})` }}
+      />
+      <div className="absolute inset-0 bg-background/92 backdrop-blur-sm" />
       
       <div className="container mx-auto px-4 relative z-10">
         {/* Section Header */}
@@ -114,6 +118,15 @@ const MapGallerySection = () => {
           transition={{ duration: 0.6 }}
           className="text-center mb-16"
         >
+          <motion.span
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5 }}
+            className="inline-block px-4 py-1.5 rounded-full bg-secondary/10 border border-secondary/20 text-secondary text-sm font-medium mb-4"
+          >
+            Visual Portfolio
+          </motion.span>
           <h2 className="text-4xl md:text-5xl font-bold font-display mb-4">
             Previous <span className="gradient-text">Work</span>
           </h2>
