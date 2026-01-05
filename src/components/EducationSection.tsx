@@ -1,6 +1,7 @@
 import { motion, useInView } from 'framer-motion';
 import { useRef } from 'react';
 import { GraduationCap, Award, BookOpen } from 'lucide-react';
+import hydrologyBg from '@/assets/hydrology-background.jpg';
 
 const education = [
   {
@@ -65,8 +66,15 @@ const EducationSection = () => {
   const isInView = useInView(ref, { once: true, margin: "-100px" });
 
   return (
-    <section id="education" className="py-16 relative">
-      <div className="container mx-auto px-4">
+    <section id="education" className="py-24 relative overflow-hidden">
+      {/* Background Image */}
+      <div 
+        className="absolute inset-0 bg-cover bg-center bg-fixed"
+        style={{ backgroundImage: `url(${hydrologyBg})` }}
+      />
+      <div className="absolute inset-0 bg-background/92 backdrop-blur-sm" />
+      
+      <div className="container mx-auto px-4 relative z-10">
         <motion.div
           ref={ref}
           initial={{ opacity: 0, y: 40 }}
@@ -75,7 +83,15 @@ const EducationSection = () => {
         >
           {/* Section Header */}
           <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl font-display font-bold mb-4">
+            <motion.span
+              initial={{ opacity: 0, y: 20 }}
+              animate={isInView ? { opacity: 1, y: 0 } : {}}
+              transition={{ duration: 0.5 }}
+              className="inline-block px-4 py-1.5 rounded-full bg-secondary/10 border border-secondary/20 text-secondary text-sm font-medium mb-4"
+            >
+              Academic Background
+            </motion.span>
+            <h2 className="text-4xl md:text-5xl font-display font-bold mb-4">
               <span className="gradient-text">Education</span>
             </h2>
             <div className="section-divider" />
