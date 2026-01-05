@@ -1,7 +1,6 @@
 import { motion, useInView } from 'framer-motion';
 import { useRef } from 'react';
 import { Calendar, MapPin, Building2 } from 'lucide-react';
-import hydrologyBg from '@/assets/hydrology-background.jpg';
 
 const experiences = [
   {
@@ -83,13 +82,8 @@ const ExperienceSection = () => {
   const isInView = useInView(ref, { once: true, margin: "-100px" });
 
   return (
-    <section id="experience" className="py-24 relative overflow-hidden">
-      {/* Background Image */}
-      <div 
-        className="absolute inset-0 bg-cover bg-center bg-fixed"
-        style={{ backgroundImage: `url(${hydrologyBg})` }}
-      />
-      <div className="absolute inset-0 bg-background/92 backdrop-blur-sm" />
+    <section id="experience" className="py-16 relative">
+      <div className="absolute inset-0 bg-gradient-to-b from-transparent via-muted/20 to-transparent" />
       
       <div className="container mx-auto px-4 relative z-10">
         <motion.div
@@ -100,15 +94,7 @@ const ExperienceSection = () => {
         >
           {/* Section Header */}
           <div className="text-center mb-16">
-            <motion.span
-              initial={{ opacity: 0, y: 20 }}
-              animate={isInView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.5 }}
-              className="inline-block px-4 py-1.5 rounded-full bg-primary/10 border border-primary/20 text-primary text-sm font-medium mb-4"
-            >
-              Career Journey
-            </motion.span>
-            <h2 className="text-4xl md:text-5xl font-display font-bold mb-4">
+            <h2 className="text-3xl md:text-4xl font-display font-bold mb-4">
               Work <span className="gradient-text">Experience</span>
             </h2>
             <div className="section-divider" />
