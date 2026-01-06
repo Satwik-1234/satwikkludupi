@@ -170,7 +170,7 @@ const PravahaTattva = () => {
             <div className="absolute inset-0 bg-gradient-to-r from-background/50 via-transparent to-background/50" />
           </div>
           
-          {/* Hero Content */}
+          {/* Hero Content - No glass box, text directly over video */}
           <div className="container mx-auto px-4 relative z-10 text-center">
             <motion.div
               initial={{ opacity: 0, y: 40 }}
@@ -178,76 +178,76 @@ const PravahaTattva = () => {
               transition={{ duration: 1, ease: 'easeOut' }}
               className="max-w-4xl mx-auto"
             >
-              {/* Glassmorphism Card */}
-              <div className="bg-card/30 backdrop-blur-2xl border border-border/20 rounded-3xl p-8 md:p-12 shadow-2xl">
-                <motion.div
-                  initial={{ scale: 0.9, opacity: 0 }}
-                  animate={{ scale: 1, opacity: 1 }}
-                  transition={{ delay: 0.2, duration: 0.6 }}
-                  className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 border border-primary/20 mb-6"
-                >
-                  <Play className="w-4 h-4 text-primary" />
-                  <span className="text-sm text-primary font-medium">Professional GIS & Hydrology Consulting</span>
-                </motion.div>
+              <motion.div
+                initial={{ scale: 0.9, opacity: 0 }}
+                animate={{ scale: 1, opacity: 1 }}
+                transition={{ delay: 0.2, duration: 0.6 }}
+                className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/20 backdrop-blur-sm border border-primary/30 mb-6"
+              >
+                <Play className="w-4 h-4 text-primary" />
+                <span className="text-sm text-primary font-medium">Professional GIS & Hydrology Consulting</span>
+              </motion.div>
 
-                <motion.h1
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.3, duration: 0.6 }}
-                  className="text-4xl md:text-6xl lg:text-7xl font-display font-bold mb-4"
-                >
-                  <span className="gradient-text">Pravaha Tattva</span>
-                  <span className="block text-2xl md:text-3xl mt-3 text-foreground/90">Solutions</span>
-                </motion.h1>
-                
-                <motion.p
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  transition={{ delay: 0.5 }}
-                  className="text-primary font-medium mb-6"
-                >
-                  Founded by Satwik Udupi
-                </motion.p>
+              <motion.h1
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.3, duration: 0.6 }}
+                className="text-4xl md:text-6xl lg:text-7xl font-display font-bold mb-4"
+                style={{ textShadow: '0 4px 30px rgba(0,0,0,0.5)' }}
+              >
+                <span className="gradient-text">Pravaha Tattva</span>
+                <span className="block text-2xl md:text-3xl mt-3 text-white">Solutions</span>
+              </motion.h1>
+              
+              <motion.p
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ delay: 0.5 }}
+                className="text-primary font-medium mb-6"
+                style={{ textShadow: '0 2px 10px rgba(0,0,0,0.5)' }}
+              >
+                Founded by Satwik Udupi
+              </motion.p>
 
-                <motion.p
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.6 }}
-                  className="text-lg text-foreground/80 max-w-2xl mx-auto leading-relaxed mb-8"
-                >
-                  Cutting-edge drone technology, LiDAR mapping, and multispectral imaging 
-                  for precision agriculture, watershed management, and environmental monitoring.
-                </motion.p>
+              <motion.p
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.6 }}
+                className="text-lg text-white/90 max-w-2xl mx-auto leading-relaxed mb-8"
+                style={{ textShadow: '0 2px 15px rgba(0,0,0,0.6)' }}
+              >
+                Cutting-edge drone technology, LiDAR mapping, and multispectral imaging 
+                for precision agriculture, watershed management, and environmental monitoring.
+              </motion.p>
 
-                <motion.div
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.8 }}
-                  className="flex flex-wrap justify-center gap-4"
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.8 }}
+                className="flex flex-wrap justify-center gap-4"
+              >
+                <Button
+                  size="lg"
+                  className="bg-gradient-accent text-primary-foreground font-semibold shadow-lg hover:shadow-xl transition-shadow"
+                  asChild
                 >
-                  <Button
-                    size="lg"
-                    className="bg-gradient-accent text-primary-foreground font-semibold shadow-lg hover:shadow-xl transition-shadow"
-                    asChild
-                  >
-                    <a href={googleFormUrl} target="_blank" rel="noopener noreferrer">
-                      <ExternalLink className="w-5 h-5 mr-2" />
-                      Get a Quote
-                    </a>
-                  </Button>
-                  <Button
-                    size="lg"
-                    variant="outline"
-                    className="bg-card/50 backdrop-blur border-border/50"
-                    asChild
-                  >
-                    <a href={whatsappUrl} target="_blank" rel="noopener noreferrer">
-                      <MessageCircle className="w-5 h-5 mr-2" />
-                      WhatsApp
-                    </a>
-                  </Button>
-                </motion.div>
-              </div>
+                  <a href={googleFormUrl} target="_blank" rel="noopener noreferrer">
+                    <ExternalLink className="w-5 h-5 mr-2" />
+                    Get a Quote
+                  </a>
+                </Button>
+                <Button
+                  size="lg"
+                  variant="outline"
+                  className="bg-white/10 backdrop-blur-sm border-white/30 text-white hover:bg-white/20"
+                  asChild
+                >
+                  <a href={whatsappUrl} target="_blank" rel="noopener noreferrer">
+                    <MessageCircle className="w-5 h-5 mr-2" />
+                    WhatsApp
+                  </a>
+                </Button>
+              </motion.div>
             </motion.div>
           </div>
 
