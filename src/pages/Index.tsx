@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { Helmet } from 'react-helmet-async';
 import Navbar from '@/components/Navbar';
 import HeroSection from '@/components/HeroSection';
@@ -10,8 +11,12 @@ import ProjectsSection from '@/components/ProjectsSection';
 import MapGallerySection from '@/components/MapGallerySection';
 import ContactSection from '@/components/ContactSection';
 import Footer from '@/components/Footer';
+import IntroAnimation from '@/components/IntroAnimation';
+import hydrologyBackground from '@/assets/hydrology-background.jpg';
 
 const Index = () => {
+  const [showIntro, setShowIntro] = useState(true);
+
   return (
     <>
       <Helmet>
@@ -24,7 +29,19 @@ const Index = () => {
         <link rel="canonical" href="https://satwikudupi.com" />
       </Helmet>
 
-      <div className="min-h-screen bg-background">
+      {/* Intro Animation */}
+      {showIntro && <IntroAnimation onComplete={() => setShowIntro(false)} />}
+
+      {/* Main Content */}
+      <div 
+        className="min-h-screen relative"
+        style={{
+          backgroundImage: `linear-gradient(to bottom, hsla(222, 47%, 6%, 0.75), hsla(222, 47%, 6%, 0.75)), url(${hydrologyBackground})`,
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
+          backgroundAttachment: 'fixed'
+        }}
+      >
         <Navbar />
         <main className="space-y-0">
           <HeroSection />
