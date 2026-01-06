@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
@@ -8,6 +9,7 @@ import {
   CheckCircle, Github, Sun, Moon, Play
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import IntroAnimation from '@/components/IntroAnimation';
 
 // Service images
 import floodplainImg from '@/assets/services/floodplain-mapping.png';
@@ -21,6 +23,7 @@ import multispectralImg from '@/assets/services/multispectral.png';
 
 // Drone video
 import droneVideo from '@/assets/drone-video.mp4';
+import hydrologyBackground from '@/assets/hydrology-background.jpg';
 
 const services = [
   {
@@ -92,6 +95,7 @@ const whyChooseUs = [
 
 const PravahaTattva = () => {
   const { theme, setTheme } = useTheme();
+  const [showIntro, setShowIntro] = useState(true);
   const phoneNumber = '+919834300849';
   const whatsappUrl = `https://wa.me/${phoneNumber.replace('+', '')}?text=Hi%20Satwik,%20I'm%20interested%20in%20Pravaha%20Tattva%20Solutions%20services`;
   const googleFormUrl = 'https://forms.gle/SCyQeFigrgsPft9D9';
@@ -109,7 +113,17 @@ const PravahaTattva = () => {
         <link rel="canonical" href="https://satwikudupi.com/pravaha-tattva" />
       </Helmet>
 
-      <div className="min-h-screen bg-background">
+      {showIntro && <IntroAnimation onComplete={() => setShowIntro(false)} />}
+
+      <div 
+        className="min-h-screen"
+        style={{
+          backgroundImage: `linear-gradient(to bottom, hsla(222, 47%, 6%, 0.75), hsla(222, 47%, 6%, 0.75)), url(${hydrologyBackground})`,
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
+          backgroundAttachment: 'fixed'
+        }}
+      >
         {/* Fixed Header */}
         <header className="fixed top-0 left-0 right-0 z-50 bg-background/80 backdrop-blur-xl border-b border-border/30">
           <div className="container mx-auto px-4 h-16 flex items-center justify-between">

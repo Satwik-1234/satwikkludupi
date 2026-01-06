@@ -15,9 +15,6 @@ const AboutSection = () => {
 
   return (
     <section id="about" className="py-16 relative overflow-hidden">
-      {/* Background Glow */}
-      <div className="absolute inset-0 bg-gradient-glow opacity-30" />
-      
       <div className="container mx-auto px-4 relative z-10">
         <motion.div
           ref={ref}
@@ -27,7 +24,7 @@ const AboutSection = () => {
         >
           {/* Section Header */}
           <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl font-display font-bold mb-4">
+            <h2 className="text-3xl md:text-4xl font-display font-bold mb-4 text-white">
               About <span className="gradient-text">Me</span>
             </h2>
             <div className="section-divider" />
@@ -42,8 +39,8 @@ const AboutSection = () => {
               transition={{ duration: 0.6, delay: 0.2 }}
               className="space-y-6"
             >
-              <div className="glass-card p-8">
-                <p className="text-lg leading-relaxed text-foreground/90 mb-6">
+              <div className="glass-card-light p-8">
+                <p className="text-lg leading-relaxed text-white mb-6">
                   An <span className="text-primary font-semibold">Agricultural Engineer</span> 🌾👷🏞️, 
                   I am passionate about leveraging technology for sustainable land and water management. 
                   My expertise spans agricultural machinery design, irrigation systems, and soil and water 
@@ -51,12 +48,12 @@ const AboutSection = () => {
                   (ArcGIS, QGIS)</span>, hydrological modeling <span className="text-secondary font-semibold">
                   (HEC-HMS, HEC-RAS)</span>, and CAD/CFD simulations.
                 </p>
-                <p className="text-muted-foreground leading-relaxed mb-6">
+                <p className="text-white/80 leading-relaxed mb-6">
                   I have successfully contributed to 6+ projects in LULC and GIS modeling, hydrological 
                   assessments, and conservation planning, collaborating with leading institutions such as 
                   Shivaji University and the Forest department, Government of Maharashtra.
                 </p>
-                <p className="text-muted-foreground leading-relaxed">
+                <p className="text-white/80 leading-relaxed">
                   My hands-on experience includes developing hydrological models, performing spatial analysis, 
                   and supporting field data collection using DGPS and other advanced instruments. Driven by 
                   curiosity and a commitment to innovation, I continually seek to expand my technical toolkit 
@@ -65,7 +62,7 @@ const AboutSection = () => {
               </div>
 
               {/* Location */}
-              <div className="flex items-center gap-2 text-muted-foreground">
+              <div className="flex items-center gap-2 text-white/70">
                 <MapPin className="w-5 h-5 text-primary" />
                 <span>Karad, Maharashtra, India</span>
               </div>
@@ -84,21 +81,21 @@ const AboutSection = () => {
                   initial={{ opacity: 0, y: 20 }}
                   animate={isInView ? { opacity: 1, y: 0 } : {}}
                   transition={{ duration: 0.5, delay: 0.5 + index * 0.1 }}
-                  className="glass-card p-6 flex items-center gap-6 group hover:border-primary/50 transition-colors"
+                  className="glass-card-light p-6 flex items-center gap-6 group hover:border-primary/50 transition-colors"
                 >
                   <div className="w-16 h-16 rounded-xl bg-gradient-accent flex items-center justify-center shadow-button group-hover:scale-110 transition-transform">
                     <stat.icon className="w-8 h-8 text-primary-foreground" />
                   </div>
                   <div>
                     <p className="text-4xl font-display font-bold gradient-text">{stat.value}</p>
-                    <p className="text-muted-foreground">{stat.label}</p>
+                    <p className="text-white/70">{stat.label}</p>
                   </div>
                 </motion.div>
               ))}
 
               {/* Collaboration CTA */}
-              <div className="glass-card p-6 border-secondary/30">
-                <p className="text-sm text-muted-foreground">
+              <div className="glass-card-light p-6 border-secondary/30">
+                <p className="text-sm text-white/80">
                   💡 I excel in collaborative environments and am eager to connect with professionals 
                   and organizations dedicated to advancing sustainable agriculture. Let's connect to 
                   explore opportunities for collaboration, project support, or knowledge exchange in 

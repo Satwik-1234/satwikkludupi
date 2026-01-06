@@ -39,8 +39,6 @@ const SkillsSection = () => {
 
   return (
     <section id="skills" className="py-16 relative">
-      <div className="absolute inset-0 bg-gradient-to-b from-transparent via-muted/5 to-transparent" />
-      
       <div className="container mx-auto px-4 relative z-10">
         <motion.div
           ref={ref}
@@ -50,7 +48,7 @@ const SkillsSection = () => {
         >
           {/* Section Header */}
           <div className="text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-display font-bold mb-4">
+            <h2 className="text-3xl md:text-4xl font-display font-bold mb-4 text-white">
               Technical <span className="gradient-text">Skills</span>
             </h2>
             <div className="section-divider" />
@@ -69,11 +67,11 @@ const SkillsSection = () => {
                 {/* Circle with skills */}
                 <div className="relative w-32 h-32 md:w-36 md:h-36 group">
                   {/* Outer ring */}
-                  <div className="absolute inset-0 rounded-full border-2 border-primary/20 group-hover:border-primary/40 transition-colors" />
+                  <div className="absolute inset-0 rounded-full border-2 border-primary/30 group-hover:border-primary/60 transition-colors" />
                   
                   {/* Inner circle */}
-                  <div className="absolute inset-2 rounded-full bg-gradient-to-br from-muted/50 to-muted/20 backdrop-blur-sm border border-border/30 flex items-center justify-center group-hover:from-primary/10 group-hover:to-primary/5 transition-all">
-                    <span className="text-xs md:text-sm font-semibold text-center px-3 text-foreground/90 leading-tight">
+                  <div className="absolute inset-2 rounded-full glass-card-light flex items-center justify-center group-hover:border-primary/40 transition-all">
+                    <span className="text-xs md:text-sm font-semibold text-center px-3 text-white leading-tight">
                       {category.name}
                     </span>
                   </div>
@@ -87,7 +85,7 @@ const SkillsSection = () => {
                     return (
                       <motion.div
                         key={i}
-                        className="absolute w-2 h-2 rounded-full bg-primary/60"
+                        className="absolute w-2 h-2 rounded-full bg-primary/80"
                         style={{
                           left: `calc(50% + ${x}px - 4px)`,
                           top: `calc(50% + ${y}px - 4px)`,
@@ -103,7 +101,7 @@ const SkillsSection = () => {
                 {/* Skills list below circle */}
                 <div className="mt-4 text-center">
                   {category.skills.map((skill, i) => (
-                    <p key={i} className="text-xs text-muted-foreground leading-relaxed">
+                    <p key={i} className="text-xs text-white/70 leading-relaxed">
                       {skill}
                     </p>
                   ))}
@@ -119,10 +117,10 @@ const SkillsSection = () => {
             transition={{ duration: 0.5, delay: 0.6 }}
             className="flex flex-wrap justify-center gap-2 max-w-3xl mx-auto"
           >
-            {additionalSkills.map((skill, i) => (
+            {additionalSkills.map((skill) => (
               <span
                 key={skill}
-                className="px-3 py-1 rounded-full bg-muted/30 text-muted-foreground text-xs border border-border/20 hover:bg-primary/10 hover:text-primary hover:border-primary/20 transition-colors"
+                className="px-3 py-1 rounded-full bg-white/10 text-white/80 text-xs border border-white/10 hover:bg-primary/20 hover:text-primary hover:border-primary/30 transition-colors"
               >
                 {skill}
               </span>

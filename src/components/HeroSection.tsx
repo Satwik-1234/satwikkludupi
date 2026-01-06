@@ -26,13 +26,10 @@ const HeroSection = () => {
 
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
-      {/* Glassmorphism Background */}
-      <div className="absolute inset-0 bg-gradient-to-br from-background via-hydro-ocean/30 to-background" />
-      
       {/* Animated Gradient Orbs */}
-      <div className="absolute inset-0 overflow-hidden">
-        <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-primary/20 rounded-full blur-3xl animate-float" />
-        <div className="absolute bottom-1/4 right-1/4 w-80 h-80 bg-secondary/20 rounded-full blur-3xl animate-float" style={{ animationDelay: '-3s' }} />
+      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+        <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-primary/15 rounded-full blur-3xl animate-float" />
+        <div className="absolute bottom-1/4 right-1/4 w-80 h-80 bg-secondary/15 rounded-full blur-3xl animate-float" style={{ animationDelay: '-3s' }} />
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-accent/10 rounded-full blur-3xl" />
       </div>
 
@@ -50,7 +47,7 @@ const HeroSection = () => {
             transition={{ delay: 0.2, duration: 0.6 }}
             className="w-36 h-36 md:w-44 md:h-44 mx-auto mb-8 rounded-full bg-gradient-accent p-1 shadow-glow"
           >
-            <div className="w-full h-full rounded-full bg-card/80 backdrop-blur-xl flex items-center justify-center overflow-hidden border border-border/30">
+            <div className="w-full h-full rounded-full glass-card-light flex items-center justify-center overflow-hidden">
               <span className="text-5xl md:text-6xl font-display font-bold gradient-text">SU</span>
             </div>
           </motion.div>
@@ -60,7 +57,7 @@ const HeroSection = () => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.4, duration: 0.6 }}
-            className="text-4xl md:text-6xl lg:text-7xl font-display font-bold mb-4 tracking-tight"
+            className="text-4xl md:text-6xl lg:text-7xl font-display font-bold mb-4 tracking-tight text-white"
           >
             Satwik <span className="gradient-text">Udupi</span>
           </motion.h1>
@@ -70,7 +67,7 @@ const HeroSection = () => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.5, duration: 0.6 }}
-            className="text-lg md:text-xl text-muted-foreground mb-2 font-body font-medium tracking-wide"
+            className="text-lg md:text-xl text-white/80 mb-2 font-body font-medium tracking-wide"
           >
             Agricultural Engineer | GIS & Hydrology Professional
           </motion.p>
@@ -90,7 +87,7 @@ const HeroSection = () => {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.7, duration: 0.6 }}
-            className="text-sm md:text-base text-muted-foreground mb-8 max-w-2xl mx-auto font-body"
+            className="text-sm md:text-base text-white/70 mb-8 max-w-2xl mx-auto font-body"
           >
             Fluent in HEC-HMS, HEC-RAS, ArcGIS/QGIS, Google Earth Engine, CAD/CFD
           </motion.p>
@@ -118,7 +115,7 @@ const HeroSection = () => {
               <Button 
                 size="lg" 
                 variant="outline"
-                className="border-border/50 bg-card/50 backdrop-blur-xl hover:bg-card/80 text-foreground min-w-[180px] font-semibold"
+                className="border-white/20 bg-white/5 backdrop-blur-xl hover:bg-white/10 text-white min-w-[180px] font-semibold"
                 onClick={() => setShowResumeOptions(!showResumeOptions)}
               >
                 <FileDown className="w-5 h-5 mr-2" />
@@ -134,7 +131,7 @@ const HeroSection = () => {
                 <motion.div
                   initial={{ opacity: 0, y: -10 }}
                   animate={{ opacity: 1, y: 0 }}
-                  className="absolute top-full left-0 right-0 mt-2 bg-card/90 backdrop-blur-xl border border-border/50 rounded-lg overflow-hidden shadow-card z-20"
+                  className="absolute top-full left-0 right-0 mt-2 glass-card-light overflow-hidden shadow-lg z-20"
                 >
                   {resumeLinks.map((resume, index) => (
                     <a
@@ -144,11 +141,11 @@ const HeroSection = () => {
                       rel="noopener noreferrer"
                       className={`block px-4 py-3 text-sm font-medium transition-colors ${
                         resume.highlight 
-                          ? 'bg-primary/10 text-primary hover:bg-primary/20 border-l-2 border-primary' 
-                          : 'text-muted-foreground hover:bg-muted/50 hover:text-foreground'
+                          ? 'bg-primary/20 text-white hover:bg-primary/30 border-l-2 border-primary' 
+                          : 'text-white/80 hover:bg-white/10 hover:text-white'
                       }`}
                     >
-                      {resume.highlight && <span className="text-xs bg-primary/20 text-primary px-2 py-0.5 rounded mr-2">NEW</span>}
+                      {resume.highlight && <span className="text-xs bg-primary/30 text-primary-foreground px-2 py-0.5 rounded mr-2">NEW</span>}
                       {resume.label}
                     </a>
                   ))}
@@ -160,7 +157,7 @@ const HeroSection = () => {
             <Button 
               size="lg" 
               variant="outline"
-              className="border-primary/50 bg-primary/10 hover:bg-primary/20 text-primary min-w-[180px] font-semibold"
+              className="border-primary/50 bg-primary/10 hover:bg-primary/20 text-white min-w-[180px] font-semibold"
               asChild
             >
               <Link to="/pravaha-tattva">
@@ -177,7 +174,7 @@ const HeroSection = () => {
           animate={{ opacity: 1 }}
           transition={{ delay: 1.2, duration: 0.6 }}
           onClick={scrollToAbout}
-          className="absolute bottom-8 left-1/2 -translate-x-1/2 text-muted-foreground hover:text-primary transition-colors"
+          className="absolute bottom-8 left-1/2 -translate-x-1/2 text-white/60 hover:text-primary transition-colors"
         >
           <motion.div
             animate={{ y: [0, 8, 0] }}
