@@ -4,27 +4,33 @@ import { useRef } from 'react';
 const skillCategories = [
   {
     name: "GIS & Remote Sensing",
-    skills: ["ArcGIS Pro", "QGIS", "Google Earth Engine", "Google Earth Pro", "ArcMap"]
+    skills: ["ArcGIS Pro", "QGIS", "Google Earth Engine", "Google Earth Pro", "ArcMap"],
+    color: "from-primary to-primary/60"
   },
   {
     name: "Hydrological Modeling",
-    skills: ["HEC-HMS", "HEC-RAS", "Floodplain Mapping", "RUSLE Modeling", "Watershed Analysis"]
+    skills: ["HEC-HMS", "HEC-RAS", "Floodplain Mapping", "RUSLE Modeling", "Watershed Analysis"],
+    color: "from-secondary to-secondary/60"
   },
   {
     name: "CAD/CAE/CFD",
-    skills: ["SolidWorks", "ANSYS Workbench", "FEA Analysis", "CFD Simulation", "NX CAD"]
+    skills: ["SolidWorks", "ANSYS Workbench", "FEA Analysis", "CFD Simulation", "NX CAD"],
+    color: "from-accent to-accent/60"
   },
   {
     name: "Data & Analysis",
-    skills: ["Spatial Analysis", "NDVI/NDWI", "Statistical Analysis", "Data Visualization", "Satellite Imagery"]
+    skills: ["Spatial Analysis", "NDVI/NDWI", "Statistical Analysis", "Data Visualization", "Satellite Imagery"],
+    color: "from-primary to-secondary"
   },
   {
     name: "Photogrammetry",
-    skills: ["Agisoft Metashape", "WebODM", "DSM Generation", "Orthomosaic", "Point Cloud"]
+    skills: ["Agisoft Metashape", "WebODM", "DSM Generation", "Orthomosaic", "Point Cloud"],
+    color: "from-secondary to-accent"
   },
   {
     name: "Programming & Tools",
-    skills: ["Google Colab", "Python", "Java Libraries", "DGPS Survey", "LISEM"]
+    skills: ["Google Colab", "Python", "Java Libraries", "DGPS Survey", "LISEM"],
+    color: "from-accent to-primary"
   }
 ];
 
@@ -38,7 +44,7 @@ const SkillsSection = () => {
   const isInView = useInView(ref, { once: true, margin: "-100px" });
 
   return (
-    <section id="skills" className="py-16 relative">
+    <section id="skills" className="py-20 relative">
       <div className="container mx-auto px-4 relative z-10">
         <motion.div
           ref={ref}
@@ -47,84 +53,73 @@ const SkillsSection = () => {
           transition={{ duration: 0.6 }}
         >
           {/* Section Header */}
-          <div className="text-center mb-12">
+          <div className="text-center mb-16">
             <h2 className="text-3xl md:text-4xl font-display font-bold mb-4 text-white">
               Technical <span className="gradient-text">Skills</span>
             </h2>
             <div className="section-divider" />
           </div>
 
-          {/* Skills Grid - Clean Circles */}
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-6 mb-12">
+          {/* Skills Grid - Card Based */}
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
             {skillCategories.map((category, categoryIndex) => (
               <motion.div
                 key={category.name}
-                initial={{ opacity: 0, scale: 0.8 }}
-                animate={isInView ? { opacity: 1, scale: 1 } : {}}
-                transition={{ duration: 0.5, delay: 0.1 + categoryIndex * 0.08 }}
-                className="flex flex-col items-center"
+                initial={{ opacity: 0, y: 30 }}
+                animate={isInView ? { opacity: 1, y: 0 } : {}}
+                transition={{ duration: 0.5, delay: 0.1 + categoryIndex * 0.1 }}
+                className="group glass-card-light p-6 hover:border-primary/40 transition-all"
               >
-                {/* Circle with skills */}
-                <div className="relative w-32 h-32 md:w-36 md:h-36 group">
-                  {/* Outer ring */}
-                  <div className="absolute inset-0 rounded-full border-2 border-primary/30 group-hover:border-primary/60 transition-colors" />
-                  
-                  {/* Inner circle */}
-                  <div className="absolute inset-2 rounded-full glass-card-light flex items-center justify-center group-hover:border-primary/40 transition-all">
-                    <span className="text-xs md:text-sm font-semibold text-center px-3 text-white leading-tight">
-                      {category.name}
-                    </span>
-                  </div>
-                  
-                  {/* Skill dots around circle */}
-                  {category.skills.slice(0, 5).map((_, i) => {
-                    const angle = (i * 72 - 90) * (Math.PI / 180);
-                    const radius = 58;
-                    const x = Math.cos(angle) * radius;
-                    const y = Math.sin(angle) * radius;
-                    return (
-                      <motion.div
-                        key={i}
-                        className="absolute w-2 h-2 rounded-full bg-primary/80"
-                        style={{
-                          left: `calc(50% + ${x}px - 4px)`,
-                          top: `calc(50% + ${y}px - 4px)`,
-                        }}
-                        initial={{ scale: 0 }}
-                        animate={isInView ? { scale: 1 } : {}}
-                        transition={{ delay: 0.3 + categoryIndex * 0.1 + i * 0.05 }}
-                      />
-                    );
-                  })}
+                {/* Category Header */}
+                <div className="flex items-center gap-3 mb-4">
+                  <div className={`w-3 h-3 rounded-full bg-gradient-to-r ${category.color}`} />
+                  <h3 className="font-display font-bold text-white text-lg">
+                    {category.name}
+                  </h3>
                 </div>
 
-                {/* Skills list below circle */}
-                <div className="mt-4 text-center">
+                {/* Skills as Tags */}
+                <div className="flex flex-wrap gap-2">
                   {category.skills.map((skill, i) => (
-                    <p key={i} className="text-xs text-white/70 leading-relaxed">
+                    <motion.span
+                      key={skill}
+                      initial={{ opacity: 0, scale: 0.8 }}
+                      animate={isInView ? { opacity: 1, scale: 1 } : {}}
+                      transition={{ delay: 0.2 + categoryIndex * 0.1 + i * 0.05 }}
+                      className="px-3 py-1.5 text-sm bg-white/5 border border-white/10 rounded-lg text-white/80 hover:bg-primary/20 hover:border-primary/30 hover:text-white transition-all cursor-default"
+                    >
                       {skill}
-                    </p>
+                    </motion.span>
                   ))}
                 </div>
+
+                {/* Hover accent line */}
+                <div className={`mt-4 h-0.5 w-0 group-hover:w-full transition-all duration-500 bg-gradient-to-r ${category.color} rounded-full`} />
               </motion.div>
             ))}
           </div>
 
-          {/* Additional Skills - Minimal Tags */}
+          {/* Additional Skills */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={isInView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.5, delay: 0.6 }}
-            className="flex flex-wrap justify-center gap-2 max-w-3xl mx-auto"
+            transition={{ duration: 0.5, delay: 0.7 }}
+            className="text-center"
           >
-            {additionalSkills.map((skill) => (
-              <span
-                key={skill}
-                className="px-3 py-1 rounded-full bg-white/10 text-white/80 text-xs border border-white/10 hover:bg-primary/20 hover:text-primary hover:border-primary/30 transition-colors"
-              >
-                {skill}
-              </span>
-            ))}
+            <p className="text-white/60 text-sm mb-4 font-medium">Also experienced with</p>
+            <div className="flex flex-wrap justify-center gap-3 max-w-4xl mx-auto">
+              {additionalSkills.map((skill, i) => (
+                <motion.span
+                  key={skill}
+                  initial={{ opacity: 0 }}
+                  animate={isInView ? { opacity: 1 } : {}}
+                  transition={{ delay: 0.8 + i * 0.05 }}
+                  className="px-4 py-2 rounded-full bg-gradient-to-r from-primary/10 to-secondary/10 border border-white/10 text-white/70 text-sm hover:text-white hover:border-primary/30 transition-all"
+                >
+                  {skill}
+                </motion.span>
+              ))}
+            </div>
           </motion.div>
         </motion.div>
       </div>
