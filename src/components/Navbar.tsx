@@ -64,7 +64,9 @@ const Navbar = () => {
   const handleNavClick = (href: string, isExternal?: boolean) => {
     setIsMobileMenuOpen(false);
     if (isExternal) {
+      // Navigate to top of page
       window.location.href = href;
+      setTimeout(() => window.scrollTo({ top: 0, behavior: 'instant' }), 100);
       return;
     }
     const element = document.querySelector(href);
