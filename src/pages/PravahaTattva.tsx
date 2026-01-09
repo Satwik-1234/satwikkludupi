@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 import { useTheme } from 'next-themes';
 import { 
   ArrowLeft, Waves, Mountain, Map, FileSpreadsheet, Cog, 
-  Plane, Camera, Scan, Phone, Mail, MessageCircle, ExternalLink,
+  Plane, Camera, Ruler, Phone, Mail, MessageCircle, ExternalLink,
   CheckCircle, Github, Sun, Moon, Play
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
@@ -21,8 +21,8 @@ import dronePhotogrammetryImg from '@/assets/services/drone-photogrammetry.png';
 import droneMappingImg from '@/assets/services/drone-mapping.png';
 import multispectralImg from '@/assets/services/multispectral.png';
 
-// Drone video
-import droneVideo from '@/assets/drone-video.mp4';
+// Drone hero image
+import droneHeroImg from '@/assets/drone-hero.png';
 import hydrologyBackground from '@/assets/hydrology-background.jpg';
 
 const services = [
@@ -69,10 +69,10 @@ const services = [
     image: dronePhotogrammetryImg
   },
   {
-    icon: Scan,
-    title: 'LiDAR Processing',
-    description: 'High-precision elevation models and terrain analysis from LiDAR point cloud data.',
-    features: ['Point cloud processing', 'Terrain modeling', 'Feature extraction'],
+    icon: Ruler,
+    title: 'CAD Design',
+    description: 'Professional 2D/3D CAD drafting for agricultural machinery, irrigation systems, and infrastructure.',
+    features: ['Technical drawings', '3D modeling', 'Design documentation'],
     image: droneMappingImg
   },
   {
@@ -152,30 +152,42 @@ const PravahaTattva = () => {
           </div>
         </header>
 
-        {/* Hero Section with Video Background */}
+        {/* Hero Section with Drone Image */}
         <section className="relative min-h-screen flex items-center justify-center overflow-hidden pt-16">
-          {/* Video Background */}
+          {/* Background gradient */}
           <div className="absolute inset-0 z-0">
-            <video
-              autoPlay
-              loop
-              muted
-              playsInline
-              className="absolute inset-0 w-full h-full object-cover"
-            >
-              <source src={droneVideo} type="video/mp4" />
-            </video>
-            {/* Gradient overlay for readability */}
-            <div className="absolute inset-0 bg-gradient-to-b from-background/60 via-background/40 to-background" />
-            <div className="absolute inset-0 bg-gradient-to-r from-background/50 via-transparent to-background/50" />
+            <div className="absolute inset-0 bg-gradient-to-b from-primary/10 via-background to-background" />
           </div>
           
-          {/* Hero Content - No glass box, text directly over video */}
-          <div className="container mx-auto px-4 relative z-10 text-center">
+          {/* Floating Drone Image */}
+          <motion.div
+            initial={{ opacity: 0, y: 50 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 1, ease: 'easeOut' }}
+            className="absolute top-24 md:top-32 left-1/2 -translate-x-1/2 z-20 pointer-events-none"
+          >
+            <motion.img 
+              src={droneHeroImg} 
+              alt="Professional Survey Drone"
+              className="w-[280px] md:w-[420px] lg:w-[520px] drop-shadow-[0_25px_60px_rgba(0,200,255,0.3)]"
+              animate={{ 
+                y: [0, -15, 0],
+                rotateZ: [-1, 1, -1]
+              }}
+              transition={{ 
+                duration: 4, 
+                repeat: Infinity, 
+                ease: 'easeInOut' 
+              }}
+            />
+          </motion.div>
+          
+          {/* Hero Content - Positioned below drone */}
+          <div className="container mx-auto px-4 relative z-10 text-center mt-64 md:mt-72 lg:mt-80">
             <motion.div
               initial={{ opacity: 0, y: 40 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 1, ease: 'easeOut' }}
+              transition={{ duration: 1, delay: 0.3, ease: 'easeOut' }}
               className="max-w-4xl mx-auto"
             >
               <motion.div
