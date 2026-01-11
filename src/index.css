@@ -43,15 +43,22 @@
     --hydro-teal: 168 76% 30%;
     --hydro-cyan: 180 60% 45%;
     --hydro-glow: 200 100% 70%;
+    
+    /* Gold accent for consultancy */
+    --gold: 45 90% 55%;
+    --gold-light: 45 95% 70%;
+    --gold-dark: 38 85% 45%;
 
     --gradient-hero: linear-gradient(135deg, hsl(222 47% 6%) 0%, hsl(217 70% 12%) 50%, hsl(168 50% 10%) 100%);
     --gradient-card: linear-gradient(180deg, hsl(217 40% 12% / 0.8) 0%, hsl(222 47% 8% / 0.9) 100%);
     --gradient-accent: linear-gradient(135deg, hsl(217 91% 60%) 0%, hsl(168 76% 40%) 100%);
+    --gradient-gold: linear-gradient(135deg, hsl(45 90% 55%) 0%, hsl(38 85% 50%) 100%);
     --gradient-glow: radial-gradient(ellipse at center, hsl(200 100% 70% / 0.15) 0%, transparent 70%);
 
     --shadow-glow: 0 0 60px hsl(200 100% 70% / 0.2);
     --shadow-card: 0 8px 32px hsl(222 47% 4% / 0.5);
     --shadow-button: 0 4px 20px hsl(217 91% 60% / 0.3);
+    --shadow-gold: 0 4px 20px hsl(45 90% 55% / 0.4);
 
     --font-display: 'Plus Jakarta Sans', sans-serif;
     --font-body: 'Inter', sans-serif;
