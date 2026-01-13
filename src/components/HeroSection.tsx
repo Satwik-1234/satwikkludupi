@@ -3,6 +3,7 @@ import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { Linkedin, FileDown, ChevronDown, ChevronUp, Briefcase } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import profilePhoto from '@/assets/profile-photo.png';
 
 const HeroSection = () => {
   const [showResumeOptions, setShowResumeOptions] = useState(false);
@@ -40,16 +41,18 @@ const HeroSection = () => {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, ease: "easeOut" }}
         >
-          {/* Profile Photo Placeholder */}
+          {/* Profile Photo */}
           <motion.div
             initial={{ scale: 0.8, opacity: 0 }}
             animate={{ scale: 1, opacity: 1 }}
             transition={{ delay: 0.2, duration: 0.6 }}
             className="w-36 h-36 md:w-44 md:h-44 mx-auto mb-8 rounded-full bg-gradient-accent p-1 shadow-glow"
           >
-            <div className="w-full h-full rounded-full glass-card-light flex items-center justify-center overflow-hidden">
-              <span className="text-5xl md:text-6xl font-display font-bold gradient-text">SU</span>
-            </div>
+            <img 
+              src={profilePhoto} 
+              alt="Satwik Udupi" 
+              className="w-full h-full rounded-full object-cover"
+            />
           </motion.div>
 
           {/* Name */}
