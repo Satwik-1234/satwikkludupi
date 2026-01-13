@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
@@ -6,10 +5,9 @@ import { useTheme } from 'next-themes';
 import { 
   ArrowLeft, Waves, Mountain, Map, FileSpreadsheet, Cog, 
   Plane, Camera, Ruler, Phone, Mail, MessageCircle, ExternalLink,
-  CheckCircle, Github, Sun, Moon
+  CheckCircle, Github, Sun, Moon, Sparkles, Target, Users, Award
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import IntroAnimation from '@/components/IntroAnimation';
 
 // Service images
 import floodplainImg from '@/assets/services/floodplain-mapping.png';
@@ -84,14 +82,10 @@ const services = [
 ];
 
 const stats = [
-  { value: '50+', label: 'Projects Delivered' },
-  { value: '25+', label: 'Active Clients' },
-  { value: '1,000+', label: 'Hectares Mapped' }
-];
-
-const capabilities = [
-  ['GIS Analysis', 'Watershed Modeling', 'LULC Mapping', 'DEM Processing', 'Risk Assessment'],
-  ['Real-time monitoring', 'Detailed land parcel insights', 'Interactive map view']
+  { value: '50+', label: 'Projects Delivered', icon: Target },
+  { value: '25+', label: 'Active Clients', icon: Users },
+  { value: '1,000+', label: 'Hectares Mapped', icon: Map },
+  { value: '100%', label: 'Client Satisfaction', icon: Award }
 ];
 
 const whyChooseUs = [
@@ -105,7 +99,6 @@ const whyChooseUs = [
 
 const PravahaTattva = () => {
   const { theme, setTheme } = useTheme();
-  const [showIntro, setShowIntro] = useState(true);
   const phoneNumber = '+919834300849';
   const whatsappUrl = `https://wa.me/${phoneNumber.replace('+', '')}?text=Hi%20Satwik,%20I'm%20interested%20in%20Pravaha%20Tattva%20Solutions%20services`;
   const googleFormUrl = 'https://forms.gle/SCyQeFigrgsPft9D9';
@@ -123,21 +116,21 @@ const PravahaTattva = () => {
         <link rel="canonical" href="https://satwikudupi.com/pravaha-tattva" />
       </Helmet>
 
-      {showIntro && <IntroAnimation onComplete={() => setShowIntro(false)} />}
-
-      <div className="min-h-screen bg-[hsl(0_0%_5%)]">
+      <div className="min-h-screen bg-[hsl(var(--services-navy))]">
         {/* Fixed Header */}
-        <header className="fixed top-0 left-0 right-0 z-50 bg-[hsl(0_0%_5%)]/90 backdrop-blur-xl border-b border-white/5">
+        <header className="fixed top-0 left-0 right-0 z-50 bg-[hsl(var(--services-navy))]/95 backdrop-blur-xl border-b border-[hsl(var(--services-blue))]/10">
           <div className="container mx-auto px-6 h-16 flex items-center justify-between">
             <div className="flex items-center gap-8">
-              <Link to="/" className="text-white font-bold text-xl tracking-tight">
-                PT
+              <Link to="/" className="flex items-center gap-2 text-white font-bold text-xl tracking-tight hover:text-[hsl(var(--services-cyan))] transition-colors">
+                <ArrowLeft className="w-5 h-5" />
+                <span className="bg-gradient-to-r from-[hsl(var(--services-blue-light))] to-[hsl(var(--services-cyan))] bg-clip-text text-transparent">
+                  PT
+                </span>
               </Link>
               <nav className="hidden md:flex items-center gap-6">
-                <span className="text-white text-sm font-medium">Home</span>
-                <a href="#services" className="text-white/60 text-sm hover:text-white transition-colors">Services</a>
-                <a href="#about" className="text-white/60 text-sm hover:text-white transition-colors">About</a>
-                <a href="#contact" className="text-white/60 text-sm hover:text-white transition-colors">Contact</a>
+                <a href="#services" className="text-white/70 text-sm hover:text-[hsl(var(--services-cyan))] transition-colors">Services</a>
+                <a href="#about" className="text-white/70 text-sm hover:text-[hsl(var(--services-cyan))] transition-colors">About</a>
+                <a href="#contact" className="text-white/70 text-sm hover:text-[hsl(var(--services-cyan))] transition-colors">Contact</a>
               </nav>
             </div>
             
@@ -146,179 +139,201 @@ const PravahaTattva = () => {
                 variant="ghost"
                 size="icon"
                 onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
-                className="text-white/60 hover:text-white hover:bg-white/10"
+                className="text-white/60 hover:text-[hsl(var(--services-cyan))] hover:bg-[hsl(var(--services-blue))]/10"
               >
                 {theme === 'dark' ? <Sun className="w-5 h-5" /> : <Moon className="w-5 h-5" />}
               </Button>
               <Button
                 size="sm"
-                className="bg-[hsl(var(--gold))] text-black font-semibold hover:bg-[hsl(var(--gold-light))] shadow-[var(--shadow-gold)]"
+                className="bg-gradient-to-r from-[hsl(var(--services-blue))] to-[hsl(var(--services-cyan))] text-white font-semibold hover:opacity-90 shadow-[0_4px_20px_hsl(var(--services-blue)/0.4)]"
                 asChild
               >
                 <a href={googleFormUrl} target="_blank" rel="noopener noreferrer">
-                  Request a demo
+                  Get Started
                 </a>
               </Button>
             </div>
           </div>
         </header>
 
-        {/* Hero Section - Bold Typography with Drone */}
+        {/* Hero Section - 3D Drone with Blue Theme */}
         <section className="relative min-h-screen flex items-center overflow-hidden pt-16">
-          {/* Grid background pattern */}
+          {/* Animated Background */}
           <div className="absolute inset-0 z-0">
+            {/* Gradient orbs */}
+            <div className="absolute top-1/4 left-1/4 w-[600px] h-[600px] bg-[hsl(var(--services-blue))]/20 rounded-full blur-[120px] animate-pulse" />
+            <div className="absolute bottom-1/4 right-1/4 w-[400px] h-[400px] bg-[hsl(var(--services-cyan))]/15 rounded-full blur-[100px] animate-pulse" style={{ animationDelay: '1s' }} />
+            
+            {/* Grid pattern */}
             <div 
-              className="absolute inset-0"
+              className="absolute inset-0 opacity-30"
               style={{
                 backgroundImage: `
-                  linear-gradient(to right, hsl(0 0% 15% / 0.3) 1px, transparent 1px),
-                  linear-gradient(to bottom, hsl(0 0% 15% / 0.3) 1px, transparent 1px)
+                  linear-gradient(to right, hsl(var(--services-blue) / 0.1) 1px, transparent 1px),
+                  linear-gradient(to bottom, hsl(var(--services-blue) / 0.1) 1px, transparent 1px)
                 `,
-                backgroundSize: '60px 60px'
+                backgroundSize: '50px 50px'
               }}
             />
-            {/* Radial gradient fade */}
-            <div className="absolute inset-0 bg-gradient-to-b from-transparent via-[hsl(0_0%_5%)]/50 to-[hsl(0_0%_5%)]" />
           </div>
           
           <div className="container mx-auto px-6 relative z-10">
-            <div className="grid lg:grid-cols-[1fr_auto_1fr] items-center gap-8 min-h-[80vh]">
-              {/* Left side - Main headline */}
-              <div className="lg:text-left text-center">
-                <motion.h1
-                  initial={{ opacity: 0, y: 30 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.8, ease: 'easeOut' }}
-                  className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-display font-light text-white leading-[0.95] tracking-tight"
-                >
-                  We are your
-                  <br />
-                  <span className="text-[hsl(var(--gold))]">geospatial</span>
-                </motion.h1>
-                
-                <motion.div
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.8, delay: 0.3 }}
-                  className="mt-8 lg:mt-12"
-                >
-                  <p className="text-white/60 text-lg mb-6 max-w-sm">
-                    Efficient flood mapping<br />
-                    and watershed management
-                  </p>
-                  
-                  <div className="flex flex-wrap gap-3 lg:justify-start justify-center">
-                    <Button
-                      size="lg"
-                      className="bg-[hsl(var(--gold))] text-black font-semibold hover:bg-[hsl(var(--gold-light))] shadow-[var(--shadow-gold)] px-8"
-                      asChild
-                    >
-                      <a href={googleFormUrl} target="_blank" rel="noopener noreferrer">
-                        Request a demo
-                      </a>
-                    </Button>
-                    <Button
-                      size="lg"
-                      variant="outline"
-                      className="border-white/20 text-white hover:bg-white/10 px-8"
-                      asChild
-                    >
-                      <a href="#services">
-                        See services
-                      </a>
-                    </Button>
-                  </div>
-                </motion.div>
-              </div>
-              
-              {/* Center - Drone Image */}
+            <div className="grid lg:grid-cols-2 items-center gap-12 min-h-[85vh]">
+              {/* Left - Text Content */}
               <motion.div
-                initial={{ opacity: 0, scale: 0.9 }}
-                animate={{ opacity: 1, scale: 1 }}
-                transition={{ duration: 1, delay: 0.2 }}
-                className="relative lg:w-[400px] xl:w-[500px]"
+                initial={{ opacity: 0, x: -50 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ duration: 0.8 }}
+                className="text-left"
               >
-                <motion.img 
-                  src={droneHeroImg} 
-                  alt="Professional Survey Drone"
-                  className="w-full drop-shadow-[0_25px_60px_rgba(200,170,50,0.3)]"
-                  animate={{ 
-                    y: [0, -10, 0],
-                    rotateZ: [-0.5, 0.5, -0.5]
-                  }}
-                  transition={{ 
-                    duration: 5, 
-                    repeat: Infinity, 
-                    ease: 'easeInOut' 
-                  }}
-                />
-              </motion.div>
-              
-              {/* Right side - "partner" text and stats */}
-              <div className="lg:text-right text-center">
-                <motion.h1
-                  initial={{ opacity: 0, y: 30 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.8, delay: 0.1 }}
-                  className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-display font-light text-white leading-[0.95] tracking-tight"
-                >
-                  partner
-                </motion.h1>
-                
-                {/* Stats */}
                 <motion.div
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.8, delay: 0.5 }}
-                  className="mt-12 space-y-8 lg:text-right text-center"
+                  transition={{ delay: 0.2 }}
+                  className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[hsl(var(--services-blue))]/10 border border-[hsl(var(--services-blue))]/30 mb-6"
                 >
+                  <Sparkles className="w-4 h-4 text-[hsl(var(--services-cyan))]" />
+                  <span className="text-sm text-[hsl(var(--services-cyan))]">Pravaha Tattva Solutions</span>
+                </motion.div>
+                
+                <h1 className="text-5xl sm:text-6xl md:text-7xl font-display font-bold text-white leading-[1.1] mb-6">
+                  Your Trusted
+                  <br />
+                  <span className="bg-gradient-to-r from-[hsl(var(--services-blue-light))] via-[hsl(var(--services-cyan))] to-[hsl(var(--services-blue))] bg-clip-text text-transparent">
+                    Geospatial
+                  </span>
+                  <br />
+                  Partner
+                </h1>
+                
+                <p className="text-lg text-white/60 max-w-lg mb-8 leading-relaxed">
+                  Empowering decisions with precision GIS mapping, advanced hydrology modeling, 
+                  and cutting-edge drone technology. We transform complex spatial data into 
+                  actionable insights for sustainable land and water management.
+                </p>
+                
+                <div className="flex flex-wrap gap-4 mb-12">
+                  <Button
+                    size="lg"
+                    className="bg-gradient-to-r from-[hsl(var(--services-blue))] to-[hsl(var(--services-cyan))] text-white font-semibold hover:opacity-90 shadow-[0_8px_30px_hsl(var(--services-blue)/0.4)] px-8"
+                    asChild
+                  >
+                    <a href={googleFormUrl} target="_blank" rel="noopener noreferrer">
+                      <ExternalLink className="w-5 h-5 mr-2" />
+                      Request Consultation
+                    </a>
+                  </Button>
+                  <Button
+                    size="lg"
+                    variant="outline"
+                    className="border-[hsl(var(--services-blue))]/40 text-white hover:bg-[hsl(var(--services-blue))]/10 hover:border-[hsl(var(--services-cyan))] px-8"
+                    asChild
+                  >
+                    <a href="#services">
+                      View Services
+                    </a>
+                  </Button>
+                </div>
+                
+                {/* Stats Row */}
+                <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
                   {stats.map((stat, index) => (
                     <motion.div
                       key={stat.label}
-                      initial={{ opacity: 0, x: 20 }}
-                      animate={{ opacity: 1, x: 0 }}
-                      transition={{ delay: 0.6 + index * 0.15 }}
+                      initial={{ opacity: 0, y: 20 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ delay: 0.5 + index * 0.1 }}
+                      className="text-center p-4 rounded-xl bg-white/[0.03] border border-[hsl(var(--services-blue))]/20"
                     >
-                      <div className="text-4xl md:text-5xl font-display font-light text-white">
-                        {stat.value}
-                      </div>
-                      <div className="text-white/50 text-sm mt-1">{stat.label}</div>
+                      <stat.icon className="w-5 h-5 text-[hsl(var(--services-cyan))] mx-auto mb-2" />
+                      <div className="text-2xl font-bold text-white">{stat.value}</div>
+                      <div className="text-xs text-white/50">{stat.label}</div>
                     </motion.div>
                   ))}
+                </div>
+              </motion.div>
+              
+              {/* Right - 3D Drone Image */}
+              <motion.div
+                initial={{ opacity: 0, scale: 0.8 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ duration: 1, delay: 0.3 }}
+                className="relative flex items-center justify-center"
+              >
+                {/* Glow ring behind drone */}
+                <div className="absolute w-[500px] h-[500px] rounded-full border-2 border-[hsl(var(--services-cyan))]/20 animate-pulse" />
+                <div className="absolute w-[400px] h-[400px] rounded-full border border-[hsl(var(--services-blue))]/30" />
+                
+                {/* Main drone image with 3D effect */}
+                <motion.div
+                  className="relative z-10"
+                  animate={{ 
+                    y: [0, -20, 0],
+                    rotateY: [0, 5, 0, -5, 0]
+                  }}
+                  transition={{ 
+                    duration: 6, 
+                    repeat: Infinity, 
+                    ease: 'easeInOut' 
+                  }}
+                  style={{ perspective: '1000px' }}
+                >
+                  <img 
+                    src={droneHeroImg} 
+                    alt="Professional Survey Drone"
+                    className="w-[500px] max-w-full drop-shadow-[0_35px_60px_hsl(var(--services-blue)/0.5)]"
+                    style={{
+                      filter: 'drop-shadow(0 0 40px hsl(var(--services-cyan) / 0.3))'
+                    }}
+                  />
+                  
+                  {/* Floating particles */}
+                  <motion.div
+                    className="absolute -top-10 -right-10 w-4 h-4 rounded-full bg-[hsl(var(--services-cyan))]"
+                    animate={{ y: [0, -30, 0], opacity: [0.5, 1, 0.5] }}
+                    transition={{ duration: 3, repeat: Infinity }}
+                  />
+                  <motion.div
+                    className="absolute bottom-20 -left-10 w-3 h-3 rounded-full bg-[hsl(var(--services-blue-light))]"
+                    animate={{ y: [0, 20, 0], opacity: [0.3, 0.8, 0.3] }}
+                    transition={{ duration: 4, repeat: Infinity, delay: 1 }}
+                  />
                 </motion.div>
-              </div>
+              </motion.div>
             </div>
           </div>
-          
-          {/* Bottom info bar */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.8 }}
-            className="absolute bottom-0 left-0 right-0 py-8 border-t border-white/10"
-          >
-            <div className="container mx-auto px-6">
-              <div className="flex flex-wrap justify-between items-start gap-8">
-                <div className="text-white/40 text-xs">V.01.24</div>
-                <div className="flex gap-16">
-                  <div>
-                    {capabilities[0].map(cap => (
-                      <div key={cap} className="text-white/50 text-sm">{cap}</div>
-                    ))}
-                  </div>
-                  <div>
-                    {capabilities[1].map(cap => (
-                      <div key={cap} className="text-white/50 text-sm">{cap}</div>
-                    ))}
-                  </div>
-                </div>
-              </div>
-            </div>
-          </motion.div>
+        </section>
+
+        {/* Consultancy Section */}
+        <section className="py-20 relative bg-gradient-to-b from-[hsl(var(--services-navy))] to-[hsl(220_50%_8%)]">
+          <div className="container mx-auto px-6">
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              className="max-w-4xl mx-auto text-center"
+            >
+              <h2 className="text-3xl md:text-5xl font-display font-bold text-white mb-6">
+                Expert <span className="bg-gradient-to-r from-[hsl(var(--services-blue-light))] to-[hsl(var(--services-cyan))] bg-clip-text text-transparent">Consultancy</span> Services
+              </h2>
+              <p className="text-lg text-white/60 leading-relaxed mb-8">
+                At Pravaha Tattva Solutions, we bring together cutting-edge geospatial technology 
+                and deep domain expertise to deliver transformative solutions for land and water management. 
+                Our consultancy services are designed to bridge the gap between complex spatial data and 
+                actionable insights that drive sustainable development.
+              </p>
+              <p className="text-base text-white/50 leading-relaxed">
+                Whether you're a government agency seeking flood risk assessments, an agricultural enterprise 
+                optimizing land use, or a research institution requiring advanced GIS analysis—we provide 
+                end-to-end support from project conceptualization to final deliverable. Our commitment to 
+                quality, transparency, and innovation ensures that every project exceeds expectations.
+              </p>
+            </motion.div>
+          </div>
         </section>
 
         {/* Services Section */}
-        <section id="services" className="py-24 relative bg-[hsl(0_0%_5%)]">
+        <section id="services" className="py-24 relative bg-[hsl(220_50%_8%)]">
           <div className="container mx-auto px-6">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
@@ -327,17 +342,17 @@ const PravahaTattva = () => {
               transition={{ duration: 0.6 }}
               className="text-center mb-16"
             >
-              <h2 className="text-4xl md:text-6xl font-display font-light text-white mb-4">
-                Our <span className="text-[hsl(var(--gold))]">Services</span>
+              <h2 className="text-4xl md:text-6xl font-display font-bold text-white mb-4">
+                Our <span className="bg-gradient-to-r from-[hsl(var(--services-blue-light))] to-[hsl(var(--services-cyan))] bg-clip-text text-transparent">Services</span>
               </h2>
-              <div className="w-24 h-0.5 bg-gradient-to-r from-transparent via-[hsl(var(--gold))] to-transparent mx-auto mb-6" />
+              <div className="w-32 h-1 bg-gradient-to-r from-[hsl(var(--services-blue))] via-[hsl(var(--services-cyan))] to-[hsl(var(--services-blue))] mx-auto mb-6 rounded-full" />
               <p className="text-white/50 max-w-2xl mx-auto text-lg">
                 Comprehensive geospatial and engineering solutions tailored to your project needs
               </p>
             </motion.div>
 
-            {/* Service Cards Grid */}
-            <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-4">
+            {/* Service Cards Grid - Redesigned */}
+            <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
               {services.map((service, index) => (
                 <motion.div
                   key={service.title}
@@ -345,43 +360,46 @@ const PravahaTattva = () => {
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
                   transition={{ duration: 0.5, delay: index * 0.08 }}
-                  className="group relative rounded-2xl overflow-hidden cursor-pointer bg-white/[0.02] border border-white/5 hover:border-[hsl(var(--gold))]/30 transition-all duration-300"
+                  className="group relative rounded-2xl overflow-hidden cursor-pointer bg-gradient-to-b from-white/[0.05] to-transparent border border-[hsl(var(--services-blue))]/20 hover:border-[hsl(var(--services-cyan))]/50 transition-all duration-500 hover:shadow-[0_20px_50px_hsl(var(--services-blue)/0.2)]"
                 >
                   {/* Background Image */}
-                  <div className="aspect-[3/4] relative">
+                  <div className="aspect-[4/5] relative">
                     <img 
                       src={service.image} 
                       alt={service.title}
-                      className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110 opacity-60"
+                      className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110 opacity-40 group-hover:opacity-60"
                     />
                     
                     {/* Gradient Overlay */}
-                    <div className="absolute inset-0 bg-gradient-to-t from-[hsl(0_0%_5%)] via-[hsl(0_0%_5%)]/70 to-transparent" />
+                    <div className="absolute inset-0 bg-gradient-to-t from-[hsl(var(--services-navy))] via-[hsl(var(--services-navy))]/80 to-transparent" />
+                    
+                    {/* Hover glow effect */}
+                    <div className="absolute inset-0 bg-gradient-to-t from-[hsl(var(--services-blue))]/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
                     
                     {/* Content */}
-                    <div className="absolute inset-0 flex flex-col justify-end p-5">
+                    <div className="absolute inset-0 flex flex-col justify-end p-6">
                       {/* Icon */}
-                      <div className="w-12 h-12 rounded-xl bg-[hsl(var(--gold))] flex items-center justify-center mb-4 shadow-[var(--shadow-gold)] group-hover:scale-110 transition-transform">
-                        <service.icon className="w-6 h-6 text-black" />
+                      <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-[hsl(var(--services-blue))] to-[hsl(var(--services-cyan))] flex items-center justify-center mb-4 shadow-[0_8px_25px_hsl(var(--services-blue)/0.4)] group-hover:scale-110 group-hover:rotate-3 transition-all duration-300">
+                        <service.icon className="w-7 h-7 text-white" />
                       </div>
                       
                       {/* Title */}
-                      <h3 className="text-lg font-display font-semibold text-white mb-2 group-hover:text-[hsl(var(--gold))] transition-colors">
+                      <h3 className="text-xl font-display font-bold text-white mb-2 group-hover:text-[hsl(var(--services-cyan))] transition-colors">
                         {service.title}
                       </h3>
                       
-                      {/* Description - Hidden by default, shown on hover */}
-                      <div className="overflow-hidden transition-all duration-300 max-h-0 group-hover:max-h-40">
-                        <p className="text-white/70 text-sm mb-3 leading-relaxed">
+                      {/* Description - Shown on hover */}
+                      <div className="overflow-hidden transition-all duration-500 max-h-0 group-hover:max-h-48 opacity-0 group-hover:opacity-100">
+                        <p className="text-white/70 text-sm mb-4 leading-relaxed">
                           {service.description}
                         </p>
                         
                         {/* Features */}
-                        <div className="flex flex-wrap gap-1.5">
+                        <div className="flex flex-wrap gap-2">
                           {service.features.map((feature) => (
                             <span 
                               key={feature} 
-                              className="px-2 py-1 text-xs bg-white/5 border border-white/10 rounded-full text-white/60"
+                              className="px-3 py-1.5 text-xs bg-[hsl(var(--services-blue))]/20 border border-[hsl(var(--services-cyan))]/30 rounded-full text-[hsl(var(--services-cyan))]"
                             >
                               {feature}
                             </span>
@@ -397,7 +415,7 @@ const PravahaTattva = () => {
         </section>
 
         {/* Why Choose Us */}
-        <section id="about" className="py-24 relative bg-[hsl(0_0%_3%)]">
+        <section id="about" className="py-24 relative bg-[hsl(var(--services-navy))]">
           <div className="container mx-auto px-6 relative z-10">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
@@ -406,13 +424,13 @@ const PravahaTattva = () => {
               transition={{ duration: 0.6 }}
               className="text-center mb-16"
             >
-              <h2 className="text-4xl md:text-6xl font-display font-light text-white mb-4">
-                Why Choose <span className="text-[hsl(var(--gold))]">Us</span>
+              <h2 className="text-4xl md:text-6xl font-display font-bold text-white mb-4">
+                Why Choose <span className="bg-gradient-to-r from-[hsl(var(--services-blue-light))] to-[hsl(var(--services-cyan))] bg-clip-text text-transparent">Us</span>
               </h2>
-              <div className="w-24 h-0.5 bg-gradient-to-r from-transparent via-[hsl(var(--gold))] to-transparent mx-auto" />
+              <div className="w-32 h-1 bg-gradient-to-r from-[hsl(var(--services-blue))] via-[hsl(var(--services-cyan))] to-[hsl(var(--services-blue))] mx-auto rounded-full" />
             </motion.div>
 
-            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4 max-w-6xl mx-auto">
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto">
               {whyChooseUs.map((item, index) => (
                 <motion.div
                   key={index}
@@ -420,15 +438,15 @@ const PravahaTattva = () => {
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
                   transition={{ duration: 0.4, delay: index * 0.1 }}
-                  className="group bg-white/[0.02] border border-white/5 rounded-2xl p-6 hover:border-[hsl(var(--gold))]/30 transition-all"
+                  className="group bg-gradient-to-b from-white/[0.05] to-transparent border border-[hsl(var(--services-blue))]/20 rounded-2xl p-6 hover:border-[hsl(var(--services-cyan))]/50 transition-all hover:shadow-[0_15px_40px_hsl(var(--services-blue)/0.15)]"
                 >
                   <div className="flex items-start gap-4">
-                    <div className="w-10 h-10 rounded-xl bg-[hsl(var(--gold))] flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition-transform">
-                      <CheckCircle className="w-5 h-5 text-black" />
+                    <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-[hsl(var(--services-blue))] to-[hsl(var(--services-cyan))] flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition-transform shadow-[0_8px_20px_hsl(var(--services-blue)/0.3)]">
+                      <CheckCircle className="w-6 h-6 text-white" />
                     </div>
                     <div>
-                      <h3 className="font-semibold text-white mb-1">{item.title}</h3>
-                      <p className="text-sm text-white/50">{item.desc}</p>
+                      <h3 className="font-bold text-white mb-2 text-lg">{item.title}</h3>
+                      <p className="text-sm text-white/50 leading-relaxed">{item.desc}</p>
                     </div>
                   </div>
                 </motion.div>
@@ -438,18 +456,18 @@ const PravahaTattva = () => {
         </section>
 
         {/* Contact Section */}
-        <section id="contact" className="py-24 relative bg-[hsl(0_0%_5%)]">
+        <section id="contact" className="py-24 relative bg-[hsl(220_50%_8%)]">
           <div className="container mx-auto px-6">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.6 }}
-              className="bg-white/[0.02] border border-white/10 rounded-3xl p-8 md:p-12 max-w-4xl mx-auto"
+              className="bg-gradient-to-b from-white/[0.05] to-transparent border border-[hsl(var(--services-blue))]/30 rounded-3xl p-8 md:p-12 max-w-4xl mx-auto"
             >
               <div className="text-center mb-8">
-                <h2 className="text-3xl md:text-5xl font-display font-light text-white mb-4">
-                  Ready to Start Your <span className="text-[hsl(var(--gold))]">Project?</span>
+                <h2 className="text-3xl md:text-5xl font-display font-bold text-white mb-4">
+                  Ready to Start Your <span className="bg-gradient-to-r from-[hsl(var(--services-blue-light))] to-[hsl(var(--services-cyan))] bg-clip-text text-transparent">Project?</span>
                 </h2>
                 <p className="text-white/50 max-w-xl mx-auto">
                   Get in touch for a free consultation. I'll respond within 24 hours with a detailed proposal.
@@ -459,7 +477,7 @@ const PravahaTattva = () => {
               <div className="flex flex-wrap justify-center gap-4 mb-10">
                 <Button
                   size="lg"
-                  className="bg-[hsl(var(--gold))] text-black font-semibold hover:bg-[hsl(var(--gold-light))] shadow-[var(--shadow-gold)]"
+                  className="bg-gradient-to-r from-[hsl(var(--services-blue))] to-[hsl(var(--services-cyan))] text-white font-semibold hover:opacity-90 shadow-[0_8px_30px_hsl(var(--services-blue)/0.4)]"
                   asChild
                 >
                   <a href={googleFormUrl} target="_blank" rel="noopener noreferrer">
@@ -484,25 +502,25 @@ const PravahaTattva = () => {
               <div className="grid sm:grid-cols-3 gap-4">
                 <a 
                   href={`tel:${phoneNumber}`} 
-                  className="flex items-center justify-center gap-3 p-4 rounded-xl bg-white/[0.03] border border-white/10 hover:border-[hsl(var(--gold))]/30 transition-colors"
+                  className="flex items-center justify-center gap-3 p-4 rounded-xl bg-white/[0.03] border border-[hsl(var(--services-blue))]/20 hover:border-[hsl(var(--services-cyan))]/50 transition-colors"
                 >
-                  <Phone className="w-5 h-5 text-[hsl(var(--gold))]" />
+                  <Phone className="w-5 h-5 text-[hsl(var(--services-cyan))]" />
                   <span className="text-sm text-white/80">+91 9834300849</span>
                 </a>
                 <a 
                   href="mailto:satwikudupi@gmail.com" 
-                  className="flex items-center justify-center gap-3 p-4 rounded-xl bg-white/[0.03] border border-white/10 hover:border-[hsl(var(--gold))]/30 transition-colors"
+                  className="flex items-center justify-center gap-3 p-4 rounded-xl bg-white/[0.03] border border-[hsl(var(--services-blue))]/20 hover:border-[hsl(var(--services-cyan))]/50 transition-colors"
                 >
-                  <Mail className="w-5 h-5 text-[hsl(var(--gold))]" />
+                  <Mail className="w-5 h-5 text-[hsl(var(--services-cyan))]" />
                   <span className="text-sm text-white/80">satwikudupi@gmail.com</span>
                 </a>
                 <a 
                   href={githubUrl} 
                   target="_blank" 
                   rel="noopener noreferrer"
-                  className="flex items-center justify-center gap-3 p-4 rounded-xl bg-white/[0.03] border border-white/10 hover:border-[hsl(var(--gold))]/30 transition-colors"
+                  className="flex items-center justify-center gap-3 p-4 rounded-xl bg-white/[0.03] border border-[hsl(var(--services-blue))]/20 hover:border-[hsl(var(--services-cyan))]/50 transition-colors"
                 >
-                  <Github className="w-5 h-5 text-[hsl(var(--gold))]" />
+                  <Github className="w-5 h-5 text-[hsl(var(--services-cyan))]" />
                   <span className="text-sm text-white/80">GitHub</span>
                 </a>
               </div>
@@ -511,12 +529,12 @@ const PravahaTattva = () => {
         </section>
 
         {/* Footer */}
-        <footer className="py-8 border-t border-white/5 bg-[hsl(0_0%_3%)]">
+        <footer className="py-8 border-t border-[hsl(var(--services-blue))]/10 bg-[hsl(var(--services-navy))]">
           <div className="container mx-auto px-6 text-center">
             <p className="text-sm text-white/40">
               © {new Date().getFullYear()} Pravaha Tattva Solutions. Founded by Satwik Udupi.
             </p>
-            <Link to="/" className="text-[hsl(var(--gold))] text-sm hover:underline mt-2 inline-block">
+            <Link to="/" className="text-[hsl(var(--services-cyan))] text-sm hover:underline mt-2 inline-block">
               ← Back to Academic Portfolio
             </Link>
           </div>

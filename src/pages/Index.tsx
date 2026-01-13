@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import { Helmet } from 'react-helmet-async';
 import Navbar from '@/components/Navbar';
 import HeroSection from '@/components/HeroSection';
@@ -11,12 +10,9 @@ import ProjectsSection from '@/components/ProjectsSection';
 import MapGallerySection from '@/components/MapGallerySection';
 import ContactSection from '@/components/ContactSection';
 import Footer from '@/components/Footer';
-import IntroAnimation from '@/components/IntroAnimation';
 import hydrologyBackground from '@/assets/hydrology-background.jpg';
 
 const Index = () => {
-  const [showIntro, setShowIntro] = useState(true);
-
   return (
     <>
       <Helmet>
@@ -28,9 +24,6 @@ const Index = () => {
         <meta name="keywords" content="GIS hydrology engineer Maharashtra, HEC-HMS, HEC-RAS, ArcGIS, QGIS, watershed management, flood mapping, agricultural engineering" />
         <link rel="canonical" href="https://satwikudupi.com" />
       </Helmet>
-
-      {/* Intro Animation */}
-      {showIntro && <IntroAnimation onComplete={() => setShowIntro(false)} />}
 
       {/* Main Content */}
       <div 
