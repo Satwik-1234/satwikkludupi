@@ -3,9 +3,10 @@ import { useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { 
   Mail, MapPin, Linkedin, Phone, MessageCircle, 
-  ExternalLink, Github, Briefcase, ArrowRight
+  ExternalLink, Github, Briefcase, ArrowRight, Download
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import SocialMediaCard from '@/components/SocialMediaCard';
 import hydrologyBg from '@/assets/hydrology-background.jpg';
 
 const techStack = [
@@ -27,7 +28,7 @@ const ContactSection = () => {
   const phoneNumber = '+919834300849';
   const whatsappUrl = `https://wa.me/${phoneNumber.replace('+', '')}?text=Hi%20Satwik,%20I'm%20interested%20in%20your%20GIS/Hydrology%20services`;
   const googleFormUrl = 'https://forms.gle/SCyQeFigrgsPft9D9';
-  const githubUrl = 'https://github.com/Satwik-1234';
+  const resumeUrl = 'https://drive.google.com/file/d/1example/view';
 
   return (
     <section id="contact" className="py-20 relative overflow-hidden">
@@ -74,9 +75,9 @@ const ContactSection = () => {
                   {/* Phone */}
                   <a 
                     href={`tel:${phoneNumber}`}
-                    className="flex items-center gap-4 p-3 rounded-xl bg-card/50 border border-border/30 hover:border-primary/50 transition-all group"
+                    className="contact-item flex items-center gap-4 p-3 rounded-xl bg-card/50 border border-border/30 hover:border-primary/50 transition-all group"
                   >
-                    <div className="w-10 h-10 rounded-lg bg-gradient-accent flex items-center justify-center group-hover:scale-110 transition-transform">
+                    <div className="w-10 h-10 rounded-lg bg-gradient-accent flex items-center justify-center group-hover:scale-110 group-hover:rotate-6 transition-all duration-300">
                       <Phone className="w-5 h-5 text-primary-foreground" />
                     </div>
                     <div>
@@ -88,9 +89,9 @@ const ContactSection = () => {
                   {/* Email */}
                   <a 
                     href="mailto:satwikudupi@gmail.com"
-                    className="flex items-center gap-4 p-3 rounded-xl bg-card/50 border border-border/30 hover:border-primary/50 transition-all group"
+                    className="contact-item flex items-center gap-4 p-3 rounded-xl bg-card/50 border border-border/30 hover:border-primary/50 transition-all group"
                   >
-                    <div className="w-10 h-10 rounded-lg bg-gradient-accent flex items-center justify-center group-hover:scale-110 transition-transform">
+                    <div className="w-10 h-10 rounded-lg bg-gradient-accent flex items-center justify-center group-hover:scale-110 group-hover:rotate-6 transition-all duration-300">
                       <Mail className="w-5 h-5 text-primary-foreground" />
                     </div>
                     <div>
@@ -111,26 +112,30 @@ const ContactSection = () => {
                   </div>
                 </div>
 
-                {/* Social Links */}
+                {/* Social Links with Modern Buttons */}
                 <div className="flex gap-3 mt-6">
-                  <a 
+                  <motion.a 
                     href="https://www.linkedin.com/in/satwik-udupi-37304a231" 
                     target="_blank" 
                     rel="noopener noreferrer"
-                    className="flex-1 flex items-center justify-center gap-2 p-3 rounded-xl bg-[#0077B5]/10 border border-[#0077B5]/30 text-[#0077B5] hover:bg-[#0077B5]/20 transition-colors"
+                    className="modern-btn flex-1 flex items-center justify-center gap-2 p-3 rounded-xl bg-[#0077B5]/10 border border-[#0077B5]/30 text-[#0077B5] hover:bg-[#0077B5] hover:text-white transition-all duration-300 group"
+                    whileHover={{ scale: 1.02, y: -2 }}
+                    whileTap={{ scale: 0.98 }}
                   >
-                    <Linkedin className="w-5 h-5" />
+                    <Linkedin className="w-5 h-5 group-hover:rotate-12 transition-transform" />
                     <span className="text-sm font-medium">LinkedIn</span>
-                  </a>
-                  <a 
-                    href={githubUrl}
+                  </motion.a>
+                  <motion.a 
+                    href="https://github.com/Satwik-1234"
                     target="_blank" 
                     rel="noopener noreferrer"
-                    className="flex-1 flex items-center justify-center gap-2 p-3 rounded-xl bg-card/50 border border-border/30 hover:border-primary/50 transition-colors"
+                    className="modern-btn flex-1 flex items-center justify-center gap-2 p-3 rounded-xl bg-card/50 border border-border/30 hover:bg-foreground hover:text-background transition-all duration-300 group"
+                    whileHover={{ scale: 1.02, y: -2 }}
+                    whileTap={{ scale: 0.98 }}
                   >
-                    <Github className="w-5 h-5 text-foreground" />
+                    <Github className="w-5 h-5 group-hover:rotate-12 transition-transform" />
                     <span className="text-sm font-medium">GitHub</span>
-                  </a>
+                  </motion.a>
                 </div>
               </div>
 
@@ -149,7 +154,7 @@ const ContactSection = () => {
               </div>
             </motion.div>
 
-            {/* Right Column - CTA & Tech Stack */}
+            {/* Right Column - CTA, Social Media Card & Resume */}
             <motion.div
               initial={{ opacity: 0, x: 30 }}
               animate={isInView ? { opacity: 1, x: 0 } : {}}
@@ -166,91 +171,122 @@ const ContactSection = () => {
                   <p className="text-muted-foreground mb-6 text-sm max-w-md mx-auto">
                     Fill out the project quote form and I'll get back to you within 24 hours with a detailed proposal.
                   </p>
-                  <Button
-                    asChild
-                    size="lg"
-                    className="bg-gradient-accent text-primary-foreground font-semibold px-8 shadow-lg hover:shadow-xl transition-shadow"
+                  <motion.div
+                    whileHover={{ scale: 1.02 }}
+                    whileTap={{ scale: 0.98 }}
                   >
-                    <a href={googleFormUrl} target="_blank" rel="noopener noreferrer">
-                      <ExternalLink className="w-5 h-5 mr-2" />
-                      Get a Project Quote
-                    </a>
-                  </Button>
+                    <Button
+                      asChild
+                      size="lg"
+                      className="cta-button bg-gradient-accent text-primary-foreground font-semibold px-8 shadow-lg hover:shadow-xl transition-all duration-300 hover:shadow-[0_10px_40px_hsl(var(--primary)/0.4)]"
+                    >
+                      <a href={googleFormUrl} target="_blank" rel="noopener noreferrer">
+                        <ExternalLink className="w-5 h-5 mr-2" />
+                        Get a Project Quote
+                      </a>
+                    </Button>
+                  </motion.div>
                 </div>
               </div>
 
               {/* Quick Actions */}
               <div className="grid grid-cols-2 gap-4">
-                <a
+                <motion.a
                   href={whatsappUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="bg-card/40 backdrop-blur-2xl border border-border/30 rounded-2xl p-5 text-center hover:border-green-500/50 transition-all group"
+                  className="bg-card/40 backdrop-blur-2xl border border-border/30 rounded-2xl p-5 text-center hover:border-green-500/50 hover:bg-green-500/5 transition-all group"
+                  whileHover={{ scale: 1.02, y: -4 }}
+                  whileTap={{ scale: 0.98 }}
                 >
-                  <div className="w-12 h-12 rounded-full bg-green-500/20 flex items-center justify-center mx-auto mb-3 group-hover:scale-110 transition-transform">
-                    <MessageCircle className="w-6 h-6 text-green-500" />
+                  <div className="w-12 h-12 rounded-full bg-green-500/20 flex items-center justify-center mx-auto mb-3 group-hover:scale-110 group-hover:bg-green-500 transition-all duration-300">
+                    <MessageCircle className="w-6 h-6 text-green-500 group-hover:text-white transition-colors" />
                   </div>
                   <h4 className="font-bold text-foreground text-sm">WhatsApp</h4>
                   <p className="text-xs text-muted-foreground mt-1">Quick chat</p>
-                </a>
+                </motion.a>
 
-                <Link
-                  to="/pravaha-tattva"
-                  className="bg-card/40 backdrop-blur-2xl border border-border/30 rounded-2xl p-5 text-center hover:border-primary/50 transition-all group"
+                <motion.div
+                  whileHover={{ scale: 1.02, y: -4 }}
+                  whileTap={{ scale: 0.98 }}
                 >
-                  <div className="w-12 h-12 rounded-full bg-gradient-accent flex items-center justify-center mx-auto mb-3 group-hover:scale-110 transition-transform">
-                    <Briefcase className="w-6 h-6 text-primary-foreground" />
-                  </div>
-                  <h4 className="font-bold text-foreground text-sm">Consultancy</h4>
-                  <p className="text-xs text-muted-foreground mt-1">Pravaha Tattva</p>
-                </Link>
-              </div>
-
-              {/* Resume Download Card - 3D Effect */}
-              <div className="relative duration-300 hover:-rotate-0 [transform:rotate3d(1,-1,1,15deg)] group border-4 border-primary/60 overflow-hidden rounded-2xl h-52 bg-gradient-to-br from-primary to-primary/80 p-5 flex flex-col items-start gap-4 hover:shadow-[0_20px_50px_hsl(var(--primary)/0.4)] transition-all">
-                <div className="text-primary-foreground">
-                  <span className="font-display font-bold text-4xl">SU</span>
-                  <p className="text-xs opacity-90">Agricultural Engineer</p>
-                </div>
-                <a 
-                  href="https://drive.google.com/file/d/1example/view" 
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="duration-300 hover:bg-primary border border-primary-foreground/30 hover:text-primary-foreground bg-background/95 font-semibold text-foreground px-4 py-2.5 flex flex-row items-center gap-3 rounded-lg group/btn"
-                >
-                  Download CV 
-                  <svg 
-                    xmlns="http://www.w3.org/2000/svg" 
-                    viewBox="0 0 100 100" 
-                    className="w-5 h-5 fill-current group-hover/btn:animate-bounce"
+                  <Link
+                    to="/pravaha-tattva"
+                    className="block bg-card/40 backdrop-blur-2xl border border-border/30 rounded-2xl p-5 text-center hover:border-primary/50 hover:bg-primary/5 transition-all group"
                   >
-                    <path fillRule="evenodd" d="M22.1,77.9a4,4,0,0,1,4-4H73.9a4,4,0,0,1,0,8H26.1A4,4,0,0,1,22.1,77.9ZM35.2,47.2a4,4,0,0,1,5.7,0L46,52.3V22.1a4,4,0,1,1,8,0V52.3l5.1-5.1a4,4,0,0,1,5.7,0,4,4,0,0,1,0,5.6l-12,12a3.9,3.9,0,0,1-5.6,0l-12-12A4,4,0,0,1,35.2,47.2Z" />
-                  </svg>
-                </a>
-                {/* Decorative person silhouette */}
-                <svg 
-                  viewBox="0 0 64 64" 
-                  xmlns="http://www.w3.org/2000/svg" 
-                  className="group-hover:scale-125 duration-500 absolute -bottom-0.5 -right-20 w-48 h-48 z-10 -my-2 fill-background/90 stroke-primary/60"
-                >
-                  <path 
-                    strokeWidth={5} 
-                    strokeMiterlimit={10} 
-                    d="M 50.4 51 C 40.5 49.1 40 46 40 44 v -1.2 a 18.9 18.9 0 0 0 5.7 -8.8 h 0.1 c 3 0 3.8 -6.3 3.8 -7.3 s 0.1 -4.7 -3 -4.7 C 53 4 30 0 22.3 6 c -5.4 0 -5.9 8 -3.9 16 c -3.1 0 -3 3.8 -3 4.7 s 0.7 7.3 3.8 7.3 c 1 3.6 2.3 6.9 4.7 9 v 1.2 c 0 2 0.5 5 -9.5 6.8 S 2 62 2 62 h 60 a 14.6 14.6 0 0 0 -11.6 -11 z" 
-                  />
-                </svg>
-                <svg 
-                  viewBox="0 0 64 64" 
-                  xmlns="http://www.w3.org/2000/svg" 
-                  className="group-hover:scale-125 duration-200 absolute -bottom-0.5 -right-20 w-48 h-48 z-10 -my-2 fill-background/90 stroke-primary/30"
-                >
-                  <path 
-                    strokeWidth={2} 
-                    strokeMiterlimit={10} 
-                    d="M 50.4 51 C 40.5 49.1 40 46 40 44 v -1.2 a 18.9 18.9 0 0 0 5.7 -8.8 h 0.1 c 3 0 3.8 -6.3 3.8 -7.3 s 0.1 -4.7 -3 -4.7 C 53 4 30 0 22.3 6 c -5.4 0 -5.9 8 -3.9 16 c -3.1 0 -3 3.8 -3 4.7 s 0.7 7.3 3.8 7.3 c 1 3.6 2.3 6.9 4.7 9 v 1.2 c 0 2 0.5 5 -9.5 6.8 S 2 62 2 62 h 60 a 14.6 14.6 0 0 0 -11.6 -11 z" 
-                  />
-                </svg>
+                    <div className="w-12 h-12 rounded-full bg-gradient-accent flex items-center justify-center mx-auto mb-3 group-hover:scale-110 transition-transform">
+                      <Briefcase className="w-6 h-6 text-primary-foreground" />
+                    </div>
+                    <h4 className="font-bold text-foreground text-sm">Consultancy</h4>
+                    <p className="text-xs text-muted-foreground mt-1">Pravaha Tattva</p>
+                  </Link>
+                </motion.div>
               </div>
+
+              {/* Resume Download Card - Enhanced 3D Effect */}
+              <motion.div
+                className="relative group"
+                style={{ perspective: '1000px' }}
+                whileHover={{ scale: 1.02 }}
+              >
+                <div 
+                  className="relative overflow-hidden rounded-2xl h-56 p-6 flex flex-col justify-between transition-all duration-500 group-hover:[transform:rotate3d(0.5,-0.5,0,15deg)]"
+                  style={{
+                    transformStyle: 'preserve-3d',
+                    background: 'linear-gradient(135deg, hsl(var(--primary)) 0%, hsl(var(--accent)) 100%)',
+                    boxShadow: '0 25px 50px -12px hsl(var(--primary) / 0.4)'
+                  }}
+                >
+                  {/* Background Pattern */}
+                  <div 
+                    className="absolute inset-0 opacity-20"
+                    style={{
+                      backgroundImage: `linear-gradient(135deg, transparent 18.75%, rgba(255,255,255,0.2) 31.25%, transparent 0),
+                        repeating-linear-gradient(45deg, rgba(255,255,255,0.1) -6.25% 6.25%, transparent 0 18.75%)`,
+                      backgroundSize: '40px 40px'
+                    }}
+                  />
+                  
+                  {/* Top Content */}
+                  <div 
+                    className="relative z-10"
+                    style={{ transform: 'translate3d(0px, 0px, 40px)' }}
+                  >
+                    <span className="font-display font-black text-4xl text-primary-foreground drop-shadow-lg">SU</span>
+                    <p className="text-primary-foreground/80 text-sm font-medium mt-1">GIS & Water Resource Professional</p>
+                  </div>
+                  
+                  {/* Download Button */}
+                  <motion.a 
+                    href={resumeUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="resume-download-btn relative z-10 inline-flex items-center gap-3 px-5 py-3 bg-background/95 rounded-xl font-bold text-foreground hover:bg-primary hover:text-primary-foreground transition-all duration-300 w-fit group/btn"
+                    style={{ transform: 'translate3d(0px, 0px, 60px)' }}
+                    whileHover={{ scale: 1.05 }}
+                    whileTap={{ scale: 0.95 }}
+                  >
+                    <Download className="w-5 h-5 group-hover/btn:animate-bounce" />
+                    Download Resume
+                  </motion.a>
+                  
+                  {/* Decorative person silhouette */}
+                  <svg 
+                    viewBox="0 0 64 64" 
+                    xmlns="http://www.w3.org/2000/svg" 
+                    className="absolute -bottom-2 -right-16 w-44 h-44 z-0 fill-background/20 stroke-primary-foreground/30 group-hover:scale-125 transition-transform duration-500"
+                  >
+                    <path 
+                      strokeWidth={4} 
+                      strokeMiterlimit={10} 
+                      d="M 50.4 51 C 40.5 49.1 40 46 40 44 v -1.2 a 18.9 18.9 0 0 0 5.7 -8.8 h 0.1 c 3 0 3.8 -6.3 3.8 -7.3 s 0.1 -4.7 -3 -4.7 C 53 4 30 0 22.3 6 c -5.4 0 -5.9 8 -3.9 16 c -3.1 0 -3 3.8 -3 4.7 s 0.7 7.3 3.8 7.3 c 1 3.6 2.3 6.9 4.7 9 v 1.2 c 0 2 0.5 5 -9.5 6.8 S 2 62 2 62 h 60 a 14.6 14.6 0 0 0 -11.6 -11 z" 
+                    />
+                  </svg>
+                </div>
+              </motion.div>
+
+              {/* Social Media Card */}
+              <SocialMediaCard />
 
               {/* Technical Stack */}
               <div className="bg-card/40 backdrop-blur-2xl border border-border/30 rounded-3xl p-6">
@@ -260,12 +296,13 @@ const ContactSection = () => {
                 </h4>
                 <div className="flex flex-wrap gap-2">
                   {techStack.map((tech, index) => (
-                    <span 
+                    <motion.span 
                       key={index}
-                      className="px-3 py-1.5 text-sm bg-card/50 border border-border/50 rounded-full text-muted-foreground hover:border-primary/50 hover:text-foreground transition-colors cursor-default"
+                      className="tech-tag px-3 py-1.5 text-sm bg-card/50 border border-border/50 rounded-full text-muted-foreground hover:border-primary/50 hover:text-foreground hover:bg-primary/10 transition-all cursor-default"
+                      whileHover={{ scale: 1.05, y: -2 }}
                     >
                       {tech.name}
-                    </span>
+                    </motion.span>
                   ))}
                 </div>
               </div>
