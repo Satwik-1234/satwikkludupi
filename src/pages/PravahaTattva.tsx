@@ -1,16 +1,12 @@
 import { Helmet } from 'react-helmet-async';
-import { motion, useScroll, useTransform } from 'framer-motion';
+import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
-import { useTheme } from 'next-themes';
-import { useRef } from 'react';
+import { useRef, useState } from 'react';
 import { 
   ArrowLeft, Waves, Mountain, Map, FileSpreadsheet, Cog, 
   Plane, Camera, Ruler, Phone, Mail, MessageCircle, ExternalLink,
-  CheckCircle, Github, Sun, Moon, Sparkles, ArrowRight, Zap, Shield, Clock
+  ArrowRight, ArrowUpRight, Droplets, Layers, Satellite, FlaskConical
 } from 'lucide-react';
-import { Button } from '@/components/ui/button';
-import FloatingParticles from '@/components/FloatingParticles';
-import GlowingCard from '@/components/GlowingCard';
 
 // Service images
 import floodplainImg from '@/assets/services/floodplain-mapping.png';
@@ -21,525 +17,436 @@ import cfdAnalysisImg from '@/assets/services/cfd-analysis.png';
 import dronePhotogrammetryImg from '@/assets/services/drone-photogrammetry.png';
 import droneMappingImg from '@/assets/services/drone-mapping.png';
 import multispectralImg from '@/assets/services/multispectral.png';
-
-// Drone hero image
 import droneHeroImg from '@/assets/drone-hero.png';
 
 const services = [
   {
+    id: '01',
     icon: Waves,
-    title: 'Flood Risk Mapping',
-    description: 'Comprehensive floodplain inundation mapping, risk zonation, and hazard assessment using HEC-RAS hydraulic modeling.',
-    features: ['Flood extent mapping', 'Depth & velocity analysis', 'Risk zone classification'],
-    image: floodplainImg,
-    color: 'from-blue-500 to-cyan-500'
+    title: 'Hydraulic Modeling',
+    subtitle: 'HEC-RAS & Flood Analysis',
+    description: 'Precision flood risk assessment and floodplain delineation using industry-standard hydraulic modeling. We deliver actionable inundation maps for infrastructure planning and disaster preparedness.',
+    capabilities: ['Flood Extent Mapping', 'Depth-Velocity Analysis', 'Dam Break Simulation', 'Bridge Hydraulics'],
+    image: floodplainImg
   },
   {
+    id: '02',
     icon: Mountain,
-    title: 'Watershed Analysis',
-    description: 'Hydrological modeling and rainfall-runoff analysis using HEC-HMS for effective water resource planning.',
-    features: ['Basin delineation', 'Runoff estimation', 'Peak flow analysis'],
-    image: rainfallRunoffImg,
-    color: 'from-emerald-500 to-teal-500'
+    title: 'Watershed Hydrology',
+    subtitle: 'HEC-HMS & Runoff Modeling',
+    description: 'Comprehensive hydrological analysis from catchment delineation to peak discharge estimation. Data-driven insights for water resource management and conservation planning.',
+    capabilities: ['Basin Delineation', 'Rainfall-Runoff Modeling', 'SCS-CN Method', 'Unit Hydrograph Analysis'],
+    image: rainfallRunoffImg
   },
   {
-    icon: Map,
-    title: 'Soil Erosion Assessment',
-    description: 'RUSLE-based soil loss estimation and conservation planning for sustainable land management.',
-    features: ['Erosion hotspot mapping', 'Conservation planning', 'Priority area identification'],
-    image: soilErosionImg,
-    color: 'from-orange-500 to-amber-500'
+    id: '03',
+    icon: Layers,
+    title: 'Erosion Assessment',
+    subtitle: 'RUSLE & Soil Conservation',
+    description: 'Quantitative soil loss estimation using empirical models integrated with remote sensing data. Identify erosion hotspots and prioritize conservation interventions.',
+    capabilities: ['RUSLE Modeling', 'Sediment Yield', 'Conservation Planning', 'Priority Mapping'],
+    image: soilErosionImg
   },
   {
-    icon: FileSpreadsheet,
-    title: 'GIS Spatial Analysis',
-    description: 'Land use/land cover mapping, change detection, and comprehensive spatial data analysis.',
-    features: ['LULC classification', 'Change detection', 'Thematic mapping'],
-    image: gisAnalysisImg,
-    color: 'from-purple-500 to-pink-500'
+    id: '04',
+    icon: Satellite,
+    title: 'Geospatial Analysis',
+    subtitle: 'ArcGIS Pro & QGIS',
+    description: 'Advanced spatial analysis and thematic mapping leveraging multi-temporal satellite imagery. From LULC classification to change detection—precision at every pixel.',
+    capabilities: ['LULC Classification', 'Change Detection', 'Spatial Modeling', 'Cartographic Design'],
+    image: gisAnalysisImg
   },
   {
-    icon: Cog,
-    title: 'CAD/CFD Simulations',
-    description: 'Precision machinery design and computational fluid dynamics for agricultural applications.',
-    features: ['3D modeling', 'Flow simulation', 'Design optimization'],
-    image: cfdAnalysisImg,
-    color: 'from-red-500 to-rose-500'
-  },
-  {
+    id: '05',
     icon: Plane,
-    title: 'Drone Mapping',
-    description: 'UAV-based aerial surveys with photogrammetry processing for high-resolution orthomosaics.',
-    features: ['Orthomosaic generation', 'DEM/DSM creation', 'Volumetric analysis'],
-    image: dronePhotogrammetryImg,
-    color: 'from-sky-500 to-blue-500'
+    title: 'UAV Photogrammetry',
+    subtitle: 'Drone Surveys & Mapping',
+    description: 'High-resolution aerial surveys with centimeter-level accuracy. Generate orthomosaics, DSMs, and 3D point clouds for terrain analysis and volumetric calculations.',
+    capabilities: ['Orthomosaic Generation', 'DSM/DTM Creation', 'Volumetric Analysis', 'Contour Mapping'],
+    image: dronePhotogrammetryImg
   },
   {
-    icon: Ruler,
-    title: 'CAD Design',
-    description: 'Professional 2D/3D CAD drafting for agricultural machinery, irrigation systems, and infrastructure.',
-    features: ['Technical drawings', '3D modeling', 'Design documentation'],
-    image: droneMappingImg,
-    color: 'from-indigo-500 to-violet-500'
+    id: '06',
+    icon: FlaskConical,
+    title: 'CFD Simulations',
+    subtitle: 'Computational Fluid Dynamics',
+    description: 'Flow simulation and thermal analysis for agricultural machinery and irrigation infrastructure. Optimize designs before prototyping.',
+    capabilities: ['Flow Simulation', 'Thermal Analysis', 'Design Optimization', 'Performance Validation'],
+    image: cfdAnalysisImg
   },
   {
+    id: '07',
     icon: Camera,
-    title: 'Multispectral Analysis',
-    description: 'Vegetation health assessment and crop monitoring using multispectral imaging.',
-    features: ['NDVI analysis', 'Crop health mapping', 'Stress detection'],
-    image: multispectralImg,
-    color: 'from-lime-500 to-green-500'
+    title: 'Multispectral Imaging',
+    subtitle: 'NDVI & Crop Health',
+    description: 'Vegetation health assessment using multispectral indices. Monitor crop stress, optimize irrigation scheduling, and enhance agricultural productivity.',
+    capabilities: ['NDVI/NDWI Analysis', 'Crop Health Mapping', 'Stress Detection', 'Yield Prediction'],
+    image: multispectralImg
+  },
+  {
+    id: '08',
+    icon: Ruler,
+    title: 'Technical Drafting',
+    subtitle: 'CAD & Design Documentation',
+    description: 'Professional 2D/3D CAD services for irrigation systems, agricultural machinery, and civil infrastructure with industry-standard documentation.',
+    capabilities: ['2D Drafting', '3D Modeling', 'Assembly Drawings', 'Design Documentation'],
+    image: droneMappingImg
   }
 ];
 
-
-const whyChooseUs = [
-  { icon: Zap, title: 'End-to-End Delivery', desc: 'Complete project lifecycle from data collection to final deliverables' },
-  { icon: Cog, title: 'Industry Tools', desc: 'HEC-RAS, HEC-HMS, ArcGIS Pro, QGIS expertise' },
-  { icon: Clock, title: '24hr Response', desc: 'Quick turnaround with guaranteed response time' },
-  { icon: Shield, title: 'Transparent Pricing', desc: 'Affordable rates with upfront cost estimates' },
-  { icon: CheckCircle, title: 'Academic Foundation', desc: 'Research-backed practical consulting' },
-  { icon: Sparkles, title: 'Custom Solutions', desc: 'Tailored to your specific project needs' }
+const expertise = [
+  { label: 'HEC-RAS', category: 'Hydraulics' },
+  { label: 'HEC-HMS', category: 'Hydrology' },
+  { label: 'ArcGIS Pro', category: 'GIS' },
+  { label: 'QGIS', category: 'GIS' },
+  { label: 'Google Earth Engine', category: 'Remote Sensing' },
+  { label: 'Agisoft Metashape', category: 'Photogrammetry' },
+  { label: 'ANSYS CFD', category: 'Simulation' },
+  { label: 'AutoCAD', category: 'Design' }
 ];
 
 const PravahaTattva = () => {
-  const { theme, setTheme } = useTheme();
+  const [activeService, setActiveService] = useState<string | null>(null);
+  const servicesRef = useRef<HTMLDivElement>(null);
+  
   const phoneNumber = '+919834300849';
-  const whatsappUrl = `https://wa.me/${phoneNumber.replace('+', '')}?text=Hi%20Satwik,%20I'm%20interested%20in%20Pravaha%20Tattva%20Solutions%20services`;
+  const whatsappUrl = `https://wa.me/${phoneNumber.replace('+', '')}?text=Hi%20Satwik,%20I'm%20interested%20in%20your%20geospatial%20consulting%20services`;
   const googleFormUrl = 'https://forms.gle/SCyQeFigrgsPft9D9';
-  const githubUrl = 'https://github.com/Satwik-1234';
 
   return (
     <>
       <Helmet>
-        <title>Pravaha Tattva Solutions | GIS & Hydrology Consulting by Satwik Udupi</title>
+        <title>Pravaha Tattva Solutions | Geospatial & Hydrology Consulting</title>
         <meta 
           name="description" 
-          content="Pravaha Tattva Solutions offers professional GIS, hydrology, drone mapping, and environmental consulting services. Founded by Satwik Udupi." 
+          content="Professional GIS, hydraulic modeling, and drone mapping services. Expertise in HEC-RAS, HEC-HMS, ArcGIS, and remote sensing for sustainable water resource management." 
         />
-        <meta name="keywords" content="GIS consulting, hydrology services, drone mapping, flood risk assessment, watershed analysis, Maharashtra" />
         <link rel="canonical" href="https://satwikudupi.com/pravaha-tattva" />
       </Helmet>
 
-      <div className="min-h-screen bg-[hsl(var(--services-navy))]">
-        {/* Fixed Header */}
-        <header className="fixed top-0 left-0 right-0 z-50 bg-[hsl(var(--services-navy))]/95 backdrop-blur-xl border-b border-[hsl(var(--services-blue))]/10">
-          <div className="container mx-auto px-6 h-16 flex items-center justify-between">
-            <div className="flex items-center gap-8">
-              <Link to="/" className="flex items-center gap-2 text-white font-bold text-xl tracking-tight hover:text-[hsl(var(--services-cyan))] transition-colors">
-                <ArrowLeft className="w-5 h-5" />
-                <span className="bg-gradient-to-r from-[hsl(var(--services-blue-light))] to-[hsl(var(--services-cyan))] bg-clip-text text-transparent">
-                  PT
-                </span>
-              </Link>
-              <nav className="hidden md:flex items-center gap-6">
-                <a href="#services" className="text-white/70 text-sm hover:text-[hsl(var(--services-cyan))] transition-colors">Services</a>
-                <a href="#about" className="text-white/70 text-sm hover:text-[hsl(var(--services-cyan))] transition-colors">About</a>
-                <a href="#contact" className="text-white/70 text-sm hover:text-[hsl(var(--services-cyan))] transition-colors">Contact</a>
-              </nav>
-            </div>
+      <div className="min-h-screen bg-[#0a0f1a] text-white">
+        {/* Minimal Header */}
+        <header className="fixed top-0 left-0 right-0 z-50 bg-[#0a0f1a]/80 backdrop-blur-xl">
+          <div className="max-w-7xl mx-auto px-8 h-20 flex items-center justify-between">
+            <Link 
+              to="/" 
+              className="flex items-center gap-3 group"
+            >
+              <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-cyan-400 to-blue-600 flex items-center justify-center">
+                <Droplets className="w-5 h-5 text-white" />
+              </div>
+              <div className="hidden sm:block">
+                <span className="text-lg font-semibold tracking-tight">Pravaha Tattva</span>
+                <span className="text-xs text-white/40 block -mt-0.5">Geospatial Solutions</span>
+              </div>
+            </Link>
             
-            <div className="flex items-center gap-4">
-              <Button
-                variant="ghost"
-                size="icon"
-                onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
-                className="text-white/60 hover:text-[hsl(var(--services-cyan))] hover:bg-[hsl(var(--services-blue))]/10"
-              >
-                {theme === 'dark' ? <Sun className="w-5 h-5" /> : <Moon className="w-5 h-5" />}
-              </Button>
-              <Button
-                size="sm"
-                className="bg-gradient-to-r from-[hsl(var(--services-blue))] to-[hsl(var(--services-cyan))] text-white font-semibold hover:opacity-90 shadow-[0_4px_20px_hsl(var(--services-blue)/0.4)]"
-                asChild
-              >
-                <a href={googleFormUrl} target="_blank" rel="noopener noreferrer">
-                  Get Started
-                </a>
-              </Button>
-            </div>
+            <nav className="hidden md:flex items-center gap-8">
+              <a href="#services" className="text-sm text-white/60 hover:text-white transition-colors">Services</a>
+              <a href="#expertise" className="text-sm text-white/60 hover:text-white transition-colors">Expertise</a>
+              <a href="#contact" className="text-sm text-white/60 hover:text-white transition-colors">Contact</a>
+            </nav>
+
+            <a 
+              href={googleFormUrl} 
+              target="_blank" 
+              rel="noopener noreferrer"
+              className="group flex items-center gap-2 px-5 py-2.5 rounded-full bg-white text-[#0a0f1a] text-sm font-medium hover:bg-cyan-400 transition-all duration-300"
+            >
+              Get Quote
+              <ArrowUpRight className="w-4 h-4 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
+            </a>
           </div>
         </header>
 
-        {/* Hero Section - 3D Drone with Blue Theme */}
-        <section className="relative min-h-screen flex items-center overflow-hidden pt-16">
-          {/* Animated Background */}
-          <div className="absolute inset-0 z-0">
-            {/* Gradient orbs */}
-            <div className="absolute top-1/4 left-1/4 w-[600px] h-[600px] bg-[hsl(var(--services-blue))]/20 rounded-full blur-[120px] animate-pulse" />
-            <div className="absolute bottom-1/4 right-1/4 w-[400px] h-[400px] bg-[hsl(var(--services-cyan))]/15 rounded-full blur-[100px] animate-pulse" style={{ animationDelay: '1s' }} />
-            
-            {/* Grid pattern */}
-            <div 
-              className="absolute inset-0 opacity-30"
-              style={{
-                backgroundImage: `
-                  linear-gradient(to right, hsl(var(--services-blue) / 0.1) 1px, transparent 1px),
-                  linear-gradient(to bottom, hsl(var(--services-blue) / 0.1) 1px, transparent 1px)
-                `,
-                backgroundSize: '50px 50px'
-              }}
-            />
-          </div>
+        {/* Hero - Minimal & Bold */}
+        <section className="relative min-h-screen flex items-center pt-20">
+          {/* Subtle grid */}
+          <div 
+            className="absolute inset-0 opacity-[0.03]"
+            style={{
+              backgroundImage: `linear-gradient(rgba(255,255,255,0.1) 1px, transparent 1px),
+                               linear-gradient(90deg, rgba(255,255,255,0.1) 1px, transparent 1px)`,
+              backgroundSize: '60px 60px'
+            }}
+          />
           
-          <div className="container mx-auto px-6 relative z-10">
-            <div className="grid lg:grid-cols-2 items-center gap-12 min-h-[85vh]">
-              {/* Left - Text Content */}
+          {/* Gradient orb */}
+          <div className="absolute top-1/3 right-1/4 w-[600px] h-[600px] bg-cyan-500/10 rounded-full blur-[150px]" />
+          
+          <div className="max-w-7xl mx-auto px-8 w-full relative z-10">
+            <div className="grid lg:grid-cols-2 gap-16 items-center">
+              {/* Left - Copy */}
               <motion.div
-                initial={{ opacity: 0, x: -50 }}
-                animate={{ opacity: 1, x: 0 }}
+                initial={{ opacity: 0, y: 30 }}
+                animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.8 }}
-                className="text-left"
               >
-                <motion.div
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.2 }}
-                  className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[hsl(var(--services-blue))]/10 border border-[hsl(var(--services-blue))]/30 mb-6"
-                >
-                  <Sparkles className="w-4 h-4 text-[hsl(var(--services-cyan))]" />
-                  <span className="text-sm text-[hsl(var(--services-cyan))]">Pravaha Tattva Solutions</span>
-                </motion.div>
+                <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-white/10 bg-white/5 mb-8">
+                  <span className="w-2 h-2 rounded-full bg-cyan-400 animate-pulse" />
+                  <span className="text-xs text-white/60 uppercase tracking-widest">Available for Projects</span>
+                </div>
                 
-                <h1 className="text-5xl sm:text-6xl md:text-7xl font-display font-bold text-white leading-[1.1] mb-6">
-                  Your Trusted
+                <h1 className="text-5xl sm:text-6xl lg:text-7xl font-light leading-[1.1] mb-6 tracking-tight">
+                  Precision
                   <br />
-                  <span className="bg-gradient-to-r from-[hsl(var(--services-blue-light))] via-[hsl(var(--services-cyan))] to-[hsl(var(--services-blue))] bg-clip-text text-transparent">
+                  <span className="font-semibold bg-gradient-to-r from-cyan-400 via-blue-400 to-cyan-400 bg-clip-text text-transparent">
                     Geospatial
                   </span>
                   <br />
-                  Partner
+                  Intelligence
                 </h1>
                 
-                <p className="text-lg text-white/60 max-w-lg mb-8 leading-relaxed">
-                  Empowering decisions with precision GIS mapping, advanced hydrology modeling, 
-                  and cutting-edge drone technology. We transform complex spatial data into 
-                  actionable insights for sustainable land and water management.
+                <p className="text-lg text-white/50 max-w-md mb-10 leading-relaxed font-light">
+                  Transforming complex hydrological data into strategic insights. 
+                  From watershed analysis to flood risk mapping—engineering solutions 
+                  for sustainable water resource management.
                 </p>
                 
-                <div className="flex flex-wrap gap-4 mb-12">
-                  <Button
-                    size="lg"
-                    className="bg-gradient-to-r from-[hsl(var(--services-blue))] to-[hsl(var(--services-cyan))] text-white font-semibold hover:opacity-90 shadow-[0_8px_30px_hsl(var(--services-blue)/0.4)] px-8"
-                    asChild
+                <div className="flex flex-wrap gap-4">
+                  <a 
+                    href={googleFormUrl} 
+                    target="_blank" 
+                    rel="noopener noreferrer"
+                    className="group inline-flex items-center gap-3 px-8 py-4 rounded-full bg-gradient-to-r from-cyan-500 to-blue-600 text-white font-medium hover:shadow-[0_20px_40px_-15px_rgba(34,211,238,0.4)] transition-all duration-300"
                   >
-                    <a href={googleFormUrl} target="_blank" rel="noopener noreferrer">
-                      <ExternalLink className="w-5 h-5 mr-2" />
-                      Request Consultation
-                    </a>
-                  </Button>
-                  <Button
-                    size="lg"
-                    variant="outline"
-                    className="border-[hsl(var(--services-blue))]/40 text-white hover:bg-[hsl(var(--services-blue))]/10 hover:border-[hsl(var(--services-cyan))] px-8"
-                    asChild
+                    Start a Project
+                    <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                  </a>
+                  <a 
+                    href="#services"
+                    className="inline-flex items-center gap-3 px-8 py-4 rounded-full border border-white/10 text-white/80 font-medium hover:bg-white/5 hover:border-white/20 transition-all duration-300"
                   >
-                    <a href="#services">
-                      View Services
-                    </a>
-                  </Button>
+                    Explore Services
+                  </a>
                 </div>
-                
               </motion.div>
               
-              {/* Right - 3D Drone Image */}
+              {/* Right - Drone Visual */}
               <motion.div
-                initial={{ opacity: 0, scale: 0.8 }}
+                initial={{ opacity: 0, scale: 0.9 }}
                 animate={{ opacity: 1, scale: 1 }}
-                transition={{ duration: 1, delay: 0.3 }}
-                className="relative flex items-center justify-center"
+                transition={{ duration: 1, delay: 0.2 }}
+                className="relative hidden lg:flex items-center justify-center"
               >
-                {/* Glow ring behind drone */}
-                <div className="absolute w-[500px] h-[500px] rounded-full border-2 border-[hsl(var(--services-cyan))]/20 animate-pulse" />
-                <div className="absolute w-[400px] h-[400px] rounded-full border border-[hsl(var(--services-blue))]/30" />
+                <div className="absolute w-[400px] h-[400px] rounded-full border border-cyan-500/10" />
+                <div className="absolute w-[300px] h-[300px] rounded-full border border-cyan-500/20" />
                 
-                {/* Main drone image with 3D effect */}
-                <motion.div
-                  className="relative z-10"
-                  animate={{ 
-                    y: [0, -20, 0],
-                    rotateY: [0, 5, 0, -5, 0]
-                  }}
-                  transition={{ 
-                    duration: 6, 
-                    repeat: Infinity, 
-                    ease: 'easeInOut' 
-                  }}
-                  style={{ perspective: '1000px' }}
-                >
-                  <img 
-                    src={droneHeroImg} 
-                    alt="Professional Survey Drone"
-                    className="w-[500px] max-w-full drop-shadow-[0_35px_60px_hsl(var(--services-blue)/0.5)]"
-                    style={{
-                      filter: 'drop-shadow(0 0 40px hsl(var(--services-cyan) / 0.3))'
-                    }}
-                  />
-                  
-                  {/* Floating particles */}
-                  <motion.div
-                    className="absolute -top-10 -right-10 w-4 h-4 rounded-full bg-[hsl(var(--services-cyan))]"
-                    animate={{ y: [0, -30, 0], opacity: [0.5, 1, 0.5] }}
-                    transition={{ duration: 3, repeat: Infinity }}
-                  />
-                  <motion.div
-                    className="absolute bottom-20 -left-10 w-3 h-3 rounded-full bg-[hsl(var(--services-blue-light))]"
-                    animate={{ y: [0, 20, 0], opacity: [0.3, 0.8, 0.3] }}
-                    transition={{ duration: 4, repeat: Infinity, delay: 1 }}
-                  />
-                </motion.div>
+                <motion.img 
+                  src={droneHeroImg} 
+                  alt="UAV Survey Drone"
+                  className="w-[450px] relative z-10 drop-shadow-2xl"
+                  animate={{ y: [0, -15, 0] }}
+                  transition={{ duration: 5, repeat: Infinity, ease: 'easeInOut' }}
+                />
               </motion.div>
+            </div>
+          </div>
+          
+          {/* Scroll indicator */}
+          <motion.div 
+            className="absolute bottom-12 left-1/2 -translate-x-1/2"
+            animate={{ y: [0, 8, 0] }}
+            transition={{ duration: 2, repeat: Infinity }}
+          >
+            <div className="w-6 h-10 rounded-full border border-white/20 flex justify-center pt-2">
+              <div className="w-1 h-2 rounded-full bg-white/40" />
+            </div>
+          </motion.div>
+        </section>
+
+        {/* Services - Clean Grid */}
+        <section id="services" ref={servicesRef} className="py-32 relative">
+          <div className="max-w-7xl mx-auto px-8">
+            {/* Section Header */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              className="mb-20"
+            >
+              <span className="text-cyan-400 text-sm font-medium uppercase tracking-widest mb-4 block">What We Deliver</span>
+              <h2 className="text-4xl md:text-5xl font-light tracking-tight mb-4">
+                Technical <span className="font-semibold">Services</span>
+              </h2>
+              <p className="text-white/40 max-w-xl text-lg font-light">
+                End-to-end geospatial solutions powered by industry-standard tools and methodologies.
+              </p>
+            </motion.div>
+
+            {/* Services Grid */}
+            <div className="grid md:grid-cols-2 gap-4">
+              {services.map((service, index) => (
+                <motion.div
+                  key={service.id}
+                  initial={{ opacity: 0, y: 30 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: index * 0.05 }}
+                  className="group relative"
+                  onMouseEnter={() => setActiveService(service.id)}
+                  onMouseLeave={() => setActiveService(null)}
+                >
+                  <div className="relative p-8 rounded-2xl border border-white/5 bg-white/[0.02] hover:bg-white/[0.04] hover:border-white/10 transition-all duration-500 overflow-hidden">
+                    {/* Background image on hover */}
+                    <div 
+                      className="absolute inset-0 opacity-0 group-hover:opacity-10 transition-opacity duration-500"
+                      style={{
+                        backgroundImage: `url(${service.image})`,
+                        backgroundSize: 'cover',
+                        backgroundPosition: 'center'
+                      }}
+                    />
+                    
+                    <div className="relative z-10">
+                      {/* Header */}
+                      <div className="flex items-start justify-between mb-6">
+                        <div className="flex items-center gap-4">
+                          <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-cyan-500/20 to-blue-600/20 border border-cyan-500/20 flex items-center justify-center group-hover:border-cyan-500/40 transition-colors">
+                            <service.icon className="w-5 h-5 text-cyan-400" />
+                          </div>
+                          <div>
+                            <h3 className="text-xl font-medium text-white group-hover:text-cyan-400 transition-colors">
+                              {service.title}
+                            </h3>
+                            <p className="text-sm text-white/40">{service.subtitle}</p>
+                          </div>
+                        </div>
+                        <span className="text-3xl font-light text-white/10 group-hover:text-cyan-500/20 transition-colors">
+                          {service.id}
+                        </span>
+                      </div>
+                      
+                      {/* Description */}
+                      <p className="text-white/50 text-sm leading-relaxed mb-6 font-light">
+                        {service.description}
+                      </p>
+                      
+                      {/* Capabilities */}
+                      <div className="flex flex-wrap gap-2">
+                        {service.capabilities.map((cap) => (
+                          <span 
+                            key={cap}
+                            className="px-3 py-1.5 rounded-full text-xs bg-white/5 text-white/50 border border-white/5 group-hover:border-cyan-500/20 group-hover:text-cyan-400/80 transition-all"
+                          >
+                            {cap}
+                          </span>
+                        ))}
+                      </div>
+                    </div>
+                    
+                    {/* Arrow indicator */}
+                    <div className="absolute bottom-8 right-8 w-10 h-10 rounded-full border border-white/10 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-300 group-hover:border-cyan-500/30">
+                      <ArrowUpRight className="w-4 h-4 text-cyan-400" />
+                    </div>
+                  </div>
+                </motion.div>
+              ))}
             </div>
           </div>
         </section>
 
-        {/* Consultancy Section */}
-        <section className="py-20 relative bg-gradient-to-b from-[hsl(var(--services-navy))] to-[hsl(220_50%_8%)]">
-          <div className="container mx-auto px-6">
+        {/* Expertise - Tools & Technologies */}
+        <section id="expertise" className="py-32 bg-[#080c14]">
+          <div className="max-w-7xl mx-auto px-8">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              className="text-center mb-16"
+            >
+              <span className="text-cyan-400 text-sm font-medium uppercase tracking-widest mb-4 block">Technical Stack</span>
+              <h2 className="text-4xl md:text-5xl font-light tracking-tight mb-4">
+                Tools & <span className="font-semibold">Expertise</span>
+              </h2>
+            </motion.div>
+
+            <div className="flex flex-wrap justify-center gap-3 max-w-4xl mx-auto">
+              {expertise.map((tool, index) => (
+                <motion.div
+                  key={tool.label}
+                  initial={{ opacity: 0, scale: 0.9 }}
+                  whileInView={{ opacity: 1, scale: 1 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: index * 0.05 }}
+                  className="group px-6 py-3 rounded-full border border-white/10 bg-white/[0.02] hover:border-cyan-500/30 hover:bg-cyan-500/5 transition-all duration-300 cursor-default"
+                >
+                  <span className="text-white/70 group-hover:text-white transition-colors">{tool.label}</span>
+                  <span className="text-white/30 text-xs ml-2">{tool.category}</span>
+                </motion.div>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* CTA - Contact */}
+        <section id="contact" className="py-32 relative">
+          <div className="absolute inset-0 bg-gradient-to-b from-[#080c14] to-[#0a0f1a]" />
+          
+          <div className="max-w-4xl mx-auto px-8 relative z-10">
             <motion.div
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              className="max-w-4xl mx-auto text-center"
+              className="text-center"
             >
-              <h2 className="text-3xl md:text-5xl font-display font-bold text-white mb-6">
-                Expert <span className="bg-gradient-to-r from-[hsl(var(--services-blue-light))] to-[hsl(var(--services-cyan))] bg-clip-text text-transparent">Consultancy</span> Services
+              <span className="text-cyan-400 text-sm font-medium uppercase tracking-widest mb-4 block">Let's Collaborate</span>
+              <h2 className="text-4xl md:text-6xl font-light tracking-tight mb-6">
+                Ready to Start Your
+                <br />
+                <span className="font-semibold">Next Project?</span>
               </h2>
-              <p className="text-lg text-white/60 leading-relaxed mb-8">
-                At Pravaha Tattva Solutions, we bring together cutting-edge geospatial technology 
-                and deep domain expertise to deliver transformative solutions for land and water management. 
-                Our consultancy services are designed to bridge the gap between complex spatial data and 
-                actionable insights that drive sustainable development.
+              <p className="text-white/40 text-lg font-light max-w-xl mx-auto mb-12">
+                Whether it's flood risk analysis, watershed modeling, or drone surveys—
+                I'm here to deliver precision solutions tailored to your needs.
               </p>
-              <p className="text-base text-white/50 leading-relaxed">
-                Whether you're a government agency seeking flood risk assessments, an agricultural enterprise 
-                optimizing land use, or a research institution requiring advanced GIS analysis—we provide 
-                end-to-end support from project conceptualization to final deliverable. Our commitment to 
-                quality, transparency, and innovation ensures that every project exceeds expectations.
-              </p>
-            </motion.div>
-          </div>
-        </section>
-
-        {/* Services Section */}
-        <section id="services" className="py-24 relative bg-[hsl(220_50%_8%)]">
-          <div className="container mx-auto px-6">
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6 }}
-              className="text-center mb-16"
-            >
-              <h2 className="text-4xl md:text-6xl font-display font-bold text-white mb-4">
-                Our <span className="bg-gradient-to-r from-[hsl(var(--services-blue-light))] to-[hsl(var(--services-cyan))] bg-clip-text text-transparent">Services</span>
-              </h2>
-              <div className="w-32 h-1 bg-gradient-to-r from-[hsl(var(--services-blue))] via-[hsl(var(--services-cyan))] to-[hsl(var(--services-blue))] mx-auto mb-6 rounded-full" />
-              <p className="text-white/50 max-w-2xl mx-auto text-lg">
-                Comprehensive geospatial and engineering solutions tailored to your project needs
-              </p>
-            </motion.div>
-
-            {/* Service Cards Grid - Redesigned */}
-            <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
-              {services.map((service, index) => (
-                <motion.div
-                  key={service.title}
-                  initial={{ opacity: 0, y: 30 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.5, delay: index * 0.08 }}
-                  className="group relative rounded-2xl overflow-hidden cursor-pointer bg-gradient-to-b from-white/[0.05] to-transparent border border-[hsl(var(--services-blue))]/20 hover:border-[hsl(var(--services-cyan))]/50 transition-all duration-500 hover:shadow-[0_20px_50px_hsl(var(--services-blue)/0.2)]"
-                >
-                  {/* Background Image */}
-                  <div className="aspect-[4/5] relative">
-                    <img 
-                      src={service.image} 
-                      alt={service.title}
-                      className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110 opacity-40 group-hover:opacity-60"
-                    />
-                    
-                    {/* Gradient Overlay */}
-                    <div className="absolute inset-0 bg-gradient-to-t from-[hsl(var(--services-navy))] via-[hsl(var(--services-navy))]/80 to-transparent" />
-                    
-                    {/* Hover glow effect */}
-                    <div className="absolute inset-0 bg-gradient-to-t from-[hsl(var(--services-blue))]/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-                    
-                    {/* Content */}
-                    <div className="absolute inset-0 flex flex-col justify-end p-6">
-                      {/* Icon */}
-                      <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-[hsl(var(--services-blue))] to-[hsl(var(--services-cyan))] flex items-center justify-center mb-4 shadow-[0_8px_25px_hsl(var(--services-blue)/0.4)] group-hover:scale-110 group-hover:rotate-3 transition-all duration-300">
-                        <service.icon className="w-7 h-7 text-white" />
-                      </div>
-                      
-                      {/* Title */}
-                      <h3 className="text-xl font-display font-bold text-white mb-2 group-hover:text-[hsl(var(--services-cyan))] transition-colors">
-                        {service.title}
-                      </h3>
-                      
-                      {/* Description - Shown on hover */}
-                      <div className="overflow-hidden transition-all duration-500 max-h-0 group-hover:max-h-48 opacity-0 group-hover:opacity-100">
-                        <p className="text-white/70 text-sm mb-4 leading-relaxed">
-                          {service.description}
-                        </p>
-                        
-                        {/* Features */}
-                        <div className="flex flex-wrap gap-2">
-                          {service.features.map((feature) => (
-                            <span 
-                              key={feature} 
-                              className="px-3 py-1.5 text-xs bg-[hsl(var(--services-blue))]/20 border border-[hsl(var(--services-cyan))]/30 rounded-full text-[hsl(var(--services-cyan))]"
-                            >
-                              {feature}
-                            </span>
-                          ))}
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </motion.div>
-              ))}
-            </div>
-          </div>
-        </section>
-
-        {/* Why Choose Us */}
-        <section id="about" className="py-24 relative bg-[hsl(var(--services-navy))]">
-          {/* Floating particles */}
-          <FloatingParticles />
-          
-          <div className="container mx-auto px-6 relative z-10">
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6 }}
-              className="text-center mb-16"
-            >
-              <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[hsl(var(--services-blue))]/10 border border-[hsl(var(--services-blue))]/30 mb-6">
-                <Shield className="w-4 h-4 text-[hsl(var(--services-cyan))]" />
-                <span className="text-sm text-[hsl(var(--services-cyan))]">Our Promise</span>
-              </span>
-              <h2 className="text-4xl md:text-6xl font-display font-bold text-white mb-4">
-                Why Choose <span className="bg-gradient-to-r from-[hsl(var(--services-blue-light))] to-[hsl(var(--services-cyan))] bg-clip-text text-transparent">Us</span>
-              </h2>
-              <div className="w-32 h-1 bg-gradient-to-r from-[hsl(var(--services-blue))] via-[hsl(var(--services-cyan))] to-[hsl(var(--services-blue))] mx-auto rounded-full section-divider-animated" />
-            </motion.div>
-
-            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto">
-              {whyChooseUs.map((item, index) => (
-                <motion.div
-                  key={index}
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.4, delay: index * 0.1 }}
-                  whileHover={{ y: -5, scale: 1.02 }}
-                  className="group bg-gradient-to-b from-white/[0.08] to-transparent border border-[hsl(var(--services-blue))]/20 rounded-2xl p-6 hover:border-[hsl(var(--services-cyan))]/50 transition-all hover:shadow-[0_20px_50px_hsl(var(--services-blue)/0.2)] backdrop-blur-sm"
-                >
-                  <div className="flex items-start gap-4">
-                    <motion.div 
-                      className="w-14 h-14 rounded-2xl bg-gradient-to-br from-[hsl(var(--services-blue))] to-[hsl(var(--services-cyan))] flex items-center justify-center flex-shrink-0 shadow-[0_8px_25px_hsl(var(--services-blue)/0.4)]"
-                      whileHover={{ rotate: 5, scale: 1.1 }}
-                      transition={{ type: 'spring', stiffness: 300 }}
-                    >
-                      <item.icon className="w-7 h-7 text-white" />
-                    </motion.div>
-                    <div>
-                      <h3 className="font-display font-bold text-white mb-2 text-xl group-hover:text-[hsl(var(--services-cyan))] transition-colors">{item.title}</h3>
-                      <p className="text-sm text-white/60 leading-relaxed">{item.desc}</p>
-                    </div>
-                  </div>
-                  
-                  {/* Hover gradient line */}
-                  <div className="mt-4 h-0.5 w-0 group-hover:w-full transition-all duration-500 bg-gradient-to-r from-[hsl(var(--services-blue))] to-[hsl(var(--services-cyan))] rounded-full" />
-                </motion.div>
-              ))}
-            </div>
-          </div>
-        </section>
-
-        {/* Contact Section */}
-        <section id="contact" className="py-24 relative bg-[hsl(220_50%_8%)]">
-          <div className="container mx-auto px-6">
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6 }}
-              className="bg-gradient-to-b from-white/[0.05] to-transparent border border-[hsl(var(--services-blue))]/30 rounded-3xl p-8 md:p-12 max-w-4xl mx-auto"
-            >
-              <div className="text-center mb-8">
-                <h2 className="text-3xl md:text-5xl font-display font-bold text-white mb-4">
-                  Ready to Start Your <span className="bg-gradient-to-r from-[hsl(var(--services-blue-light))] to-[hsl(var(--services-cyan))] bg-clip-text text-transparent">Project?</span>
-                </h2>
-                <p className="text-white/50 max-w-xl mx-auto">
-                  Get in touch for a free consultation. I'll respond within 24 hours with a detailed proposal.
-                </p>
-              </div>
-
-              <div className="flex flex-wrap justify-center gap-4 mb-10">
-                <Button
-                  size="lg"
-                  className="bg-gradient-to-r from-[hsl(var(--services-blue))] to-[hsl(var(--services-cyan))] text-white font-semibold hover:opacity-90 shadow-[0_8px_30px_hsl(var(--services-blue)/0.4)]"
-                  asChild
-                >
-                  <a href={googleFormUrl} target="_blank" rel="noopener noreferrer">
-                    <ExternalLink className="w-5 h-5 mr-2" />
-                    Get a Project Quote
-                  </a>
-                </Button>
-                <Button
-                  size="lg"
-                  variant="outline"
-                  className="border-green-500/50 text-green-400 hover:bg-green-500/10"
-                  asChild
-                >
-                  <a href={whatsappUrl} target="_blank" rel="noopener noreferrer">
-                    <MessageCircle className="w-5 h-5 mr-2" />
-                    WhatsApp
-                  </a>
-                </Button>
-              </div>
-
-              {/* Contact Grid */}
-              <div className="grid sm:grid-cols-3 gap-4">
+              
+              <div className="flex flex-wrap justify-center gap-4 mb-16">
                 <a 
-                  href={`tel:${phoneNumber}`} 
-                  className="flex items-center justify-center gap-3 p-4 rounded-xl bg-white/[0.03] border border-[hsl(var(--services-blue))]/20 hover:border-[hsl(var(--services-cyan))]/50 transition-colors"
-                >
-                  <Phone className="w-5 h-5 text-[hsl(var(--services-cyan))]" />
-                  <span className="text-sm text-white/80">+91 9834300849</span>
-                </a>
-                <a 
-                  href="mailto:satwikudupi@gmail.com" 
-                  className="flex items-center justify-center gap-3 p-4 rounded-xl bg-white/[0.03] border border-[hsl(var(--services-blue))]/20 hover:border-[hsl(var(--services-cyan))]/50 transition-colors"
-                >
-                  <Mail className="w-5 h-5 text-[hsl(var(--services-cyan))]" />
-                  <span className="text-sm text-white/80">satwikudupi@gmail.com</span>
-                </a>
-                <a 
-                  href={githubUrl} 
+                  href={googleFormUrl} 
                   target="_blank" 
                   rel="noopener noreferrer"
-                  className="flex items-center justify-center gap-3 p-4 rounded-xl bg-white/[0.03] border border-[hsl(var(--services-blue))]/20 hover:border-[hsl(var(--services-cyan))]/50 transition-colors"
+                  className="group inline-flex items-center gap-3 px-8 py-4 rounded-full bg-gradient-to-r from-cyan-500 to-blue-600 text-white font-medium hover:shadow-[0_20px_40px_-15px_rgba(34,211,238,0.4)] transition-all duration-300"
                 >
-                  <Github className="w-5 h-5 text-[hsl(var(--services-cyan))]" />
-                  <span className="text-sm text-white/80">GitHub</span>
+                  <ExternalLink className="w-4 h-4" />
+                  Request a Quote
+                  <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                </a>
+                <a 
+                  href={whatsappUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-3 px-8 py-4 rounded-full border border-white/10 text-white/80 font-medium hover:bg-white/5 hover:border-white/20 transition-all duration-300"
+                >
+                  <MessageCircle className="w-4 h-4" />
+                  WhatsApp
+                </a>
+              </div>
+              
+              {/* Contact Details */}
+              <div className="flex flex-wrap justify-center gap-8 text-white/40 text-sm">
+                <a href={`tel:${phoneNumber}`} className="flex items-center gap-2 hover:text-cyan-400 transition-colors">
+                  <Phone className="w-4 h-4" />
+                  +91 9834300849
+                </a>
+                <a href="mailto:satwikudupi@gmail.com" className="flex items-center gap-2 hover:text-cyan-400 transition-colors">
+                  <Mail className="w-4 h-4" />
+                  satwikudupi@gmail.com
                 </a>
               </div>
             </motion.div>
           </div>
         </section>
 
-        {/* Footer */}
-        <footer className="py-8 border-t border-[hsl(var(--services-blue))]/10 bg-[hsl(var(--services-navy))]">
-          <div className="container mx-auto px-6 text-center">
-            <p className="text-sm text-white/40">
-              © {new Date().getFullYear()} Pravaha Tattva Solutions. Founded by Satwik Udupi.
+        {/* Footer - Minimal */}
+        <footer className="py-8 border-t border-white/5">
+          <div className="max-w-7xl mx-auto px-8 flex flex-col sm:flex-row items-center justify-between gap-4">
+            <p className="text-sm text-white/30">
+              © {new Date().getFullYear()} Pravaha Tattva Solutions
             </p>
-            <Link to="/" className="text-[hsl(var(--services-cyan))] text-sm hover:underline mt-2 inline-block">
-              ← Back to Academic Portfolio
+            <Link to="/" className="text-sm text-white/40 hover:text-cyan-400 transition-colors flex items-center gap-2">
+              <ArrowLeft className="w-4 h-4" />
+              Back to Portfolio
             </Link>
           </div>
         </footer>
