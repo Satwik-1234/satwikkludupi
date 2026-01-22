@@ -1,13 +1,16 @@
 import { Helmet } from 'react-helmet-async';
-import { motion } from 'framer-motion';
+import { motion, useScroll, useTransform } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { useTheme } from 'next-themes';
+import { useRef } from 'react';
 import { 
   ArrowLeft, Waves, Mountain, Map, FileSpreadsheet, Cog, 
   Plane, Camera, Ruler, Phone, Mail, MessageCircle, ExternalLink,
-  CheckCircle, Github, Sun, Moon, Sparkles
+  CheckCircle, Github, Sun, Moon, Sparkles, ArrowRight, Zap, Shield, Clock
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import FloatingParticles from '@/components/FloatingParticles';
+import GlowingCard from '@/components/GlowingCard';
 
 // Service images
 import floodplainImg from '@/assets/services/floodplain-mapping.png';
@@ -28,67 +31,75 @@ const services = [
     title: 'Flood Risk Mapping',
     description: 'Comprehensive floodplain inundation mapping, risk zonation, and hazard assessment using HEC-RAS hydraulic modeling.',
     features: ['Flood extent mapping', 'Depth & velocity analysis', 'Risk zone classification'],
-    image: floodplainImg
+    image: floodplainImg,
+    color: 'from-blue-500 to-cyan-500'
   },
   {
     icon: Mountain,
     title: 'Watershed Analysis',
     description: 'Hydrological modeling and rainfall-runoff analysis using HEC-HMS for effective water resource planning.',
     features: ['Basin delineation', 'Runoff estimation', 'Peak flow analysis'],
-    image: rainfallRunoffImg
+    image: rainfallRunoffImg,
+    color: 'from-emerald-500 to-teal-500'
   },
   {
     icon: Map,
     title: 'Soil Erosion Assessment',
     description: 'RUSLE-based soil loss estimation and conservation planning for sustainable land management.',
     features: ['Erosion hotspot mapping', 'Conservation planning', 'Priority area identification'],
-    image: soilErosionImg
+    image: soilErosionImg,
+    color: 'from-orange-500 to-amber-500'
   },
   {
     icon: FileSpreadsheet,
     title: 'GIS Spatial Analysis',
     description: 'Land use/land cover mapping, change detection, and comprehensive spatial data analysis.',
     features: ['LULC classification', 'Change detection', 'Thematic mapping'],
-    image: gisAnalysisImg
+    image: gisAnalysisImg,
+    color: 'from-purple-500 to-pink-500'
   },
   {
     icon: Cog,
     title: 'CAD/CFD Simulations',
     description: 'Precision machinery design and computational fluid dynamics for agricultural applications.',
     features: ['3D modeling', 'Flow simulation', 'Design optimization'],
-    image: cfdAnalysisImg
+    image: cfdAnalysisImg,
+    color: 'from-red-500 to-rose-500'
   },
   {
     icon: Plane,
     title: 'Drone Mapping',
     description: 'UAV-based aerial surveys with photogrammetry processing for high-resolution orthomosaics.',
     features: ['Orthomosaic generation', 'DEM/DSM creation', 'Volumetric analysis'],
-    image: dronePhotogrammetryImg
+    image: dronePhotogrammetryImg,
+    color: 'from-sky-500 to-blue-500'
   },
   {
     icon: Ruler,
     title: 'CAD Design',
     description: 'Professional 2D/3D CAD drafting for agricultural machinery, irrigation systems, and infrastructure.',
     features: ['Technical drawings', '3D modeling', 'Design documentation'],
-    image: droneMappingImg
+    image: droneMappingImg,
+    color: 'from-indigo-500 to-violet-500'
   },
   {
     icon: Camera,
     title: 'Multispectral Analysis',
     description: 'Vegetation health assessment and crop monitoring using multispectral imaging.',
     features: ['NDVI analysis', 'Crop health mapping', 'Stress detection'],
-    image: multispectralImg
+    image: multispectralImg,
+    color: 'from-lime-500 to-green-500'
   }
 ];
 
 
 const whyChooseUs = [
-  { title: 'End-to-End Delivery', desc: 'Complete project lifecycle from data collection to final deliverables' },
-  { title: 'Industry Tools', desc: 'HEC-RAS, HEC-HMS, ArcGIS Pro, QGIS expertise' },
-  { title: '24hr Response', desc: 'Quick turnaround with guaranteed response time' },
-  { title: 'Transparent Pricing', desc: 'Affordable rates with upfront cost estimates' },
-  { title: 'Academic Foundation', desc: 'Research-backed practical consulting' },
-  { title: 'Custom Solutions', desc: 'Tailored to your specific project needs' }
+  { icon: Zap, title: 'End-to-End Delivery', desc: 'Complete project lifecycle from data collection to final deliverables' },
+  { icon: Cog, title: 'Industry Tools', desc: 'HEC-RAS, HEC-HMS, ArcGIS Pro, QGIS expertise' },
+  { icon: Clock, title: '24hr Response', desc: 'Quick turnaround with guaranteed response time' },
+  { icon: Shield, title: 'Transparent Pricing', desc: 'Affordable rates with upfront cost estimates' },
+  { icon: CheckCircle, title: 'Academic Foundation', desc: 'Research-backed practical consulting' },
+  { icon: Sparkles, title: 'Custom Solutions', desc: 'Tailored to your specific project needs' }
 ];
 
 const PravahaTattva = () => {
@@ -394,6 +405,9 @@ const PravahaTattva = () => {
 
         {/* Why Choose Us */}
         <section id="about" className="py-24 relative bg-[hsl(var(--services-navy))]">
+          {/* Floating particles */}
+          <FloatingParticles />
+          
           <div className="container mx-auto px-6 relative z-10">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
@@ -402,10 +416,14 @@ const PravahaTattva = () => {
               transition={{ duration: 0.6 }}
               className="text-center mb-16"
             >
+              <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[hsl(var(--services-blue))]/10 border border-[hsl(var(--services-blue))]/30 mb-6">
+                <Shield className="w-4 h-4 text-[hsl(var(--services-cyan))]" />
+                <span className="text-sm text-[hsl(var(--services-cyan))]">Our Promise</span>
+              </span>
               <h2 className="text-4xl md:text-6xl font-display font-bold text-white mb-4">
                 Why Choose <span className="bg-gradient-to-r from-[hsl(var(--services-blue-light))] to-[hsl(var(--services-cyan))] bg-clip-text text-transparent">Us</span>
               </h2>
-              <div className="w-32 h-1 bg-gradient-to-r from-[hsl(var(--services-blue))] via-[hsl(var(--services-cyan))] to-[hsl(var(--services-blue))] mx-auto rounded-full" />
+              <div className="w-32 h-1 bg-gradient-to-r from-[hsl(var(--services-blue))] via-[hsl(var(--services-cyan))] to-[hsl(var(--services-blue))] mx-auto rounded-full section-divider-animated" />
             </motion.div>
 
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto">
@@ -416,17 +434,25 @@ const PravahaTattva = () => {
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
                   transition={{ duration: 0.4, delay: index * 0.1 }}
-                  className="group bg-gradient-to-b from-white/[0.05] to-transparent border border-[hsl(var(--services-blue))]/20 rounded-2xl p-6 hover:border-[hsl(var(--services-cyan))]/50 transition-all hover:shadow-[0_15px_40px_hsl(var(--services-blue)/0.15)]"
+                  whileHover={{ y: -5, scale: 1.02 }}
+                  className="group bg-gradient-to-b from-white/[0.08] to-transparent border border-[hsl(var(--services-blue))]/20 rounded-2xl p-6 hover:border-[hsl(var(--services-cyan))]/50 transition-all hover:shadow-[0_20px_50px_hsl(var(--services-blue)/0.2)] backdrop-blur-sm"
                 >
                   <div className="flex items-start gap-4">
-                    <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-[hsl(var(--services-blue))] to-[hsl(var(--services-cyan))] flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition-transform shadow-[0_8px_20px_hsl(var(--services-blue)/0.3)]">
-                      <CheckCircle className="w-6 h-6 text-white" />
-                    </div>
+                    <motion.div 
+                      className="w-14 h-14 rounded-2xl bg-gradient-to-br from-[hsl(var(--services-blue))] to-[hsl(var(--services-cyan))] flex items-center justify-center flex-shrink-0 shadow-[0_8px_25px_hsl(var(--services-blue)/0.4)]"
+                      whileHover={{ rotate: 5, scale: 1.1 }}
+                      transition={{ type: 'spring', stiffness: 300 }}
+                    >
+                      <item.icon className="w-7 h-7 text-white" />
+                    </motion.div>
                     <div>
-                      <h3 className="font-bold text-white mb-2 text-lg">{item.title}</h3>
-                      <p className="text-sm text-white/50 leading-relaxed">{item.desc}</p>
+                      <h3 className="font-display font-bold text-white mb-2 text-xl group-hover:text-[hsl(var(--services-cyan))] transition-colors">{item.title}</h3>
+                      <p className="text-sm text-white/60 leading-relaxed">{item.desc}</p>
                     </div>
                   </div>
+                  
+                  {/* Hover gradient line */}
+                  <div className="mt-4 h-0.5 w-0 group-hover:w-full transition-all duration-500 bg-gradient-to-r from-[hsl(var(--services-blue))] to-[hsl(var(--services-cyan))] rounded-full" />
                 </motion.div>
               ))}
             </div>
