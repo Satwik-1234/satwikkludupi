@@ -329,8 +329,8 @@ const PravahaTattva = () => {
               </p>
             </motion.div>
 
-            {/* 3D Service Cards Grid */}
-            <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+            {/* Service Cards Grid - Redesigned */}
+            <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
               {services.map((service, index) => (
                 <motion.div
                   key={service.title}
@@ -338,85 +338,51 @@ const PravahaTattva = () => {
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
                   transition={{ duration: 0.5, delay: index * 0.08 }}
-                  className="service-card-3d-wrapper"
-                  style={{ perspective: '1000px' }}
+                  className="group relative rounded-2xl overflow-hidden cursor-pointer bg-gradient-to-b from-white/[0.05] to-transparent border border-[hsl(var(--services-blue))]/20 hover:border-[hsl(var(--services-cyan))]/50 transition-all duration-500 hover:shadow-[0_20px_50px_hsl(var(--services-blue)/0.2)]"
                 >
-                  <div className="service-card-3d group relative cursor-pointer transition-all duration-500 hover:scale-[1.02]"
-                    style={{ transformStyle: 'preserve-3d' }}
-                  >
-                    {/* Card with 3D effect */}
-                    <div 
-                      className="relative overflow-hidden border-[3px] border-[hsl(var(--services-navy))] transition-all duration-500 group-hover:[transform:rotate3d(0.5,1,0,15deg)]"
-                      style={{
-                        transformStyle: 'preserve-3d',
-                        background: `linear-gradient(135deg, transparent 18.75%, hsl(var(--services-blue)/0.2) 31.25%, transparent 0),
-                          repeating-linear-gradient(45deg, hsl(var(--services-blue)/0.2) -6.25% 6.25%, hsl(var(--services-navy)) 0 18.75%)`,
-                        backgroundSize: '60px 60px',
-                        backgroundColor: 'hsl(var(--services-navy))',
-                        boxShadow: 'rgba(100, 160, 200, 0.3) 0px 30px 30px -10px'
-                      }}
-                    >
-                      {/* Date/Index Box */}
-                      <div 
-                        className="absolute top-4 right-4 h-14 w-14 bg-[hsl(var(--services-navy))] border border-[hsl(var(--services-cyan))] p-2 z-20 shadow-[rgba(100,100,111,0.2)_0px_17px_10px_-10px]"
-                        style={{ transform: 'translate3d(0px, 0px, 80px)' }}
-                      >
-                        <span className="block text-center text-[hsl(var(--services-cyan))] text-[9px] font-bold">SERVICE</span>
-                        <span className="block text-center text-[hsl(var(--services-cyan))] text-xl font-black">{String(index + 1).padStart(2, '0')}</span>
+                  {/* Background Image */}
+                  <div className="aspect-[4/5] relative">
+                    <img 
+                      src={service.image} 
+                      alt={service.title}
+                      className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110 opacity-40 group-hover:opacity-60"
+                    />
+                    
+                    {/* Gradient Overlay */}
+                    <div className="absolute inset-0 bg-gradient-to-t from-[hsl(var(--services-navy))] via-[hsl(var(--services-navy))]/80 to-transparent" />
+                    
+                    {/* Hover glow effect */}
+                    <div className="absolute inset-0 bg-gradient-to-t from-[hsl(var(--services-blue))]/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                    
+                    {/* Content */}
+                    <div className="absolute inset-0 flex flex-col justify-end p-6">
+                      {/* Icon */}
+                      <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-[hsl(var(--services-blue))] to-[hsl(var(--services-cyan))] flex items-center justify-center mb-4 shadow-[0_8px_25px_hsl(var(--services-blue)/0.4)] group-hover:scale-110 group-hover:rotate-3 transition-all duration-300">
+                        <service.icon className="w-7 h-7 text-white" />
                       </div>
-
-                      {/* Content Box */}
-                      <div 
-                        className="relative bg-gradient-to-br from-[hsl(var(--services-blue))] to-[hsl(var(--services-cyan))] p-6 pt-14 transition-all duration-500"
-                        style={{ transformStyle: 'preserve-3d' }}
-                      >
-                        {/* Icon */}
-                        <div 
-                          className="absolute -top-6 left-6 w-12 h-12 rounded-xl bg-[hsl(var(--services-navy))] border-2 border-[hsl(var(--services-cyan))] flex items-center justify-center shadow-lg transition-transform duration-500 group-hover:scale-110"
-                          style={{ transform: 'translate3d(0px, 0px, 50px)' }}
-                        >
-                          <service.icon className="w-6 h-6 text-[hsl(var(--services-cyan))]" />
-                        </div>
-
-                        {/* Title */}
-                        <h3 
-                          className="text-lg font-display font-black text-[hsl(var(--services-navy))] mb-2 transition-transform duration-500"
-                          style={{ transform: 'translate3d(0px, 0px, 50px)' }}
-                        >
-                          {service.title}
-                        </h3>
-                        
-                        {/* Description */}
-                        <p 
-                          className="text-[hsl(var(--services-navy))]/80 text-xs font-semibold leading-relaxed mb-4 transition-transform duration-500 line-clamp-3"
-                          style={{ transform: 'translate3d(0px, 0px, 30px)' }}
-                        >
+                      
+                      {/* Title */}
+                      <h3 className="text-xl font-display font-bold text-white mb-2 group-hover:text-[hsl(var(--services-cyan))] transition-colors">
+                        {service.title}
+                      </h3>
+                      
+                      {/* Description - Shown on hover */}
+                      <div className="overflow-hidden transition-all duration-500 max-h-0 group-hover:max-h-48 opacity-0 group-hover:opacity-100">
+                        <p className="text-white/70 text-sm mb-4 leading-relaxed">
                           {service.description}
                         </p>
                         
-                        {/* Features as "See More" button */}
-                        <div 
-                          className="flex flex-wrap gap-1 transition-transform duration-500"
-                          style={{ transform: 'translate3d(0px, 0px, 20px)' }}
-                        >
-                          {service.features.slice(0, 2).map((feature) => (
+                        {/* Features */}
+                        <div className="flex flex-wrap gap-2">
+                          {service.features.map((feature) => (
                             <span 
                               key={feature} 
-                              className="px-2 py-1 text-[9px] uppercase font-black bg-[hsl(var(--services-navy))] text-[hsl(var(--services-cyan))] transition-transform duration-500 hover:[transform:translate3d(0px,0px,40px)]"
+                              className="px-3 py-1.5 text-xs bg-[hsl(var(--services-blue))]/20 border border-[hsl(var(--services-cyan))]/30 rounded-full text-[hsl(var(--services-cyan))]"
                             >
                               {feature}
                             </span>
                           ))}
                         </div>
-                      </div>
-
-                      {/* Background Image (subtle) */}
-                      <div className="absolute inset-0 z-0 opacity-20 group-hover:opacity-30 transition-opacity">
-                        <img 
-                          src={service.image} 
-                          alt={service.title}
-                          className="w-full h-full object-cover"
-                        />
                       </div>
                     </div>
                   </div>

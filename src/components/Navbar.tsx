@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Menu, X, Sun, Moon, Type, Monitor, ALargeSmall } from 'lucide-react';
+import { Menu, X, Sun, Moon, Type } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import {
   DropdownMenu,
@@ -22,10 +22,10 @@ const navItems = [
 ];
 
 const textSizes = [
-  { label: 'Small', value: 'small', icon: 'S' },
-  { label: 'Medium', value: 'medium', icon: 'M' },
-  { label: 'Large', value: 'large', icon: 'L' },
-  { label: 'Extra Large', value: 'xlarge', icon: 'XL' },
+  { label: 'Small', value: 'small', class: 'text-sm' },
+  { label: 'Medium', value: 'medium', class: 'text-base' },
+  { label: 'Large', value: 'large', class: 'text-lg' },
+  { label: 'Extra Large', value: 'xlarge', class: 'text-xl' },
 ];
 
 const Navbar = () => {
@@ -106,133 +106,59 @@ const Navbar = () => {
             {/* Desktop Nav */}
             <div className="hidden lg:flex items-center gap-1">
               {navItems.map((item) => (
-                <motion.button
+                <button
                   key={item.label}
                   onClick={() => handleNavClick(item.href, (item as any).isExternal)}
-                  className="nav-link px-3 py-2 text-sm font-medium text-muted-foreground hover:text-foreground rounded-lg transition-all relative overflow-hidden group"
-                  whileHover={{ scale: 1.02 }}
-                  whileTap={{ scale: 0.98 }}
+                  className="px-3 py-2 text-sm font-medium text-muted-foreground hover:text-foreground hover:bg-muted/50 rounded-lg transition-colors"
                 >
-                  <span className="relative z-10">{item.label}</span>
-                  <motion.div 
-                    className="absolute inset-0 bg-muted/50 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity"
-                    layoutId="nav-hover"
-                  />
-                </motion.button>
+                  {item.label}
+                </button>
               ))}
             </div>
 
-            {/* Accessibility Controls - Modernized */}
-            <div className="flex items-center gap-1">
-              {/* Text Size Dropdown - Modern Design */}
+            {/* Accessibility Controls */}
+            <div className="flex items-center gap-2">
+              {/* Text Size Dropdown */}
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
-                  <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
-                    <Button 
-                      variant="ghost" 
-                      size="icon" 
-                      className="modern-icon-btn relative overflow-hidden rounded-xl text-muted-foreground hover:text-foreground hover:bg-gradient-to-br hover:from-primary/20 hover:to-accent/20 border border-transparent hover:border-primary/30 transition-all duration-300"
-                    >
-                      <ALargeSmall className="w-5 h-5" />
-                      <span className="sr-only">Text size</span>
-                    </Button>
-                  </motion.div>
+                  <Button variant="ghost" size="icon" className="text-muted-foreground hover:text-foreground">
+                    <Type className="w-5 h-5" />
+                  </Button>
                 </DropdownMenuTrigger>
-                <DropdownMenuContent 
-                  align="end" 
-                  className="bg-card/95 backdrop-blur-xl border border-border/50 rounded-xl shadow-xl p-1"
-                >
+                <DropdownMenuContent align="end">
                   {textSizes.map((size) => (
                     <DropdownMenuItem
                       key={size.value}
                       onClick={() => setTextSize(size.value)}
-                      className={`flex items-center gap-3 px-4 py-2.5 rounded-lg cursor-pointer transition-all ${
-                        textSize === size.value 
-                          ? 'bg-gradient-to-r from-primary/20 to-accent/20 text-primary border border-primary/30' 
-                          : 'hover:bg-muted/50'
-                      }`}
+                      className={textSize === size.value ? 'bg-primary/10 text-primary' : ''}
                     >
-                      <span className={`w-8 h-8 rounded-lg flex items-center justify-center font-bold text-xs ${
-                        textSize === size.value ? 'bg-primary text-primary-foreground' : 'bg-muted'
-                      }`}>
-                        {size.icon}
-                      </span>
-                      <span className="font-medium">{size.label}</span>
+                      <span className={size.class}>{size.label}</span>
                     </DropdownMenuItem>
                   ))}
                 </DropdownMenuContent>
               </DropdownMenu>
 
-              {/* Theme Toggle - Modern Animated Button */}
-              <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
-                <Button 
-                  variant="ghost" 
-                  size="icon" 
-                  onClick={toggleTheme}
-                  className="theme-toggle-btn relative overflow-hidden rounded-xl text-muted-foreground hover:text-foreground border border-transparent hover:border-primary/30 transition-all duration-300 group"
-                >
-                  <motion.div
-                    className="absolute inset-0 bg-gradient-to-br from-yellow-400/20 to-orange-500/20 opacity-0 group-hover:opacity-100 transition-opacity"
-                    initial={false}
-                    animate={isDarkMode ? { rotate: 0 } : { rotate: 180 }}
-                  />
-                  <AnimatePresence mode="wait">
-                    {isDarkMode ? (
-                      <motion.div
-                        key="sun"
-                        initial={{ rotate: -90, scale: 0, opacity: 0 }}
-                        animate={{ rotate: 0, scale: 1, opacity: 1 }}
-                        exit={{ rotate: 90, scale: 0, opacity: 0 }}
-                        transition={{ duration: 0.3 }}
-                      >
-                        <Sun className="w-5 h-5 text-yellow-500" />
-                      </motion.div>
-                    ) : (
-                      <motion.div
-                        key="moon"
-                        initial={{ rotate: 90, scale: 0, opacity: 0 }}
-                        animate={{ rotate: 0, scale: 1, opacity: 1 }}
-                        exit={{ rotate: -90, scale: 0, opacity: 0 }}
-                        transition={{ duration: 0.3 }}
-                      >
-                        <Moon className="w-5 h-5 text-blue-400" />
-                      </motion.div>
-                    )}
-                  </AnimatePresence>
-                </Button>
-              </motion.div>
+              {/* Theme Toggle */}
+              <Button 
+                variant="ghost" 
+                size="icon" 
+                onClick={toggleTheme}
+                className="text-muted-foreground hover:text-foreground"
+              >
+                {isDarkMode ? (
+                  <Sun className="w-5 h-5" />
+                ) : (
+                  <Moon className="w-5 h-5" />
+                )}
+              </Button>
 
               {/* Mobile Menu Button */}
-              <motion.button
+              <button
                 onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-                className="lg:hidden p-2 rounded-xl text-foreground hover:bg-muted/50 transition-colors"
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
+                className="lg:hidden p-2 text-foreground"
               >
-                <AnimatePresence mode="wait">
-                  {isMobileMenuOpen ? (
-                    <motion.div
-                      key="close"
-                      initial={{ rotate: -90, opacity: 0 }}
-                      animate={{ rotate: 0, opacity: 1 }}
-                      exit={{ rotate: 90, opacity: 0 }}
-                      transition={{ duration: 0.2 }}
-                    >
-                      <X className="w-6 h-6" />
-                    </motion.div>
-                  ) : (
-                    <motion.div
-                      key="menu"
-                      initial={{ rotate: 90, opacity: 0 }}
-                      animate={{ rotate: 0, opacity: 1 }}
-                      exit={{ rotate: -90, opacity: 0 }}
-                      transition={{ duration: 0.2 }}
-                    >
-                      <Menu className="w-6 h-6" />
-                    </motion.div>
-                  )}
-                </AnimatePresence>
-              </motion.button>
+                {isMobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+              </button>
             </div>
           </div>
         </div>
@@ -249,18 +175,14 @@ const Navbar = () => {
           >
             <div className="container mx-auto px-4 py-4">
               <div className="flex flex-col gap-2">
-                {navItems.map((item, index) => (
-                  <motion.button
+                {navItems.map((item) => (
+                  <button
                     key={item.label}
                     onClick={() => handleNavClick(item.href, (item as any).isExternal)}
-                    className="mobile-nav-link px-4 py-3 text-left font-medium text-muted-foreground hover:text-foreground hover:bg-gradient-to-r hover:from-primary/10 hover:to-accent/10 rounded-xl transition-all border border-transparent hover:border-primary/20"
-                    initial={{ opacity: 0, x: -20 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    transition={{ delay: index * 0.05 }}
-                    whileTap={{ scale: 0.98 }}
+                    className="px-4 py-3 text-left font-medium text-muted-foreground hover:text-foreground hover:bg-muted/50 rounded-lg transition-colors"
                   >
                     {item.label}
-                  </motion.button>
+                  </button>
                 ))}
               </div>
             </div>
