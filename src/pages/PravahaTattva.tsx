@@ -18,6 +18,7 @@ import dronePhotogrammetryImg from '@/assets/services/drone-photogrammetry.png';
 import droneMappingImg from '@/assets/services/drone-mapping.png';
 import multispectralImg from '@/assets/services/multispectral.png';
 import droneHeroImg from '@/assets/drone-hero.png';
+import ProfileCard3D from '@/components/ProfileCard3D';
 
 const services = [
   {
@@ -102,7 +103,7 @@ const expertise = [
   { label: 'Google Earth Engine', category: 'Remote Sensing' },
   { label: 'Agisoft Metashape', category: 'Photogrammetry' },
   { label: 'ANSYS CFD', category: 'Simulation' },
-  { label: 'AutoCAD', category: 'Design' }
+  { label: 'SolidWorks', category: 'CAD' }
 ];
 
 const PravahaTattva = () => {
@@ -222,22 +223,29 @@ const PravahaTattva = () => {
                 </div>
               </motion.div>
               
-              {/* Right - Drone Visual */}
+              {/* Right - 3D Profile Card + Drone */}
               <motion.div
                 initial={{ opacity: 0, scale: 0.9 }}
                 animate={{ opacity: 1, scale: 1 }}
                 transition={{ duration: 1, delay: 0.2 }}
                 className="relative hidden lg:flex items-center justify-center"
               >
-                <div className="absolute w-[400px] h-[400px] rounded-full border border-cyan-500/10" />
-                <div className="absolute w-[300px] h-[300px] rounded-full border border-cyan-500/20" />
+                {/* Decorative circles */}
+                <div className="absolute w-[500px] h-[500px] rounded-full border border-cyan-500/10" />
+                <div className="absolute w-[400px] h-[400px] rounded-full border border-cyan-500/20" />
                 
+                {/* 3D Profile Card */}
+                <div className="relative z-20">
+                  <ProfileCard3D variant="services" />
+                </div>
+                
+                {/* Floating drone image */}
                 <motion.img 
                   src={droneHeroImg} 
                   alt="UAV Survey Drone"
-                  className="w-[450px] relative z-10 drop-shadow-2xl"
-                  animate={{ y: [0, -15, 0] }}
-                  transition={{ duration: 5, repeat: Infinity, ease: 'easeInOut' }}
+                  className="absolute -top-20 -right-20 w-[200px] z-10 drop-shadow-2xl"
+                  animate={{ y: [0, -10, 0], rotate: [0, 5, 0] }}
+                  transition={{ duration: 4, repeat: Infinity, ease: 'easeInOut' }}
                 />
               </motion.div>
             </div>
