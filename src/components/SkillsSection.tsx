@@ -1,7 +1,7 @@
 import { motion, useInView } from 'framer-motion';
 import { useRef, useState } from 'react';
 import { 
-  Waves, Satellite, Camera, Ruler, Code, Database, Terminal
+  Waves, Satellite, Camera, Ruler, Code, Database
 } from 'lucide-react';
 
 const skillCategories = [
@@ -49,26 +49,28 @@ const SkillsSection = () => {
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
 
   return (
-    <section id="skills" className="py-24 relative overflow-hidden">
+    <section id="skills" className="py-28 relative overflow-hidden">
+      {/* Subtle background */}
+      <div className="absolute inset-0 bg-gradient-to-b from-transparent via-card/10 to-transparent" />
+      
       <div className="max-w-5xl mx-auto px-6 relative z-10" ref={ref}>
-        {/* Section Header - Terminal style */}
+        {/* Section Header - Minimal */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.6 }}
-          className="text-center mb-14"
+          className="text-center mb-16"
         >
-          <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-md bg-card/50 border border-border/30 mb-4">
-            <Terminal className="w-3.5 h-3.5 text-primary" />
-            <span className="text-xs text-muted-foreground font-mono">$ ls skills/</span>
-          </div>
+          <span className="text-primary text-sm font-medium uppercase tracking-widest mb-4 block">
+            Expertise
+          </span>
           <h2 className="text-3xl md:text-4xl font-light tracking-tight text-foreground">
             What I <span className="font-semibold bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">Specialize In</span>
           </h2>
         </motion.div>
 
-        {/* Skills Grid */}
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
+        {/* Skills Grid - Clean Cards */}
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-5">
           {skillCategories.map((category, index) => {
             const Icon = category.icon;
             const isHovered = hoveredIndex === index;
@@ -84,7 +86,7 @@ const SkillsSection = () => {
                 className="group relative"
               >
                 <motion.div 
-                  className="relative p-5 rounded-xl border border-border/30 bg-card/40 backdrop-blur-sm overflow-hidden h-full transition-all duration-300"
+                  className="relative p-5 rounded-2xl border border-border/30 bg-card/40 backdrop-blur-sm overflow-hidden h-full transition-all duration-300"
                   whileHover={{ 
                     borderColor: 'hsl(var(--primary) / 0.3)',
                     y: -4
@@ -93,34 +95,39 @@ const SkillsSection = () => {
                   {/* Gradient glow on hover */}
                   <motion.div
                     className={`absolute -inset-1 bg-gradient-to-r ${category.color} opacity-0 blur-xl transition-opacity duration-500 -z-10`}
-                    animate={{ opacity: isHovered ? 0.1 : 0 }}
+                    animate={{ opacity: isHovered ? 0.15 : 0 }}
                   />
 
-                  {/* Header */}
+                  {/* Header with icon */}
                   <div className="flex items-center gap-3 mb-4">
                     <motion.div 
-                      className={`w-9 h-9 rounded-lg bg-gradient-to-br ${category.color} p-[1px]`}
-                      animate={isHovered ? { scale: 1.1 } : { scale: 1 }}
+                      className={`w-10 h-10 rounded-xl bg-gradient-to-br ${category.color} p-[1px]`}
+                      animate={isHovered ? { scale: 1.1, rotate: 5 } : { scale: 1, rotate: 0 }}
                       transition={{ type: "spring", stiffness: 400 }}
                     >
-                      <div className="w-full h-full rounded-lg bg-card flex items-center justify-center">
-                        <Icon className="w-4 h-4 text-foreground" />
+                      <div className="w-full h-full rounded-xl bg-card flex items-center justify-center">
+                        <Icon className="w-5 h-5 text-foreground" />
                       </div>
                     </motion.div>
-                    <h3 className="text-sm font-medium text-foreground font-mono">
+                    <h3 className="text-base font-medium text-foreground">
                       {category.name}
                     </h3>
                   </div>
                   
                   {/* Tools */}
-                  <div className="flex flex-wrap gap-1.5">
-                    {category.tools.map((tool) => (
-                      <span
+                  <div className="flex flex-wrap gap-2">
+                    {category.tools.map((tool, toolIndex) => (
+                      <motion.span
                         key={tool}
-                        className="px-2.5 py-1 text-xs rounded-md border border-border/40 bg-background/60 text-muted-foreground hover:text-foreground hover:border-primary/30 transition-all cursor-default font-mono"
+                        initial={{ opacity: 0, scale: 0.9 }}
+                        animate={isInView ? { opacity: 1, scale: 1 } : {}}
+                        transition={{ 
+                          delay: index * 0.08 + toolIndex * 0.04,
+                        }}
+                        className="px-3 py-1.5 text-xs rounded-full border border-border/40 bg-background/60 text-muted-foreground hover:text-foreground hover:border-primary/30 transition-all cursor-default"
                       >
                         {tool}
-                      </span>
+                      </motion.span>
                     ))}
                   </div>
                 </motion.div>
@@ -129,12 +136,12 @@ const SkillsSection = () => {
           })}
         </div>
 
-        {/* Terminal Code Snippet */}
+        {/* Terminal Code Snippet - Professional */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ delay: 0.5 }}
-          className="mt-12 max-w-lg mx-auto"
+          transition={{ delay: 0.6 }}
+          className="mt-16 max-w-lg mx-auto"
         >
           <div className="rounded-xl border border-border/30 bg-card/60 backdrop-blur-sm overflow-hidden">
             {/* Terminal header */}
