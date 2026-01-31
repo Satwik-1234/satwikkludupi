@@ -1,7 +1,6 @@
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
-import { Linkedin, ArrowRight, ChevronDown } from 'lucide-react';
-import ProfileCard3D from './ProfileCard3D';
+import { Linkedin, ArrowRight, ChevronDown, Terminal, Code2 } from 'lucide-react';
 
 const HeroSection = () => {
   const scrollToAbout = () => {
@@ -9,106 +8,156 @@ const HeroSection = () => {
   };
 
   return (
-    <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
-      {/* Subtle gradient orbs */}
-      <div className="absolute top-1/3 left-1/4 w-[600px] h-[600px] bg-primary/8 rounded-full blur-[180px] pointer-events-none" />
-      <div className="absolute bottom-1/4 right-1/4 w-[500px] h-[500px] bg-secondary/6 rounded-full blur-[150px] pointer-events-none" />
+    <section className="relative min-h-screen flex items-center justify-center overflow-hidden pt-16">
+      {/* Terminal grid background */}
+      <div 
+        className="absolute inset-0 opacity-[0.03]"
+        style={{
+          backgroundImage: `linear-gradient(hsl(var(--primary)/0.3) 1px, transparent 1px),
+                           linear-gradient(90deg, hsl(var(--primary)/0.3) 1px, transparent 1px)`,
+          backgroundSize: '40px 40px'
+        }}
+      />
+      
+      {/* Subtle gradient orb */}
+      <div className="absolute top-1/4 left-1/3 w-[500px] h-[500px] bg-primary/5 rounded-full blur-[150px] pointer-events-none" />
 
       {/* Content */}
-      <div className="relative z-10 container mx-auto px-6 max-w-6xl">
+      <div className="relative z-10 container mx-auto px-6 max-w-4xl">
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 0.8 }}
-          className="flex flex-col lg:flex-row items-center gap-16 lg:gap-20"
+          className="text-center"
         >
-          {/* Left side - Clean text content */}
-          <div className="flex-1 text-center lg:text-left">
-            {/* Minimal Status */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.1 }}
-              className="inline-flex items-center gap-2 mb-8"
-            >
-              <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
-              <span className="text-sm text-muted-foreground font-light tracking-wide">Open to Opportunities</span>
-            </motion.div>
-
-            {/* Name - Large & Clean */}
-            <motion.h1
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.2 }}
-              className="text-5xl md:text-6xl lg:text-7xl font-light tracking-tight mb-3"
-            >
-              <span className="text-foreground">Satwik</span>
-              <br />
-              <span className="font-semibold bg-gradient-to-r from-primary via-secondary to-accent bg-clip-text text-transparent">
-                Udupi
-              </span>
-            </motion.h1>
-
-            {/* Title - Minimal */}
-            <motion.p
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.3 }}
-              className="text-xl md:text-2xl text-muted-foreground font-light mb-8"
-            >
-              Hydrologist & GIS Analyst
-            </motion.p>
-
-            {/* Tagline */}
-            <motion.p
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.4 }}
-              className="text-base md:text-lg text-muted-foreground/80 font-light max-w-md mx-auto lg:mx-0 mb-10 leading-relaxed"
-            >
-              Engineering sustainable solutions for water resource management through precision mapping and analysis.
-            </motion.p>
-
-            {/* CTA Buttons - Clean */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.5 }}
-              className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start"
-            >
-              <a 
-                href="https://www.linkedin.com/in/satwik-udupi-37304a231" 
-                target="_blank" 
-                rel="noopener noreferrer"
-                className="group inline-flex items-center justify-center gap-3 px-7 py-3.5 rounded-full bg-gradient-to-r from-primary to-secondary text-primary-foreground font-medium hover:shadow-[0_20px_40px_-15px_hsl(var(--primary)/0.5)] transition-all duration-300"
-              >
-                <Linkedin className="w-4 h-4" />
-                Connect
-                <ArrowRight className="w-4 h-4 opacity-0 -ml-2 group-hover:opacity-100 group-hover:ml-0 transition-all" />
-              </a>
-
-              <Link 
-                to="/pravaha-tattva"
-                className="group inline-flex items-center justify-center gap-3 px-7 py-3.5 rounded-full border border-border/50 bg-card/30 text-foreground font-medium hover:bg-card/60 hover:border-primary/30 transition-all duration-300"
-              >
-                Consulting
-                <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-              </Link>
-            </motion.div>
-          </div>
-
-          {/* Right side - 3D Profile Card */}
+          {/* Terminal Header */}
           <motion.div
-            initial={{ opacity: 0, scale: 0.9 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ delay: 0.3, duration: 0.8 }}
-            className="flex-shrink-0"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.1 }}
+            className="inline-flex items-center gap-3 mb-8"
           >
-            <ProfileCard3D variant="portfolio" />
+            <div className="flex items-center gap-1.5">
+              <div className="w-3 h-3 rounded-full bg-red-500/80" />
+              <div className="w-3 h-3 rounded-full bg-yellow-500/80" />
+              <div className="w-3 h-3 rounded-full bg-green-500/80" />
+            </div>
+            <div className="flex items-center gap-2 px-3 py-1 rounded-md bg-card/50 border border-border/30">
+              <Terminal className="w-3.5 h-3.5 text-primary" />
+              <span className="text-xs text-muted-foreground font-mono">~/satwik-udupi</span>
+            </div>
+          </motion.div>
+
+          {/* Name with typing effect style */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.2 }}
+            className="mb-4"
+          >
+            <span className="text-primary font-mono text-sm mb-2 block">{"// Hydrologist & GIS Engineer"}</span>
+            <h1 className="text-5xl md:text-6xl lg:text-7xl font-light tracking-tight">
+              <span className="text-muted-foreground font-mono text-lg md:text-xl mr-2">$</span>
+              <span className="font-semibold bg-gradient-to-r from-primary via-secondary to-accent bg-clip-text text-transparent">
+                Satwik Udupi
+              </span>
+              <motion.span 
+                className="inline-block w-0.5 h-12 md:h-14 bg-primary ml-2 align-middle"
+                animate={{ opacity: [1, 0] }}
+                transition={{ duration: 0.8, repeat: Infinity }}
+              />
+            </h1>
+          </motion.div>
+
+          {/* Code-style tagline */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.3 }}
+            className="max-w-xl mx-auto mb-10"
+          >
+            <div className="bg-card/40 backdrop-blur-sm border border-border/30 rounded-lg p-4 text-left font-mono text-sm">
+              <div className="text-muted-foreground">
+                <span className="text-pink-400">const</span>{' '}
+                <span className="text-yellow-400">engineer</span>{' '}
+                <span className="text-foreground/60">=</span>{' '}
+                <span className="text-foreground/60">{'{'}</span>
+              </div>
+              <div className="pl-4 text-muted-foreground">
+                <span className="text-foreground/70">focus</span>
+                <span className="text-foreground/40">: </span>
+                <span className="text-green-400">"Water Resources & GIS"</span>
+                <span className="text-foreground/40">,</span>
+              </div>
+              <div className="pl-4 text-muted-foreground">
+                <span className="text-foreground/70">tools</span>
+                <span className="text-foreground/40">: </span>
+                <span className="text-foreground/60">[</span>
+                <span className="text-green-400">"HEC-RAS"</span>
+                <span className="text-foreground/40">, </span>
+                <span className="text-green-400">"ArcGIS"</span>
+                <span className="text-foreground/40">, </span>
+                <span className="text-green-400">"Python"</span>
+                <span className="text-foreground/60">]</span>
+                <span className="text-foreground/40">,</span>
+              </div>
+              <div className="pl-4 text-muted-foreground">
+                <span className="text-foreground/70">status</span>
+                <span className="text-foreground/40">: </span>
+                <span className="text-green-400">"Open to Opportunities"</span>
+              </div>
+              <div className="text-foreground/60">{'}'}</div>
+            </div>
+          </motion.div>
+
+          {/* CTA Buttons */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.4 }}
+            className="flex flex-col sm:flex-row gap-4 justify-center"
+          >
+            <a 
+              href="https://www.linkedin.com/in/satwik-udupi-37304a231" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              className="group inline-flex items-center justify-center gap-3 px-6 py-3 rounded-lg bg-primary text-primary-foreground font-medium font-mono text-sm hover:bg-primary/90 transition-all duration-300"
+            >
+              <Code2 className="w-4 h-4" />
+              <span>connect()</span>
+              <Linkedin className="w-4 h-4" />
+            </a>
+
+            <Link 
+              to="/pravaha-tattva"
+              className="group inline-flex items-center justify-center gap-3 px-6 py-3 rounded-lg border border-border/50 bg-card/30 text-foreground font-medium font-mono text-sm hover:bg-card/60 hover:border-primary/30 transition-all duration-300"
+            >
+              <span>services()</span>
+              <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+            </Link>
+          </motion.div>
+
+          {/* Quick stats */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.5 }}
+            className="flex justify-center gap-8 mt-12 font-mono text-xs"
+          >
+            {[
+              { label: 'Projects', value: '20+' },
+              { label: 'Tools', value: '14+' },
+              { label: 'Experience', value: '2+ yrs' }
+            ].map((stat) => (
+              <div key={stat.label} className="text-center">
+                <div className="text-primary text-lg font-semibold">{stat.value}</div>
+                <div className="text-muted-foreground">{stat.label}</div>
+              </div>
+            ))}
           </motion.div>
         </motion.div>
 
-        {/* Scroll Indicator - Minimal */}
+        {/* Scroll Indicator */}
         <motion.button
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
@@ -120,7 +169,7 @@ const HeroSection = () => {
             animate={{ y: [0, 8, 0] }}
             transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
           >
-            <ChevronDown className="w-6 h-6 text-muted-foreground/40" />
+            <ChevronDown className="w-5 h-5 text-muted-foreground/40" />
           </motion.div>
         </motion.button>
       </div>
