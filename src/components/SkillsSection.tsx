@@ -1,51 +1,44 @@
 import { motion, useInView } from 'framer-motion';
 import { useRef, useState } from 'react';
 import { 
-  Waves, Mountain, Map, Satellite, Camera, FlaskConical, 
-  Code, Database, Layers, Ruler
+  Waves, Satellite, Camera, Ruler, Code, Database
 } from 'lucide-react';
 
 const skillCategories = [
   {
-    name: "Hydraulic & Hydrological Modeling",
+    name: "Hydraulic Modeling",
     icon: Waves,
-    tools: ["HEC-RAS", "HEC-HMS", "SWAT", "LISEM"],
-    description: "Flood simulation, rainfall-runoff analysis, and water resource assessment",
+    tools: ["HEC-RAS", "HEC-HMS", "SWAT"],
     color: "from-blue-500 to-cyan-400"
   },
   {
     name: "GIS & Remote Sensing",
     icon: Satellite,
-    tools: ["ArcGIS Pro", "QGIS", "Google Earth Engine", "ERDAS Imagine"],
-    description: "Spatial analysis, satellite imagery processing, and thematic mapping",
+    tools: ["ArcGIS Pro", "QGIS", "Google Earth Engine"],
     color: "from-emerald-500 to-teal-400"
   },
   {
-    name: "Photogrammetry & Surveying",
+    name: "Photogrammetry",
     icon: Camera,
-    tools: ["Agisoft Metashape", "WebODM", "Pix4D", "DGPS"],
-    description: "UAV data processing, orthomosaic generation, and terrain modeling",
+    tools: ["Agisoft Metashape", "WebODM", "Pix4D"],
     color: "from-violet-500 to-purple-400"
   },
   {
-    name: "CAD & Simulation",
+    name: "CAD & CFD",
     icon: Ruler,
-    tools: ["SolidWorks", "ANSYS CFD", "NX CAD"],
-    description: "3D modeling and computational fluid dynamics",
+    tools: ["SolidWorks", "ANSYS CFD"],
     color: "from-orange-500 to-amber-400"
   },
   {
-    name: "Programming & Scripting",
+    name: "Programming",
     icon: Code,
-    tools: ["Python", "JavaScript", "Google Colab", "Jupyter"],
-    description: "Geospatial scripting, automation, and analytical workflows",
+    tools: ["Python", "JavaScript", "R"],
     color: "from-pink-500 to-rose-400"
   },
   {
-    name: "Satellite Data & Analysis",
+    name: "Data Analysis",
     icon: Database,
-    tools: ["Sentinel-2", "Landsat", "SRTM DEM", "CHIRPS"],
-    description: "Multi-temporal analysis and environmental monitoring",
+    tools: ["Google Colab", "Jupyter", "Pandas"],
     color: "from-indigo-500 to-blue-400"
   }
 ];
@@ -56,39 +49,28 @@ const SkillsSection = () => {
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
 
   return (
-    <section id="skills" className="py-32 relative overflow-hidden">
-      {/* Background elements */}
-      <div className="absolute inset-0 bg-gradient-to-b from-background via-card/20 to-background" />
-      <div className="absolute top-1/4 left-0 w-[500px] h-[500px] bg-primary/5 rounded-full blur-[150px]" />
-      <div className="absolute bottom-1/4 right-0 w-[400px] h-[400px] bg-secondary/5 rounded-full blur-[120px]" />
+    <section id="skills" className="py-28 relative overflow-hidden">
+      {/* Subtle background */}
+      <div className="absolute inset-0 bg-gradient-to-b from-transparent via-card/10 to-transparent" />
       
-      <div className="max-w-6xl mx-auto px-6 relative z-10" ref={ref}>
-        {/* Section Header */}
+      <div className="max-w-5xl mx-auto px-6 relative z-10" ref={ref}>
+        {/* Section Header - Minimal */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.6 }}
-          className="mb-16"
+          className="text-center mb-16"
         >
-          <div className="flex items-center gap-4 mb-4">
-            <span className="text-primary text-sm font-medium uppercase tracking-widest">Capabilities</span>
-            <motion.div 
-              className="h-px flex-1 max-w-[100px] bg-gradient-to-r from-primary to-transparent"
-              initial={{ scaleX: 0 }}
-              animate={isInView ? { scaleX: 1 } : {}}
-              transition={{ duration: 0.8, delay: 0.2 }}
-            />
-          </div>
-          <h2 className="text-4xl md:text-5xl font-light tracking-tight text-foreground mb-4">
-            Technical <span className="font-semibold bg-gradient-to-r from-primary via-secondary to-accent bg-clip-text text-transparent">Expertise</span>
+          <span className="text-primary text-sm font-medium uppercase tracking-widest mb-4 block">
+            Expertise
+          </span>
+          <h2 className="text-3xl md:text-4xl font-light tracking-tight text-foreground">
+            What I <span className="font-semibold bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">Specialize In</span>
           </h2>
-          <p className="text-muted-foreground text-lg font-light max-w-2xl">
-            Industry-standard tools and methodologies for comprehensive geospatial and hydrological analysis.
-          </p>
         </motion.div>
 
-        {/* Skills Grid - Hexagonal-inspired layout */}
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {/* Skills Grid - Clean Cards */}
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-5">
           {skillCategories.map((category, index) => {
             const Icon = category.icon;
             const isHovered = hoveredIndex === index;
@@ -96,163 +78,98 @@ const SkillsSection = () => {
             return (
               <motion.div
                 key={category.name}
-                initial={{ opacity: 0, y: 30 }}
+                initial={{ opacity: 0, y: 20 }}
                 animate={isInView ? { opacity: 1, y: 0 } : {}}
-                transition={{ duration: 0.5, delay: index * 0.1 }}
+                transition={{ duration: 0.4, delay: index * 0.08 }}
                 onMouseEnter={() => setHoveredIndex(index)}
                 onMouseLeave={() => setHoveredIndex(null)}
                 className="group relative"
               >
-                {/* Card */}
                 <motion.div 
-                  className="relative p-6 rounded-2xl border border-border/30 bg-card/50 backdrop-blur-sm overflow-hidden transition-all duration-500 h-full"
+                  className="relative p-5 rounded-2xl border border-border/30 bg-card/40 backdrop-blur-sm overflow-hidden h-full transition-all duration-300"
                   whileHover={{ 
-                    borderColor: 'hsl(var(--primary) / 0.4)',
-                    backgroundColor: 'hsl(var(--card) / 0.8)',
-                  }}
-                  style={{
-                    transformStyle: 'preserve-3d',
-                    perspective: '1000px',
+                    borderColor: 'hsl(var(--primary) / 0.3)',
+                    y: -4
                   }}
                 >
-                  {/* Gradient background on hover */}
+                  {/* Gradient glow on hover */}
                   <motion.div
-                    className={`absolute inset-0 bg-gradient-to-br ${category.color} opacity-0 group-hover:opacity-5 transition-opacity duration-500`}
-                  />
-                  
-                  {/* Animated border glow */}
-                  <motion.div
-                    className={`absolute -inset-px rounded-2xl bg-gradient-to-r ${category.color} opacity-0 group-hover:opacity-30 blur-sm transition-opacity duration-500 -z-10`}
+                    className={`absolute -inset-1 bg-gradient-to-r ${category.color} opacity-0 blur-xl transition-opacity duration-500 -z-10`}
+                    animate={{ opacity: isHovered ? 0.15 : 0 }}
                   />
 
-                  {/* Icon with floating animation */}
-                  <motion.div 
-                    className={`w-14 h-14 rounded-xl bg-gradient-to-br ${category.color} p-[1px] mb-4`}
-                    animate={isHovered ? { y: -4, rotate: 5 } : { y: 0, rotate: 0 }}
-                    transition={{ type: "spring", stiffness: 300 }}
-                  >
-                    <div className="w-full h-full rounded-xl bg-card flex items-center justify-center">
-                      <Icon className="w-6 h-6 text-foreground" />
-                    </div>
-                  </motion.div>
+                  {/* Header with icon */}
+                  <div className="flex items-center gap-3 mb-4">
+                    <motion.div 
+                      className={`w-10 h-10 rounded-xl bg-gradient-to-br ${category.color} p-[1px]`}
+                      animate={isHovered ? { scale: 1.1, rotate: 5 } : { scale: 1, rotate: 0 }}
+                      transition={{ type: "spring", stiffness: 400 }}
+                    >
+                      <div className="w-full h-full rounded-xl bg-card flex items-center justify-center">
+                        <Icon className="w-5 h-5 text-foreground" />
+                      </div>
+                    </motion.div>
+                    <h3 className="text-base font-medium text-foreground">
+                      {category.name}
+                    </h3>
+                  </div>
                   
-                  {/* Category name with underline effect */}
-                  <h3 className="text-lg font-medium text-foreground mb-2 relative inline-block">
-                    {category.name}
-                    <motion.span 
-                      className={`absolute bottom-0 left-0 h-0.5 bg-gradient-to-r ${category.color}`}
-                      initial={{ width: 0 }}
-                      animate={{ width: isHovered ? '100%' : 0 }}
-                      transition={{ duration: 0.3 }}
-                    />
-                  </h3>
-                  
-                  {/* Description */}
-                  <p className="text-sm text-muted-foreground mb-5 font-light leading-relaxed">
-                    {category.description}
-                  </p>
-                  
-                  {/* Tools with stagger animation */}
+                  {/* Tools */}
                   <div className="flex flex-wrap gap-2">
                     {category.tools.map((tool, toolIndex) => (
                       <motion.span
                         key={tool}
-                        initial={{ opacity: 0, scale: 0.8 }}
+                        initial={{ opacity: 0, scale: 0.9 }}
                         animate={isInView ? { opacity: 1, scale: 1 } : {}}
                         transition={{ 
-                          delay: index * 0.1 + toolIndex * 0.05,
-                          type: "spring",
-                          stiffness: 300
+                          delay: index * 0.08 + toolIndex * 0.04,
                         }}
-                        whileHover={{ 
-                          scale: 1.05, 
-                          backgroundColor: 'hsl(var(--primary) / 0.15)',
-                        }}
-                        className="px-3 py-1.5 text-xs rounded-full border border-border/50 bg-background/50 text-muted-foreground hover:text-foreground hover:border-primary/30 transition-all cursor-default"
+                        className="px-3 py-1.5 text-xs rounded-full border border-border/40 bg-background/60 text-muted-foreground hover:text-foreground hover:border-primary/30 transition-all cursor-default"
                       >
                         {tool}
                       </motion.span>
                     ))}
                   </div>
-
-                  {/* Corner decoration */}
-                  <motion.div
-                    className={`absolute top-0 right-0 w-20 h-20 bg-gradient-to-br ${category.color} opacity-5 rounded-bl-full`}
-                    animate={isHovered ? { scale: 1.5, opacity: 0.1 } : { scale: 1, opacity: 0.05 }}
-                    transition={{ duration: 0.3 }}
-                  />
                 </motion.div>
-
-                {/* Floating particles on hover */}
-                {isHovered && (
-                  <>
-                    {[...Array(3)].map((_, i) => (
-                      <motion.div
-                        key={i}
-                        className={`absolute w-1 h-1 rounded-full bg-gradient-to-r ${category.color}`}
-                        initial={{ 
-                          x: 100 + i * 30, 
-                          y: 100,
-                          opacity: 0 
-                        }}
-                        animate={{ 
-                          y: [100, 20],
-                          opacity: [0, 1, 0],
-                        }}
-                        transition={{ 
-                          duration: 1,
-                          delay: i * 0.2,
-                          repeat: Infinity,
-                        }}
-                      />
-                    ))}
-                  </>
-                )}
               </motion.div>
             );
           })}
         </div>
 
-        {/* Terminal-style code snippet */}
+        {/* Terminal Code Snippet - Professional */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ delay: 0.8 }}
-          className="mt-16 max-w-2xl mx-auto"
+          transition={{ delay: 0.6 }}
+          className="mt-16 max-w-lg mx-auto"
         >
-          <div className="rounded-xl border border-border/30 bg-card/80 backdrop-blur-sm overflow-hidden">
+          <div className="rounded-xl border border-border/30 bg-card/60 backdrop-blur-sm overflow-hidden">
             {/* Terminal header */}
-            <div className="flex items-center gap-2 px-4 py-3 border-b border-border/20">
-              <div className="w-3 h-3 rounded-full bg-red-500/80" />
-              <div className="w-3 h-3 rounded-full bg-yellow-500/80" />
-              <div className="w-3 h-3 rounded-full bg-green-500/80" />
-              <span className="text-xs text-muted-foreground ml-2 font-mono">expertise.py</span>
+            <div className="flex items-center gap-2 px-4 py-2.5 border-b border-border/20 bg-card/40">
+              <div className="w-2.5 h-2.5 rounded-full bg-red-400/80" />
+              <div className="w-2.5 h-2.5 rounded-full bg-yellow-400/80" />
+              <div className="w-2.5 h-2.5 rounded-full bg-green-400/80" />
+              <span className="text-xs text-muted-foreground/60 ml-2 font-mono">profile.py</span>
             </div>
             
             {/* Code content */}
             <div className="p-4 font-mono text-sm">
-              <div className="text-muted-foreground">
+              <div className="text-muted-foreground/80">
                 <span className="text-pink-400">class</span>{' '}
                 <span className="text-yellow-400">HydrologistGIS</span>
-                <span className="text-foreground">:</span>
+                <span className="text-foreground/60">:</span>
               </div>
-              <div className="pl-4 mt-1">
-                <span className="text-muted-foreground">skills</span>
-                <span className="text-foreground"> = </span>
-                <span className="text-cyan-400">[</span>
-                <span className="text-green-400">"GIS"</span>
-                <span className="text-foreground">, </span>
-                <span className="text-green-400">"Hydrology"</span>
-                <span className="text-foreground">, </span>
-                <span className="text-green-400">"Remote Sensing"</span>
-                <span className="text-cyan-400">]</span>
+              <div className="pl-4 mt-1 text-muted-foreground/80">
+                <span className="text-foreground/50">focus</span>
+                <span className="text-foreground/40"> = </span>
+                <span className="text-green-400">"Water + GIS + Data"</span>
               </div>
-              <div className="pl-4 mt-1">
-                <span className="text-muted-foreground">status</span>
-                <span className="text-foreground"> = </span>
-                <span className="text-green-400">"Available for projects"</span>
+              <div className="pl-4 mt-1 text-muted-foreground/80">
+                <span className="text-foreground/50">status</span>
+                <span className="text-foreground/40"> = </span>
+                <span className="text-green-400">"Available"</span>
                 <motion.span 
-                  className="inline-block w-2 h-4 bg-primary ml-1"
+                  className="inline-block w-1.5 h-4 bg-primary/70 ml-1 align-middle"
                   animate={{ opacity: [1, 0] }}
                   transition={{ duration: 0.8, repeat: Infinity }}
                 />
