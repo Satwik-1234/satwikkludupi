@@ -1,164 +1,144 @@
 import { motion, useInView } from 'framer-motion';
 import { useRef } from 'react';
-import { MapPin, Droplets, Layers, Mountain, ArrowUpRight } from 'lucide-react';
-
-const metrics = [
-  { value: '6+', label: 'Major Projects', sublabel: 'Completed' },
-  { value: '20+', label: 'Certifications', sublabel: 'Earned' },
-  { value: '4+', label: 'Organizations', sublabel: 'Collaborated' },
-];
+import { MapPin, Droplets, Layers, Mountain, ArrowUpRight, Sparkles } from 'lucide-react';
 
 const focus = [
   { 
     icon: Droplets, 
     title: 'Hydraulic Engineering', 
-    description: 'Flood risk assessment, dam break analysis, and water resource infrastructure planning.' 
+    description: 'Flood risk assessment, dam break analysis, and water resource infrastructure planning.',
+    gradient: 'from-blue-500 to-cyan-400'
   },
   { 
     icon: Mountain, 
     title: 'Watershed Management', 
-    description: 'Catchment analysis, runoff modeling, and sustainable land-water conservation strategies.' 
+    description: 'Catchment analysis, runoff modeling, and sustainable land-water conservation strategies.',
+    gradient: 'from-emerald-500 to-teal-400'
   },
   { 
     icon: Layers, 
     title: 'Geospatial Intelligence', 
-    description: 'Remote sensing, LULC classification, and spatial data analysis for informed decision-making.' 
+    description: 'Remote sensing, LULC classification, and spatial data analysis for informed decisions.',
+    gradient: 'from-violet-500 to-purple-400'
   },
 ];
 
 const AboutSection = () => {
   const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, margin: "-50px" });
+  const isInView = useInView(ref, { once: true, margin: "-100px" });
 
   return (
-    <section id="about" className="py-32 relative">
+    <section id="about" className="py-32 relative overflow-hidden">
+      {/* Background elements */}
+      <div className="absolute inset-0 bg-gradient-to-b from-transparent via-card/5 to-transparent" />
+      
       <div className="max-w-6xl mx-auto px-6" ref={ref}>
         {/* Section Header */}
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: 30 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.6 }}
           className="mb-20"
         >
-          <span className="text-primary text-sm font-medium uppercase tracking-widest mb-4 block">About</span>
-          <h2 className="text-4xl md:text-5xl font-light tracking-tight text-foreground mb-6">
-            Agricultural Engineer with a focus on
+          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-primary/20 bg-primary/5 mb-6">
+            <Sparkles className="w-4 h-4 text-primary" />
+            <span className="text-sm font-medium text-primary">About Me</span>
+          </div>
+          
+          <h2 className="text-4xl md:text-5xl lg:text-6xl font-light tracking-tight text-foreground mb-6">
+            Agricultural Engineer with
             <br />
-            <span className="font-semibold">Water Resource Technology</span>
+            <span className="font-bold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
+              Water Resource Expertise
+            </span>
           </h2>
-          <p className="text-muted-foreground text-lg font-light max-w-2xl leading-relaxed">
+          <p className="text-muted-foreground text-lg md:text-xl font-light max-w-2xl leading-relaxed">
             Combining field expertise with advanced geospatial tools to deliver data-driven solutions 
-            for sustainable land and water management across Maharashtra.
+            for sustainable land and water management.
           </p>
         </motion.div>
 
-        {/* Metrics - Minimal horizontal display */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.6, delay: 0.1 }}
-          className="grid grid-cols-3 gap-8 mb-20 py-12 border-y border-border/30"
-        >
-          {metrics.map((metric, index) => (
-            <motion.div
-              key={metric.label}
-              initial={{ opacity: 0, y: 20 }}
-              animate={isInView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.5, delay: 0.2 + index * 0.1 }}
-              className="text-center"
-            >
-              <p className="text-5xl md:text-6xl font-light text-foreground mb-2">{metric.value}</p>
-              <p className="text-foreground font-medium">{metric.label}</p>
-              <p className="text-sm text-muted-foreground">{metric.sublabel}</p>
-            </motion.div>
-          ))}
-        </motion.div>
-
-        {/* Focus Areas */}
+        {/* Focus Areas - Modern Cards */}
         <div className="grid md:grid-cols-3 gap-6 mb-20">
           {focus.map((item, index) => (
             <motion.div
               key={item.title}
-              initial={{ opacity: 0, y: 20 }}
+              initial={{ opacity: 0, y: 30 }}
               animate={isInView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.5, delay: 0.3 + index * 0.1 }}
-              className="group p-8 rounded-2xl border border-border/30 bg-card/30 hover:border-primary/30 hover:bg-card/50 transition-all duration-300"
+              transition={{ duration: 0.5, delay: 0.2 + index * 0.1 }}
+              className="group relative"
             >
-              <div className="w-12 h-12 rounded-xl bg-primary/10 border border-primary/20 flex items-center justify-center mb-6 group-hover:bg-primary/20 transition-colors">
-                <item.icon className="w-5 h-5 text-primary" />
+              <div className="relative p-8 rounded-3xl border border-border/50 bg-card/30 backdrop-blur-sm hover:border-border hover:bg-card/50 transition-all duration-500 h-full overflow-hidden">
+                {/* Gradient hover effect */}
+                <div className={`absolute inset-0 bg-gradient-to-br ${item.gradient} opacity-0 group-hover:opacity-5 transition-opacity duration-500`} />
+                
+                <div className="relative">
+                  <div className={`w-14 h-14 rounded-2xl bg-gradient-to-br ${item.gradient} p-[1px] mb-6`}>
+                    <div className="w-full h-full rounded-2xl bg-card flex items-center justify-center">
+                      <item.icon className="w-6 h-6 text-foreground" />
+                    </div>
+                  </div>
+                  
+                  <h3 className="text-xl font-semibold text-foreground mb-3 group-hover:text-primary transition-colors">
+                    {item.title}
+                  </h3>
+                  <p className="text-muted-foreground text-sm leading-relaxed">
+                    {item.description}
+                  </p>
+                </div>
               </div>
-              <h3 className="text-xl font-medium text-foreground mb-3 group-hover:text-primary transition-colors">
-                {item.title}
-              </h3>
-              <p className="text-muted-foreground text-sm leading-relaxed font-light">
-                {item.description}
-              </p>
             </motion.div>
           ))}
         </div>
 
-        {/* About Content - Two column */}
+        {/* Content Grid */}
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: 30 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.6, delay: 0.4 }}
-          className="grid md:grid-cols-2 gap-12"
+          className="grid lg:grid-cols-5 gap-8"
         >
           {/* Left - Bio */}
-          <div className="space-y-6">
-            <p className="text-lg text-foreground leading-relaxed font-light">
-              With a foundation in <span className="font-medium">Agricultural Engineering</span> and specialized 
-              training in GIS and hydrological modeling, I bridge the gap between field-level challenges and 
-              technology-driven solutions.
-            </p>
-            <p className="text-muted-foreground leading-relaxed">
-              My work spans collaborative projects with Shivaji University, the Forest Department of Maharashtra, 
-              and various research institutions—focusing on watershed conservation, flood risk assessment, and 
-              sustainable agricultural practices.
-            </p>
-            
-            {/* Tech stack */}
-            <div className="pt-6 border-t border-border/30">
-              <p className="text-sm text-muted-foreground mb-4 uppercase tracking-wider">Core Technologies</p>
-              <div className="flex flex-wrap gap-2">
-                {['HEC-RAS', 'HEC-HMS', 'ArcGIS Pro', 'QGIS', 'Google Earth Engine', 'ANSYS CFD'].map((tool) => (
-                  <span 
-                    key={tool}
-                    className="px-4 py-2 rounded-full border border-border/50 bg-card/50 text-sm text-muted-foreground hover:border-primary/30 hover:text-foreground transition-all"
-                  >
-                    {tool}
-                  </span>
-                ))}
-              </div>
+          <div className="lg:col-span-3 space-y-6">
+            <div className="p-8 rounded-3xl border border-border/50 bg-card/30 backdrop-blur-sm">
+              <p className="text-lg text-foreground leading-relaxed mb-6">
+                With a foundation in <span className="font-semibold text-primary">Agricultural Engineering</span> and specialized 
+                training in GIS and hydrological modeling, I bridge the gap between field-level challenges and 
+                technology-driven solutions.
+              </p>
+              <p className="text-muted-foreground leading-relaxed">
+                My work spans collaborative projects with Shivaji University, the Forest Department of Maharashtra, 
+                and various research institutions—focusing on watershed conservation, flood risk assessment, and 
+                sustainable agricultural practices.
+              </p>
             </div>
           </div>
 
           {/* Right - Location & CTA */}
-          <div className="space-y-6">
-            {/* Location */}
-            <div className="p-6 rounded-2xl border border-border/30 bg-card/30">
+          <div className="lg:col-span-2 space-y-6">
+            {/* Location Card */}
+            <div className="p-6 rounded-3xl border border-border/50 bg-card/30 backdrop-blur-sm">
               <div className="flex items-start gap-4">
-                <div className="w-10 h-10 rounded-lg bg-secondary/10 flex items-center justify-center flex-shrink-0">
-                  <MapPin className="w-5 h-5 text-secondary" />
+                <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-accent/20 to-accent/5 flex items-center justify-center flex-shrink-0">
+                  <MapPin className="w-5 h-5 text-accent" />
                 </div>
                 <div>
-                  <p className="text-sm text-muted-foreground">Based in</p>
-                  <p className="text-lg font-medium text-foreground">Karad, Maharashtra</p>
-                  <p className="text-sm text-muted-foreground mt-1">Available for remote & on-site projects across India</p>
+                  <p className="text-sm text-muted-foreground mb-1">Based in</p>
+                  <p className="text-lg font-semibold text-foreground">Karad, Maharashtra</p>
+                  <p className="text-sm text-muted-foreground mt-2">Available for remote & on-site projects</p>
                 </div>
               </div>
             </div>
 
             {/* CTA Card */}
-            <div className="p-6 rounded-2xl border border-primary/20 bg-primary/5">
-              <h4 className="text-foreground font-medium mb-2">Looking to Collaborate?</h4>
+            <div className="p-6 rounded-3xl border border-primary/20 bg-gradient-to-br from-primary/10 to-primary/5">
+              <h4 className="text-foreground font-semibold mb-2">Looking to Collaborate?</h4>
               <p className="text-muted-foreground text-sm mb-4 leading-relaxed">
-                Open to consulting opportunities, research collaborations, and projects focused on 
-                sustainable water resource management.
+                Open to consulting, research collaborations, and sustainable water projects.
               </p>
               <a 
                 href="#contact"
-                className="inline-flex items-center gap-2 text-primary text-sm font-medium hover:gap-3 transition-all"
+                className="inline-flex items-center gap-2 text-primary text-sm font-semibold hover:gap-3 transition-all"
               >
                 Get in touch
                 <ArrowUpRight className="w-4 h-4" />
