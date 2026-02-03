@@ -1,6 +1,6 @@
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
-import { Linkedin, ArrowRight, ChevronDown, Download, MapPin, Droplets } from 'lucide-react';
+import { Linkedin, ArrowRight, ChevronDown, Download, Droplets, MapPin } from 'lucide-react';
 import profilePhoto from '@/assets/profile-photo.png';
 
 const HeroSection = () => {
@@ -9,77 +9,91 @@ const HeroSection = () => {
   };
 
   return (
-    <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
-      {/* GIS-inspired grid background */}
-      <div className="absolute inset-0 opacity-[0.03]">
-        <div 
-          className="absolute inset-0" 
-          style={{
-            backgroundImage: `
-              linear-gradient(hsl(var(--primary)) 1px, transparent 1px),
-              linear-gradient(90deg, hsl(var(--primary)) 1px, transparent 1px)
-            `,
-            backgroundSize: '60px 60px'
+    <section className="relative min-h-screen flex items-center justify-center overflow-hidden bg-background">
+      {/* Animated gradient mesh background */}
+      <div className="absolute inset-0">
+        <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-accent/5" />
+        <motion.div 
+          className="absolute top-1/4 -left-32 w-96 h-96 bg-primary/10 rounded-full blur-[120px]"
+          animate={{ 
+            x: [0, 50, 0],
+            y: [0, 30, 0],
           }}
+          transition={{ duration: 20, repeat: Infinity, ease: "easeInOut" }}
+        />
+        <motion.div 
+          className="absolute bottom-1/4 -right-32 w-96 h-96 bg-accent/10 rounded-full blur-[120px]"
+          animate={{ 
+            x: [0, -50, 0],
+            y: [0, -30, 0],
+          }}
+          transition={{ duration: 25, repeat: Infinity, ease: "easeInOut" }}
         />
       </div>
 
-      {/* Topographic contour lines effect */}
-      <div className="absolute inset-0 pointer-events-none overflow-hidden">
-        {[...Array(5)].map((_, i) => (
+      {/* Floating elements */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+        {[...Array(6)].map((_, i) => (
           <motion.div
             key={i}
-            className="absolute rounded-full border border-primary/5"
+            className="absolute w-1 h-1 bg-primary/20 rounded-full"
             style={{
-              width: `${400 + i * 200}px`,
-              height: `${400 + i * 200}px`,
-              left: '50%',
-              top: '50%',
-              transform: 'translate(-50%, -50%)',
+              left: `${20 + i * 15}%`,
+              top: `${30 + (i % 3) * 20}%`,
             }}
-            initial={{ opacity: 0, scale: 0.8 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ delay: 0.2 + i * 0.15, duration: 1 }}
+            animate={{
+              y: [0, -30, 0],
+              opacity: [0.2, 0.5, 0.2],
+            }}
+            transition={{
+              duration: 4 + i,
+              repeat: Infinity,
+              delay: i * 0.5,
+            }}
           />
         ))}
       </div>
 
-      {/* Gradient orb */}
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-primary/5 rounded-full blur-[150px] pointer-events-none" />
-
       {/* Content */}
-      <div className="relative z-10 container mx-auto px-6 max-w-5xl">
+      <div className="relative z-10 container mx-auto px-6 max-w-4xl">
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 0.8 }}
           className="flex flex-col items-center text-center"
         >
-          {/* Profile Image */}
+          {/* Status badge */}
+          <motion.div
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.1 }}
+            className="mb-8"
+          >
+            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-emerald-500/30 bg-emerald-500/10">
+              <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
+              <span className="text-sm text-emerald-400 font-medium">Open to Opportunities</span>
+            </div>
+          </motion.div>
+
+          {/* Profile Image with elegant ring */}
           <motion.div
             initial={{ opacity: 0, scale: 0.9 }}
             animate={{ opacity: 1, scale: 1 }}
-            transition={{ delay: 0.1, duration: 0.6 }}
-            className="relative mb-8"
+            transition={{ delay: 0.2, duration: 0.6 }}
+            className="relative mb-10"
           >
             <div className="relative">
-              <div className="w-28 h-28 md:w-32 md:h-32 rounded-full overflow-hidden ring-2 ring-border/50 ring-offset-4 ring-offset-background">
+              {/* Outer glow ring */}
+              <div className="absolute -inset-4 bg-gradient-to-r from-primary/20 via-accent/20 to-primary/20 rounded-full blur-xl opacity-60" />
+              
+              {/* Profile container */}
+              <div className="relative w-36 h-36 md:w-44 md:h-44 rounded-full overflow-hidden ring-2 ring-border/30 ring-offset-4 ring-offset-background">
                 <img 
                   src={profilePhoto} 
-                  alt="Satwik Udupi"
+                  alt="Satwik Udupi - Agricultural Engineer & GIS Analyst"
                   className="w-full h-full object-cover"
                 />
               </div>
-              {/* Status indicator */}
-              <motion.div 
-                className="absolute -bottom-1 -right-1 flex items-center gap-1.5 px-2.5 py-1 bg-card border border-border rounded-full"
-                initial={{ opacity: 0, y: 10 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.4 }}
-              >
-                <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
-                <span className="text-[10px] text-muted-foreground font-medium">Available</span>
-              </motion.div>
             </div>
           </motion.div>
 
@@ -87,30 +101,30 @@ const HeroSection = () => {
           <motion.h1
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.2 }}
-            className="text-4xl md:text-5xl lg:text-6xl font-light tracking-tight mb-4"
+            transition={{ delay: 0.3 }}
+            className="text-5xl md:text-6xl lg:text-7xl font-light tracking-tight mb-6"
           >
             <span className="text-foreground">Satwik </span>
-            <span className="font-semibold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
+            <span className="font-bold bg-gradient-to-r from-primary via-accent to-primary bg-clip-text text-transparent bg-[length:200%_auto] animate-gradient-x">
               Udupi
             </span>
           </motion.h1>
 
-          {/* Title with GIS icon */}
+          {/* Role tags */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.3 }}
-            className="flex items-center gap-3 mb-6"
+            transition={{ delay: 0.4 }}
+            className="flex flex-wrap justify-center items-center gap-3 mb-8"
           >
-            <div className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-primary/10 border border-primary/20">
-              <Droplets className="w-3.5 h-3.5 text-primary" />
-              <span className="text-sm font-medium text-primary">Hydrologist</span>
+            <div className="flex items-center gap-2 px-4 py-2 rounded-full bg-card/50 border border-border/50 backdrop-blur-sm">
+              <Droplets className="w-4 h-4 text-primary" />
+              <span className="text-sm font-medium text-foreground">Hydrologist</span>
             </div>
-            <span className="text-muted-foreground/40">•</span>
-            <div className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-accent/10 border border-accent/20">
-              <MapPin className="w-3.5 h-3.5 text-accent" />
-              <span className="text-sm font-medium text-accent">GIS Analyst</span>
+            <span className="text-muted-foreground/30 hidden sm:block">•</span>
+            <div className="flex items-center gap-2 px-4 py-2 rounded-full bg-card/50 border border-border/50 backdrop-blur-sm">
+              <MapPin className="w-4 h-4 text-accent" />
+              <span className="text-sm font-medium text-foreground">GIS Analyst</span>
             </div>
           </motion.div>
 
@@ -118,72 +132,51 @@ const HeroSection = () => {
           <motion.p
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.4 }}
-            className="text-base md:text-lg text-muted-foreground font-light max-w-lg mx-auto mb-10 leading-relaxed"
+            transition={{ delay: 0.5 }}
+            className="text-lg md:text-xl text-muted-foreground font-light max-w-2xl mx-auto mb-12 leading-relaxed"
           >
-            Engineering sustainable solutions for water resource management 
-            through precision mapping and geospatial analysis.
+            Transforming complex hydrological data into strategic insights for 
+            <span className="text-foreground font-medium"> sustainable water resource management</span>.
           </motion.p>
 
           {/* CTA Buttons */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.5 }}
-            className="flex flex-col sm:flex-row items-center gap-3"
+            transition={{ delay: 0.6 }}
+            className="flex flex-col sm:flex-row items-center gap-4"
           >
-            <a 
+            <motion.a 
               href="https://drive.google.com/file/d/1Ns1JzNY85B7dB2IXNR4OtxlAOuPR1PAL/view?usp=drive_link" 
               target="_blank" 
               rel="noopener noreferrer"
-              className="group inline-flex items-center justify-center gap-2.5 px-6 py-3 rounded-full bg-foreground text-background font-medium hover:bg-foreground/90 transition-all"
+              className="group inline-flex items-center justify-center gap-3 px-8 py-4 rounded-full bg-foreground text-background font-medium hover:bg-foreground/90 transition-all shadow-lg hover:shadow-xl"
+              whileHover={{ scale: 1.02 }}
+              whileTap={{ scale: 0.98 }}
             >
-              <Download className="w-4 h-4" />
+              <Download className="w-5 h-5" />
               Download CV
-            </a>
+            </motion.a>
 
-            <a 
+            <motion.a 
               href="https://www.linkedin.com/in/satwik-udupi-37304a231" 
               target="_blank" 
               rel="noopener noreferrer"
-              className="group inline-flex items-center justify-center gap-2.5 px-6 py-3 rounded-full border border-border/50 bg-card/30 text-foreground font-medium hover:bg-card/60 hover:border-primary/30 transition-all"
+              className="group inline-flex items-center justify-center gap-3 px-8 py-4 rounded-full border-2 border-border/50 bg-card/30 text-foreground font-medium hover:bg-card/60 hover:border-primary/50 transition-all backdrop-blur-sm"
+              whileHover={{ scale: 1.02 }}
+              whileTap={{ scale: 0.98 }}
             >
-              <Linkedin className="w-4 h-4" />
+              <Linkedin className="w-5 h-5" />
               Connect
-            </a>
+            </motion.a>
 
             <Link 
               to="/pravaha-tattva"
-              className="group inline-flex items-center justify-center gap-2 px-6 py-3 rounded-full text-muted-foreground hover:text-foreground font-medium transition-all"
+              className="group inline-flex items-center justify-center gap-2 px-6 py-4 text-muted-foreground hover:text-foreground font-medium transition-all"
             >
               Consulting
               <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
             </Link>
-          </motion.div>
-
-          {/* Quick Stats */}
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 0.7 }}
-            className="flex items-center gap-8 mt-16 pt-8 border-t border-border/30"
-          >
-            {[
-              { value: '2+', label: 'Years Experience' },
-              { value: '14+', label: 'Tools Mastered' },
-              { value: '20+', label: 'Projects Delivered' },
-            ].map((stat, i) => (
-              <motion.div 
-                key={stat.label}
-                initial={{ opacity: 0, y: 10 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.8 + i * 0.1 }}
-                className="text-center"
-              >
-                <p className="text-2xl md:text-3xl font-semibold text-foreground">{stat.value}</p>
-                <p className="text-xs text-muted-foreground mt-1">{stat.label}</p>
-              </motion.div>
-            ))}
           </motion.div>
         </motion.div>
 
@@ -191,15 +184,18 @@ const HeroSection = () => {
         <motion.button
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          transition={{ delay: 1 }}
+          transition={{ delay: 1.2 }}
           onClick={scrollToAbout}
           className="absolute bottom-8 left-1/2 -translate-x-1/2"
+          aria-label="Scroll to about section"
         >
           <motion.div
-            animate={{ y: [0, 8, 0] }}
+            animate={{ y: [0, 10, 0] }}
             transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
+            className="flex flex-col items-center gap-2"
           >
-            <ChevronDown className="w-5 h-5 text-muted-foreground/40" />
+            <span className="text-xs text-muted-foreground/50 uppercase tracking-widest">Scroll</span>
+            <ChevronDown className="w-5 h-5 text-muted-foreground/50" />
           </motion.div>
         </motion.button>
       </div>
