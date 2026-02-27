@@ -2,11 +2,11 @@ import { Helmet } from 'react-helmet-async';
 import { motion, useInView } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { useRef, useState } from 'react';
-import { 
-  ArrowLeft, Waves, Mountain, Map, 
+import {
+  ArrowLeft, Waves, Mountain, Map,
   Plane, Camera, Ruler, Phone, Mail, MessageCircle, ExternalLink,
   ArrowRight, ArrowUpRight, Droplets, Layers, Satellite, FlaskConical,
-  User, Briefcase, Award, MapPin, GraduationCap
+  User, Briefcase, Award, MapPin, GraduationCap, Github, Globe, CheckCircle2, Star
 } from 'lucide-react';
 
 // Service images
@@ -96,27 +96,31 @@ const services = [
   }
 ];
 
-const expertise = [
-  { label: 'HEC-RAS', category: 'Hydraulics' },
-  { label: 'HEC-HMS', category: 'Hydrology' },
-  { label: 'ArcGIS Pro', category: 'GIS' },
-  { label: 'QGIS', category: 'GIS' },
-  { label: 'Google Earth Engine', category: 'Remote Sensing' },
-  { label: 'Agisoft Metashape', category: 'Photogrammetry' },
-  { label: 'ANSYS CFD', category: 'Simulation' },
-  { label: 'SolidWorks', category: 'CAD' }
+const processSteps = [
+  { step: '01', title: 'Discovery', description: 'Understanding project scope, objectives, and data requirements.' },
+  { step: '02', title: 'Data Acquisition', description: 'Satellite imagery, field surveys, and existing datasets collection.' },
+  { step: '03', title: 'Analysis & Modeling', description: 'Applying industry-standard tools for precise geospatial analysis.' },
+  { step: '04', title: 'Deliverables', description: 'Maps, reports, and actionable insights tailored to your project.' },
+];
+
+const testimonials = [
+  { name: 'Watershed Management Project', org: 'Forest Department, Maharashtra', text: 'Delivered comprehensive erosion mapping for priority watershed conservation.' },
+  { name: 'Dam Safety Assessment', org: 'Academic Research', text: 'Precision HEC-RAS modeling for Koyna Dam breach scenario analysis.' },
 ];
 
 const PravahaTattva = () => {
   const [activeService, setActiveService] = useState<string | null>(null);
   const servicesRef = useRef<HTMLDivElement>(null);
   const aboutRef = useRef<HTMLDivElement>(null);
+  const processRef = useRef<HTMLDivElement>(null);
   const isAboutInView = useInView(aboutRef, { once: true, margin: "-100px" });
+  const isProcessInView = useInView(processRef, { once: true, margin: "-100px" });
   
   const phoneNumber = '+919834300849';
   const whatsappUrl = `https://wa.me/${phoneNumber.replace('+', '')}?text=Hi%20Satwik,%20I'm%20interested%20in%20your%20geospatial%20consulting%20services`;
   const googleFormUrl = 'https://forms.gle/SCyQeFigrgsPft9D9';
-  const googleMapsUrl = 'https://www.google.com/maps/search/?api=1&query=Ambika+Bhavan+Krishna+Canal+Vidyanagar+Saidapur+Karad+Maharashtra';
+  const googleMapsUrl = 'https://www.google.com/maps/search/?api=1&query=Krishna+Canal+Saidapur+Road+Karad+415124+Maharashtra+India';
+  const githubUrl = 'https://github.com/satwikudupi';
 
   return (
     <>
@@ -149,19 +153,29 @@ const PravahaTattva = () => {
             <nav className="hidden md:flex items-center gap-8">
               <a href="#about" className="text-sm text-white/60 hover:text-white transition-colors">About</a>
               <a href="#services" className="text-sm text-white/60 hover:text-white transition-colors">Services</a>
-              <a href="#expertise" className="text-sm text-white/60 hover:text-white transition-colors">Expertise</a>
+              <a href="#process" className="text-sm text-white/60 hover:text-white transition-colors">Process</a>
               <a href="#contact" className="text-sm text-white/60 hover:text-white transition-colors">Contact</a>
             </nav>
 
-            <a 
-              href={googleFormUrl} 
-              target="_blank" 
-              rel="noopener noreferrer"
-              className="group flex items-center gap-2 px-5 py-2.5 rounded-full bg-white text-[#0a0f1a] text-sm font-medium hover:bg-cyan-400 transition-all duration-300"
-            >
-              Get Quote
-              <ArrowUpRight className="w-4 h-4 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
-            </a>
+            <div className="flex items-center gap-3">
+              <a 
+                href={githubUrl} 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="w-10 h-10 rounded-full border border-white/10 flex items-center justify-center hover:border-white/30 hover:bg-white/5 transition-all"
+              >
+                <Github className="w-4 h-4 text-white/60" />
+              </a>
+              <a 
+                href={googleFormUrl} 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="group flex items-center gap-2 px-5 py-2.5 rounded-full bg-white text-[#0a0f1a] text-sm font-medium hover:bg-cyan-400 transition-all duration-300"
+              >
+                Get Quote
+                <ArrowUpRight className="w-4 h-4 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
+              </a>
+            </div>
           </div>
         </header>
 
@@ -300,26 +314,18 @@ const PravahaTattva = () => {
                   
                   {/* Info grid */}
                   <div className="grid grid-cols-2 gap-4">
-                    <div className="p-4 rounded-xl bg-white/[0.03] border border-white/5">
-                      <GraduationCap className="w-5 h-5 text-cyan-400 mb-2" />
-                      <p className="text-xs text-white/40 mb-1">Education</p>
-                      <p className="text-sm text-white font-medium">B.Tech Agricultural Engg.</p>
-                    </div>
-                    <div className="p-4 rounded-xl bg-white/[0.03] border border-white/5">
-                      <MapPin className="w-5 h-5 text-cyan-400 mb-2" />
-                      <p className="text-xs text-white/40 mb-1">Location</p>
-                      <p className="text-sm text-white font-medium">Karad, Maharashtra</p>
-                    </div>
-                    <div className="p-4 rounded-xl bg-white/[0.03] border border-white/5">
-                      <Briefcase className="w-5 h-5 text-cyan-400 mb-2" />
-                      <p className="text-xs text-white/40 mb-1">Experience</p>
-                      <p className="text-sm text-white font-medium">2+ Years</p>
-                    </div>
-                    <div className="p-4 rounded-xl bg-white/[0.03] border border-white/5">
-                      <Award className="w-5 h-5 text-cyan-400 mb-2" />
-                      <p className="text-xs text-white/40 mb-1">Certifications</p>
-                      <p className="text-sm text-white font-medium">20+ Professional</p>
-                    </div>
+                    {[
+                      { icon: GraduationCap, label: 'Education', value: 'B.Tech Agricultural Engg.' },
+                      { icon: MapPin, label: 'Location', value: 'Karad, Maharashtra' },
+                      { icon: Briefcase, label: 'Experience', value: '2+ Years' },
+                      { icon: Award, label: 'Certifications', value: '20+ Professional' },
+                    ].map(item => (
+                      <div key={item.label} className="p-4 rounded-xl bg-white/[0.03] border border-white/5">
+                        <item.icon className="w-5 h-5 text-cyan-400 mb-2" />
+                        <p className="text-xs text-white/40 mb-1">{item.label}</p>
+                        <p className="text-sm text-white font-medium">{item.value}</p>
+                      </div>
+                    ))}
                   </div>
                 </div>
               </motion.div>
@@ -449,43 +455,107 @@ const PravahaTattva = () => {
           </div>
         </section>
 
-        {/* Expertise Section */}
-        <section id="expertise" className="py-24 md:py-32 bg-[#080c14]">
+        {/* Process Section */}
+        <section id="process" ref={processRef} className="py-24 md:py-32 bg-[#080c14]">
           <div className="max-w-7xl mx-auto px-6 md:px-8">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              className="text-center mb-12 md:mb-16"
+              animate={isProcessInView ? { opacity: 1, y: 0 } : {}}
+              className="text-center mb-16"
             >
-              <span className="text-cyan-400 text-sm font-medium uppercase tracking-widest mb-4 block">Technical Stack</span>
+              <span className="text-cyan-400 text-sm font-medium uppercase tracking-widest mb-4 block">How We Work</span>
               <h2 className="text-3xl md:text-4xl lg:text-5xl font-light tracking-tight mb-4">
-                Tools & <span className="font-semibold">Expertise</span>
+                Our <span className="font-semibold">Process</span>
               </h2>
+              <p className="text-white/40 max-w-xl mx-auto">
+                A structured approach to delivering precision geospatial intelligence.
+              </p>
             </motion.div>
 
-            <div className="flex flex-wrap justify-center gap-3 max-w-4xl mx-auto">
-              {expertise.map((tool, index) => (
+            <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
+              {processSteps.map((step, index) => (
                 <motion.div
-                  key={tool.label}
-                  initial={{ opacity: 0, scale: 0.9 }}
-                  whileInView={{ opacity: 1, scale: 1 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: index * 0.05 }}
-                  whileHover={{ scale: 1.05, y: -2 }}
-                  className="group px-5 md:px-6 py-2.5 md:py-3 rounded-full border border-white/10 bg-white/[0.02] hover:border-cyan-500/30 hover:bg-cyan-500/5 transition-all duration-300 cursor-default"
+                  key={step.step}
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={isProcessInView ? { opacity: 1, y: 0 } : {}}
+                  transition={{ delay: index * 0.1 }}
+                  className="relative p-6 rounded-2xl border border-white/5 bg-white/[0.02] hover:border-cyan-500/20 transition-all group"
                 >
-                  <span className="text-white/70 group-hover:text-white transition-colors text-sm md:text-base">{tool.label}</span>
-                  <span className="text-white/30 text-xs ml-2">{tool.category}</span>
+                  <span className="text-4xl font-bold text-cyan-500/10 group-hover:text-cyan-500/20 transition-colors">{step.step}</span>
+                  <h3 className="text-lg font-semibold text-white mt-3 mb-2">{step.title}</h3>
+                  <p className="text-sm text-white/50 leading-relaxed">{step.description}</p>
+                  {index < processSteps.length - 1 && (
+                    <ArrowRight className="hidden lg:block absolute -right-3 top-1/2 -translate-y-1/2 w-5 h-5 text-white/10" />
+                  )}
                 </motion.div>
               ))}
             </div>
           </div>
         </section>
 
+        {/* Featured Work / Testimonials */}
+        <section className="py-24 md:py-32">
+          <div className="max-w-5xl mx-auto px-6 md:px-8">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              className="text-center mb-16"
+            >
+              <span className="text-cyan-400 text-sm font-medium uppercase tracking-widest mb-4 block">Track Record</span>
+              <h2 className="text-3xl md:text-4xl font-light tracking-tight">
+                Notable <span className="font-semibold">Engagements</span>
+              </h2>
+            </motion.div>
+
+            <div className="grid md:grid-cols-2 gap-6">
+              {testimonials.map((t, i) => (
+                <motion.div
+                  key={i}
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: i * 0.1 }}
+                  className="p-6 md:p-8 rounded-2xl border border-white/5 bg-white/[0.02] hover:border-cyan-500/20 transition-all"
+                >
+                  <div className="flex gap-1 mb-4">
+                    {Array.from({ length: 5 }).map((_, j) => (
+                      <Star key={j} className="w-4 h-4 text-cyan-400 fill-cyan-400" />
+                    ))}
+                  </div>
+                  <p className="text-white/60 text-sm leading-relaxed mb-6">"{t.text}"</p>
+                  <div>
+                    <p className="text-white font-medium text-sm">{t.name}</p>
+                    <p className="text-white/40 text-xs mt-0.5">{t.org}</p>
+                  </div>
+                </motion.div>
+              ))}
+            </div>
+
+            {/* GitHub Link */}
+            <motion.div
+              initial={{ opacity: 0 }}
+              whileInView={{ opacity: 1 }}
+              viewport={{ once: true }}
+              className="mt-12 text-center"
+            >
+              <a
+                href={githubUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="group inline-flex items-center gap-3 px-6 py-3 rounded-full border border-white/10 bg-white/[0.02] hover:border-white/20 hover:bg-white/5 transition-all"
+              >
+                <Github className="w-5 h-5 text-white/60 group-hover:text-white transition-colors" />
+                <span className="text-sm text-white/60 group-hover:text-white transition-colors">View Open Source Work on GitHub</span>
+                <ArrowUpRight className="w-4 h-4 text-white/40 group-hover:text-cyan-400 transition-colors" />
+              </a>
+            </motion.div>
+          </div>
+        </section>
+
         {/* Contact Section */}
         <section id="contact" className="py-24 md:py-32 relative">
-          <div className="absolute inset-0 bg-gradient-to-b from-[#080c14] to-[#0a0f1a]" />
+          <div className="absolute inset-0 bg-gradient-to-b from-transparent to-[#080c14]" />
           
           <div className="max-w-4xl mx-auto px-6 md:px-8 relative z-10">
             <motion.div
@@ -533,11 +603,11 @@ const PravahaTattva = () => {
               
               {/* Contact Details with Map Link */}
               <div className="grid sm:grid-cols-3 gap-4 max-w-2xl mx-auto">
-                <a href={`tel:${phoneNumber}`} className="flex flex-col items-center gap-2 p-4 rounded-xl bg-white/[0.02] border border-white/5 hover:border-cyan-500/20 transition-colors">
+                <a href={`tel:${phoneNumber}`} className="flex flex-col items-center gap-2 p-5 rounded-2xl bg-white/[0.02] border border-white/5 hover:border-cyan-500/20 transition-all group">
                   <Phone className="w-5 h-5 text-cyan-400" />
                   <span className="text-white/60 text-sm">+91 9834300849</span>
                 </a>
-                <a href="mailto:satwikudupi@gmail.com" className="flex flex-col items-center gap-2 p-4 rounded-xl bg-white/[0.02] border border-white/5 hover:border-cyan-500/20 transition-colors">
+                <a href="mailto:satwikudupi@gmail.com" className="flex flex-col items-center gap-2 p-5 rounded-2xl bg-white/[0.02] border border-white/5 hover:border-cyan-500/20 transition-all group">
                   <Mail className="w-5 h-5 text-cyan-400" />
                   <span className="text-white/60 text-sm">satwikudupi@gmail.com</span>
                 </a>
@@ -545,10 +615,11 @@ const PravahaTattva = () => {
                   href={googleMapsUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex flex-col items-center gap-2 p-4 rounded-xl bg-white/[0.02] border border-white/5 hover:border-cyan-500/20 transition-colors group"
+                  className="flex flex-col items-center gap-2 p-5 rounded-2xl bg-white/[0.02] border border-white/5 hover:border-cyan-500/20 transition-all group"
                 >
                   <MapPin className="w-5 h-5 text-cyan-400" />
-                  <span className="text-white/60 text-sm text-center">Ambika Bhavan, Karad</span>
+                  <span className="text-white/60 text-sm text-center">Krishna Canal, Saidapur Road</span>
+                  <span className="text-white/40 text-xs">Karad – 415124</span>
                   <span className="text-cyan-400 text-xs flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
                     Open in Maps <ArrowUpRight className="w-3 h-3" />
                   </span>
@@ -559,15 +630,19 @@ const PravahaTattva = () => {
         </section>
 
         {/* Footer */}
-        <footer className="py-6 md:py-8 border-t border-white/5">
+        <footer className="py-6 md:py-8 border-t border-white/5 bg-[#080c14]">
           <div className="max-w-7xl mx-auto px-6 md:px-8 flex flex-col sm:flex-row items-center justify-between gap-4">
             <p className="text-sm text-white/30">
               © {new Date().getFullYear()} Pravaha Tattva Solutions
             </p>
-            <Link to="/" className="text-sm text-white/40 hover:text-cyan-400 transition-colors flex items-center gap-2">
-              <ArrowLeft className="w-4 h-4" />
-              Back to Portfolio
-            </Link>
+            <div className="flex items-center gap-6">
+              <a href={githubUrl} target="_blank" rel="noopener noreferrer" className="text-sm text-white/40 hover:text-cyan-400 transition-colors flex items-center gap-2">
+                <Github className="w-4 h-4" /> GitHub
+              </a>
+              <Link to="/" className="text-sm text-white/40 hover:text-cyan-400 transition-colors flex items-center gap-2">
+                <ArrowLeft className="w-4 h-4" /> Portfolio
+              </Link>
+            </div>
           </div>
         </footer>
       </div>

@@ -1,6 +1,6 @@
-import { motion, useInView } from 'framer-motion';
+import { motion, useInView, AnimatePresence } from 'framer-motion';
 import { useRef, useState } from 'react';
-import { Layers, Code, Droplets, Satellite, Cpu, ChevronRight } from 'lucide-react';
+import { Layers, Code, Droplets, Satellite, Cpu } from 'lucide-react';
 
 // Tech stack logos
 import pythonLogo from '@/assets/tech/python.png';
@@ -23,7 +23,7 @@ const categories = [
     id: 'gis',
     name: 'GIS & Mapping',
     icon: Layers,
-    gradient: 'from-emerald-500 to-teal-400',
+    accent: 'hsl(160, 60%, 45%)',
     tools: [
       { name: 'ArcGIS Pro', logo: arcgisProLogo },
       { name: 'QGIS', logo: qgisLogo },
@@ -35,7 +35,7 @@ const categories = [
     id: 'hydrology',
     name: 'Hydrology',
     icon: Droplets,
-    gradient: 'from-blue-500 to-cyan-400',
+    accent: 'hsl(200, 80%, 50%)',
     tools: [
       { name: 'HEC-HMS', logo: hecHmsLogo },
       { name: 'HEC-RAS', logo: hecRasLogo },
@@ -46,7 +46,7 @@ const categories = [
     id: 'remote',
     name: 'Remote Sensing',
     icon: Satellite,
-    gradient: 'from-violet-500 to-purple-400',
+    accent: 'hsl(265, 60%, 55%)',
     tools: [
       { name: 'Google Earth Engine', logo: googleEarthEngineLogo },
       { name: 'Google Earth Pro', logo: googleEarthProLogo },
@@ -57,7 +57,7 @@ const categories = [
     id: 'programming',
     name: 'Programming',
     icon: Code,
-    gradient: 'from-pink-500 to-rose-400',
+    accent: 'hsl(340, 65%, 55%)',
     tools: [
       { name: 'Python', logo: pythonLogo },
       { name: 'JavaScript', logo: javascriptLogo },
@@ -67,25 +67,38 @@ const categories = [
   },
 ];
 
+const allTools = categories.flatMap(c => c.tools);
+
 const TechStackSection = () => {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "-100px" });
   const [activeCategory, setActiveCategory] = useState('gis');
+  const [hoveredTool, setHoveredTool] = useState<string | null>(null);
 
   const activeData = categories.find(c => c.id === activeCategory);
 
   return (
-    <section className="py-32 relative overflow-hidden" ref={ref}>
-      {/* Background */}
-      <div className="absolute inset-0 bg-gradient-to-b from-card/5 via-transparent to-card/5" />
-      
+    <section className="py-28 relative overflow-hidden" ref={ref}>
+      {/* Background pattern - subtle topographic lines */}
+      <div className="absolute inset-0">
+        <div className="absolute inset-0 bg-gradient-to-b from-background via-muted/5 to-background" />
+        <svg className="absolute inset-0 w-full h-full opacity-[0.03]" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <pattern id="tech-grid" width="40" height="40" patternUnits="userSpaceOnUse">
+              <circle cx="20" cy="20" r="1" fill="currentColor" className="text-foreground" />
+            </pattern>
+          </defs>
+          <rect width="100%" height="100%" fill="url(#tech-grid)" />
+        </svg>
+      </div>
+
       <div className="max-w-6xl mx-auto px-6 relative z-10">
-        {/* Section Header */}
+        {/* Header */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.6 }}
-          className="text-center mb-16"
+          className="text-center mb-20"
         >
           <motion.div
             initial={{ opacity: 0, scale: 0.9 }}
@@ -95,7 +108,7 @@ const TechStackSection = () => {
             <Cpu className="w-4 h-4 text-primary" />
             <span className="text-sm font-medium text-primary">Technology Stack</span>
           </motion.div>
-          
+
           <h2 className="text-3xl md:text-4xl lg:text-5xl font-light tracking-tight text-foreground mb-4">
             Tools & <span className="font-bold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">Technologies</span>
           </h2>
@@ -104,113 +117,132 @@ const TechStackSection = () => {
           </p>
         </motion.div>
 
-        {/* Category Navigation */}
+        {/* Category Tabs - Pill style */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ delay: 0.2 }}
-          className="flex flex-wrap justify-center gap-3 mb-12"
+          className="flex justify-center mb-14"
         >
-          {categories.map((cat) => {
-            const Icon = cat.icon;
-            const isActive = activeCategory === cat.id;
-            return (
-              <motion.button
-                key={cat.id}
-                onClick={() => setActiveCategory(cat.id)}
-                className={`
-                  group flex items-center gap-2.5 px-5 py-3 rounded-full text-sm font-medium transition-all duration-300
-                  ${isActive 
-                    ? 'bg-foreground text-background shadow-lg' 
-                    : 'bg-card/50 border border-border/50 text-muted-foreground hover:text-foreground hover:border-border hover:bg-card/80'
-                  }
-                `}
-                whileHover={{ scale: 1.02 }}
-                whileTap={{ scale: 0.98 }}
-              >
-                <Icon className={`w-4 h-4 ${isActive ? 'text-background' : ''}`} />
-                {cat.name}
-                {isActive && <ChevronRight className="w-4 h-4 text-background/60" />}
-              </motion.button>
-            );
-          })}
+          <div className="inline-flex p-1.5 rounded-2xl bg-card/60 border border-border/50 backdrop-blur-sm">
+            {categories.map((cat) => {
+              const Icon = cat.icon;
+              const isActive = activeCategory === cat.id;
+              return (
+                <motion.button
+                  key={cat.id}
+                  onClick={() => setActiveCategory(cat.id)}
+                  className={`relative flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm font-medium transition-colors duration-300 ${
+                    isActive ? 'text-primary-foreground' : 'text-muted-foreground hover:text-foreground'
+                  }`}
+                  whileTap={{ scale: 0.97 }}
+                >
+                  {isActive && (
+                    <motion.div
+                      layoutId="activeTechTab"
+                      className="absolute inset-0 rounded-xl bg-primary shadow-lg"
+                      transition={{ type: "spring", bounce: 0.2, duration: 0.5 }}
+                    />
+                  )}
+                  <span className="relative z-10 flex items-center gap-2">
+                    <Icon className="w-4 h-4" />
+                    <span className="hidden sm:inline">{cat.name}</span>
+                  </span>
+                </motion.button>
+              );
+            })}
+          </div>
         </motion.div>
 
-        {/* Tools Display */}
-        <motion.div
-          key={activeCategory}
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.4 }}
-          className="relative"
-        >
-          {/* Active Category Tools - Grid */}
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6">
-            {activeData?.tools.map((tool, index) => (
-              <motion.div
-                key={tool.name}
-                initial={{ opacity: 0, y: 20, scale: 0.95 }}
-                animate={{ opacity: 1, y: 0, scale: 1 }}
-                transition={{ delay: index * 0.1, duration: 0.4 }}
-                className="group"
-              >
-                <div className="relative bg-card/50 backdrop-blur-sm border border-border/50 rounded-2xl p-6 md:p-8 text-center hover:border-border hover:bg-card/70 transition-all duration-300 h-full">
-                  {/* Gradient overlay */}
-                  <div className={`absolute inset-0 rounded-2xl bg-gradient-to-br ${activeData.gradient} opacity-0 group-hover:opacity-5 transition-opacity`} />
-                  
-                  <div className="relative">
-                    {/* Logo container with proper background for visibility */}
-                    <div className="w-20 h-20 md:w-24 md:h-24 mx-auto mb-4 rounded-2xl bg-white/90 dark:bg-white/10 p-4 flex items-center justify-center group-hover:scale-110 transition-transform duration-300 shadow-sm">
-                      <img 
-                        src={tool.logo} 
-                        alt={tool.name}
-                        className="w-full h-full object-contain"
-                      />
+        {/* Tools Grid - Animated swap */}
+        <AnimatePresence mode="wait">
+          <motion.div
+            key={activeCategory}
+            initial={{ opacity: 0, y: 12 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -12 }}
+            transition={{ duration: 0.3 }}
+          >
+            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-5 max-w-4xl mx-auto">
+              {activeData?.tools.map((tool, index) => (
+                <motion.div
+                  key={tool.name}
+                  initial={{ opacity: 0, scale: 0.9 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  transition={{ delay: index * 0.08 }}
+                  onMouseEnter={() => setHoveredTool(tool.name)}
+                  onMouseLeave={() => setHoveredTool(null)}
+                  className="group cursor-default"
+                >
+                  <motion.div
+                    className="relative rounded-2xl border border-border/40 bg-card/40 backdrop-blur-sm p-6 text-center transition-all duration-300 hover:border-primary/30 hover:shadow-lg hover:shadow-primary/5 overflow-hidden"
+                    animate={hoveredTool === tool.name ? { y: -6 } : { y: 0 }}
+                    transition={{ type: "spring", stiffness: 400, damping: 25 }}
+                  >
+                    {/* Glow effect on hover */}
+                    <div
+                      className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500"
+                      style={{
+                        background: `radial-gradient(circle at 50% 40%, ${activeData.accent}15 0%, transparent 70%)`
+                      }}
+                    />
+
+                    <div className="relative">
+                      {/* Logo - white bg for visibility */}
+                      <div className="w-16 h-16 md:w-20 md:h-20 mx-auto mb-4 rounded-xl bg-background p-3 flex items-center justify-center border border-border/30 group-hover:border-primary/20 transition-all duration-300 group-hover:scale-105">
+                        <img
+                          src={tool.logo}
+                          alt={tool.name}
+                          className="w-full h-full object-contain"
+                          loading="lazy"
+                        />
+                      </div>
+                      <p className="text-sm font-semibold text-foreground group-hover:text-primary transition-colors duration-300">
+                        {tool.name}
+                      </p>
                     </div>
-                    <h4 className="text-sm md:text-base font-semibold text-foreground group-hover:text-primary transition-colors">{tool.name}</h4>
-                  </div>
-                </div>
-              </motion.div>
-            ))}
-          </div>
-        </motion.div>
+                  </motion.div>
+                </motion.div>
+              ))}
+            </div>
+          </motion.div>
+        </AnimatePresence>
 
-        {/* All Tools Grid - Scrollable */}
+        {/* Infinite Marquee - All tools */}
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ delay: 0.5 }}
-          className="mt-16"
+          initial={{ opacity: 0 }}
+          animate={isInView ? { opacity: 1 } : {}}
+          transition={{ delay: 0.6 }}
+          className="mt-20 pt-12 border-t border-border/20"
         >
-          <div className="text-center mb-8">
-            <h3 className="text-lg font-medium text-foreground mb-2">Complete Toolkit</h3>
-            <p className="text-sm text-muted-foreground">All 14+ professional tools at a glance</p>
-          </div>
-          
-          {/* Infinite scroll marquee */}
-          <div className="relative overflow-hidden py-4">
-            <div className="flex animate-[scroll_30s_linear_infinite] gap-6">
-              {[...categories.flatMap(c => c.tools), ...categories.flatMap(c => c.tools)].map((tool, index) => (
+          <p className="text-center text-xs text-muted-foreground uppercase tracking-widest mb-8">
+            Complete Toolkit — {allTools.length} professional tools
+          </p>
+
+          <div className="relative overflow-hidden">
+            {/* Fade edges */}
+            <div className="absolute left-0 top-0 bottom-0 w-20 bg-gradient-to-r from-background to-transparent z-10" />
+            <div className="absolute right-0 top-0 bottom-0 w-20 bg-gradient-to-l from-background to-transparent z-10" />
+
+            <div className="flex animate-[marquee_25s_linear_infinite] gap-8">
+              {[...allTools, ...allTools].map((tool, index) => (
                 <div
                   key={`${tool.name}-${index}`}
-                  className="flex-shrink-0 w-16 h-16 md:w-20 md:h-20 rounded-xl bg-white/90 dark:bg-white/10 p-3 flex items-center justify-center shadow-sm border border-border/30"
+                  className="flex-shrink-0 flex items-center gap-3 px-4 py-2.5 rounded-full border border-border/30 bg-card/30 backdrop-blur-sm"
                 >
-                  <img 
-                    src={tool.logo} 
-                    alt={tool.name}
-                    className="w-full h-full object-contain"
-                    title={tool.name}
-                  />
+                  <div className="w-8 h-8 rounded-lg bg-background p-1.5 flex items-center justify-center border border-border/20">
+                    <img src={tool.logo} alt={tool.name} className="w-full h-full object-contain" />
+                  </div>
+                  <span className="text-sm text-muted-foreground whitespace-nowrap font-medium">{tool.name}</span>
                 </div>
               ))}
             </div>
           </div>
         </motion.div>
       </div>
-      
-      {/* Custom animation for scroll */}
+
       <style>{`
-        @keyframes scroll {
+        @keyframes marquee {
           0% { transform: translateX(0); }
           100% { transform: translateX(-50%); }
         }
