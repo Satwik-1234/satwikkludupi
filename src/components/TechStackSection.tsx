@@ -23,7 +23,6 @@ const categories = [
     id: 'gis',
     name: 'GIS & Mapping',
     icon: Layers,
-    accent: 'hsl(160, 60%, 45%)',
     tools: [
       { name: 'ArcGIS Pro', logo: arcgisProLogo },
       { name: 'QGIS', logo: qgisLogo },
@@ -35,18 +34,16 @@ const categories = [
     id: 'hydrology',
     name: 'Hydrology',
     icon: Droplets,
-    accent: 'hsl(200, 80%, 50%)',
     tools: [
       { name: 'HEC-HMS', logo: hecHmsLogo },
       { name: 'HEC-RAS', logo: hecRasLogo },
-      { name: 'ANSYS', logo: ansysLogo },
+      { name: 'ANSYS Fluent', logo: ansysLogo },
     ]
   },
   {
     id: 'remote',
     name: 'Remote Sensing',
     icon: Satellite,
-    accent: 'hsl(265, 60%, 55%)',
     tools: [
       { name: 'Google Earth Engine', logo: googleEarthEngineLogo },
       { name: 'Google Earth Pro', logo: googleEarthProLogo },
@@ -57,7 +54,6 @@ const categories = [
     id: 'programming',
     name: 'Programming',
     icon: Code,
-    accent: 'hsl(340, 65%, 55%)',
     tools: [
       { name: 'Python', logo: pythonLogo },
       { name: 'JavaScript', logo: javascriptLogo },
@@ -67,30 +63,17 @@ const categories = [
   },
 ];
 
-const allTools = categories.flatMap(c => c.tools);
-
 const TechStackSection = () => {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "-100px" });
   const [activeCategory, setActiveCategory] = useState('gis');
-  const [hoveredTool, setHoveredTool] = useState<string | null>(null);
 
   const activeData = categories.find(c => c.id === activeCategory);
 
   return (
     <section className="py-28 relative overflow-hidden" ref={ref}>
-      {/* Background pattern - subtle topographic lines */}
-      <div className="absolute inset-0">
-        <div className="absolute inset-0 bg-gradient-to-b from-background via-muted/5 to-background" />
-        <svg className="absolute inset-0 w-full h-full opacity-[0.03]" xmlns="http://www.w3.org/2000/svg">
-          <defs>
-            <pattern id="tech-grid" width="40" height="40" patternUnits="userSpaceOnUse">
-              <circle cx="20" cy="20" r="1" fill="currentColor" className="text-foreground" />
-            </pattern>
-          </defs>
-          <rect width="100%" height="100%" fill="url(#tech-grid)" />
-        </svg>
-      </div>
+      {/* Background */}
+      <div className="absolute inset-0 bg-gradient-to-b from-transparent via-muted/5 to-transparent" />
 
       <div className="max-w-6xl mx-auto px-6 relative z-10">
         {/* Header */}
@@ -98,7 +81,7 @@ const TechStackSection = () => {
           initial={{ opacity: 0, y: 20 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.6 }}
-          className="text-center mb-20"
+          className="text-center mb-16"
         >
           <motion.div
             initial={{ opacity: 0, scale: 0.9 }}
@@ -117,7 +100,7 @@ const TechStackSection = () => {
           </p>
         </motion.div>
 
-        {/* Category Tabs - Pill style */}
+        {/* Category Tabs */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
@@ -154,42 +137,32 @@ const TechStackSection = () => {
           </div>
         </motion.div>
 
-        {/* Tools Grid - Animated swap */}
+        {/* Tools Grid - Large visible cards */}
         <AnimatePresence mode="wait">
           <motion.div
             key={activeCategory}
-            initial={{ opacity: 0, y: 12 }}
+            initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -12 }}
-            transition={{ duration: 0.3 }}
+            exit={{ opacity: 0, y: -16 }}
+            transition={{ duration: 0.35 }}
           >
-            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-5 max-w-4xl mx-auto">
+            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-6 max-w-4xl mx-auto">
               {activeData?.tools.map((tool, index) => (
                 <motion.div
                   key={tool.name}
-                  initial={{ opacity: 0, scale: 0.9 }}
+                  initial={{ opacity: 0, scale: 0.85 }}
                   animate={{ opacity: 1, scale: 1 }}
-                  transition={{ delay: index * 0.08 }}
-                  onMouseEnter={() => setHoveredTool(tool.name)}
-                  onMouseLeave={() => setHoveredTool(null)}
+                  transition={{ delay: index * 0.08, type: "spring", bounce: 0.3 }}
+                  whileHover={{ y: -8, scale: 1.05 }}
                   className="group cursor-default"
                 >
-                  <motion.div
-                    className="relative rounded-2xl border border-border/40 bg-card/40 backdrop-blur-sm p-6 text-center transition-all duration-300 hover:border-primary/30 hover:shadow-lg hover:shadow-primary/5 overflow-hidden"
-                    animate={hoveredTool === tool.name ? { y: -6 } : { y: 0 }}
-                    transition={{ type: "spring", stiffness: 400, damping: 25 }}
-                  >
-                    {/* Glow effect on hover */}
-                    <div
-                      className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500"
-                      style={{
-                        background: `radial-gradient(circle at 50% 40%, ${activeData.accent}15 0%, transparent 70%)`
-                      }}
-                    />
+                  <div className="relative rounded-2xl border border-border/50 bg-card/60 backdrop-blur-sm p-6 md:p-8 text-center transition-all duration-300 hover:border-primary/40 hover:shadow-xl hover:shadow-primary/10 overflow-hidden">
+                    {/* Hover glow */}
+                    <div className="absolute inset-0 bg-gradient-to-br from-primary/8 to-accent/8 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
 
                     <div className="relative">
-                      {/* Logo - white bg for visibility */}
-                      <div className="w-16 h-16 md:w-20 md:h-20 mx-auto mb-4 rounded-xl bg-background p-3 flex items-center justify-center border border-border/30 group-hover:border-primary/20 transition-all duration-300 group-hover:scale-105">
+                      {/* Logo container - LARGE with white bg for visibility */}
+                      <div className="w-20 h-20 md:w-24 md:h-24 mx-auto mb-5 rounded-2xl bg-background p-4 flex items-center justify-center border border-border/40 group-hover:border-primary/30 group-hover:shadow-lg transition-all duration-300">
                         <img
                           src={tool.logo}
                           alt={tool.name}
@@ -197,56 +170,37 @@ const TechStackSection = () => {
                           loading="lazy"
                         />
                       </div>
-                      <p className="text-sm font-semibold text-foreground group-hover:text-primary transition-colors duration-300">
+                      <p className="text-sm md:text-base font-semibold text-foreground group-hover:text-primary transition-colors duration-300">
                         {tool.name}
                       </p>
                     </div>
-                  </motion.div>
+                  </div>
                 </motion.div>
               ))}
             </div>
           </motion.div>
         </AnimatePresence>
 
-        {/* Infinite Marquee - All tools */}
+        {/* All tools summary strip */}
         <motion.div
           initial={{ opacity: 0 }}
           animate={isInView ? { opacity: 1 } : {}}
-          transition={{ delay: 0.6 }}
-          className="mt-20 pt-12 border-t border-border/20"
+          transition={{ delay: 0.5 }}
+          className="mt-16 flex flex-wrap justify-center gap-3"
         >
-          <p className="text-center text-xs text-muted-foreground uppercase tracking-widest mb-8">
-            Complete Toolkit — {allTools.length} professional tools
-          </p>
-
-          <div className="relative overflow-hidden">
-            {/* Fade edges */}
-            <div className="absolute left-0 top-0 bottom-0 w-20 bg-gradient-to-r from-background to-transparent z-10" />
-            <div className="absolute right-0 top-0 bottom-0 w-20 bg-gradient-to-l from-background to-transparent z-10" />
-
-            <div className="flex animate-[marquee_25s_linear_infinite] gap-8">
-              {[...allTools, ...allTools].map((tool, index) => (
-                <div
-                  key={`${tool.name}-${index}`}
-                  className="flex-shrink-0 flex items-center gap-3 px-4 py-2.5 rounded-full border border-border/30 bg-card/30 backdrop-blur-sm"
-                >
-                  <div className="w-8 h-8 rounded-lg bg-background p-1.5 flex items-center justify-center border border-border/20">
-                    <img src={tool.logo} alt={tool.name} className="w-full h-full object-contain" />
-                  </div>
-                  <span className="text-sm text-muted-foreground whitespace-nowrap font-medium">{tool.name}</span>
-                </div>
-              ))}
+          {categories.flatMap(c => c.tools).map((tool) => (
+            <div
+              key={tool.name}
+              className="flex items-center gap-2.5 px-4 py-2.5 rounded-xl border border-border/40 bg-card/40 backdrop-blur-sm hover:border-primary/30 hover:bg-primary/5 transition-all duration-300"
+            >
+              <div className="w-7 h-7 rounded-lg bg-background p-1 flex items-center justify-center border border-border/30">
+                <img src={tool.logo} alt={tool.name} className="w-full h-full object-contain" />
+              </div>
+              <span className="text-sm text-muted-foreground font-medium whitespace-nowrap">{tool.name}</span>
             </div>
-          </div>
+          ))}
         </motion.div>
       </div>
-
-      <style>{`
-        @keyframes marquee {
-          0% { transform: translateX(0); }
-          100% { transform: translateX(-50%); }
-        }
-      `}</style>
     </section>
   );
 };
