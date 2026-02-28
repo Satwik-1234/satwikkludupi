@@ -10,6 +10,7 @@ import TechStackSection from '@/components/TechStackSection';
 import CertificationsSection from '@/components/CertificationsSection';
 import ProjectsSection from '@/components/ProjectsSection';
 import MapGallerySection from '@/components/MapGallerySection';
+import GitHubProjectsSection from '@/components/GitHubProjectsSection';
 import ContactSection from '@/components/ContactSection';
 import Footer from '@/components/Footer';
 
@@ -47,6 +48,7 @@ const Index = () => {
           <TechStackSection />
           <CertificationsSection />
           <ProjectsSection />
+          <GitHubProjectsSection />
           <MapGallerySection />
           <ContactSection />
         </main>
