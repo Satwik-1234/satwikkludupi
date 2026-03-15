@@ -104,11 +104,24 @@ const testimonials = [
 
 const PravahaTattva = () => {
   const [activeService, setActiveService] = useState<string | null>(null);
+  const [isDarkMode, setIsDarkMode] = useState(() => document.documentElement.classList.contains('dark'));
   const servicesRef = useRef<HTMLDivElement>(null);
   const aboutRef = useRef<HTMLDivElement>(null);
   const processRef = useRef<HTMLDivElement>(null);
   const isAboutInView = useInView(aboutRef, { once: true, margin: "-100px" });
   const isProcessInView = useInView(processRef, { once: true, margin: "-100px" });
+
+  const toggleTheme = () => {
+    const html = document.documentElement;
+    if (isDarkMode) {
+      html.classList.remove('dark');
+      html.classList.add('light');
+    } else {
+      html.classList.remove('light');
+      html.classList.add('dark');
+    }
+    setIsDarkMode(!isDarkMode);
+  };
   
   const phoneNumber = '+919834300849';
   const whatsappUrl = `https://wa.me/${phoneNumber.replace('+', '')}?text=Hi%20Satwik,%20I'm%20interested%20in%20your%20geospatial%20consulting%20services`;
