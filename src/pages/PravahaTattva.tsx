@@ -1,13 +1,15 @@
 import { Helmet } from 'react-helmet-async';
 import { motion, useInView } from 'framer-motion';
 import { Link } from 'react-router-dom';
-import { useRef, useState } from 'react';
+import { useRef, useState, useEffect } from 'react';
 import {
   ArrowLeft, Waves, Mountain, Map,
   Plane, Camera, Ruler, Phone, Mail, MessageCircle, ExternalLink,
   ArrowRight, ArrowUpRight, Droplets, Layers, Satellite, FlaskConical,
-  User, Briefcase, Award, MapPin, GraduationCap, Github, Globe, CheckCircle2, Star
+  User, Briefcase, Award, MapPin, GraduationCap, Github, Globe, CheckCircle2, Star,
+  Sun, Moon
 } from 'lucide-react';
+import { Button } from '@/components/ui/button';
 
 // Service images
 import floodplainImg from '@/assets/services/floodplain-mapping.png';
@@ -73,10 +75,26 @@ const services = [
 ];
 
 const processSteps = [
-  { step: '01', title: 'Discovery', description: 'Understanding project scope, objectives, and data requirements.' },
-  { step: '02', title: 'Data Acquisition', description: 'Satellite imagery, field surveys, and existing datasets collection.' },
-  { step: '03', title: 'Analysis & Modeling', description: 'Applying industry-standard tools for precise geospatial analysis.' },
-  { step: '04', title: 'Deliverables', description: 'Maps, reports, and actionable insights tailored to your project.' },
+  { 
+    step: '01', title: 'Discovery & Consultation', 
+    description: 'We begin with in-depth discussions to understand your project scope, objectives, geographic focus, and data requirements. This includes site feasibility assessment, stakeholder mapping, and defining key deliverables and timelines.',
+    highlights: ['Scope Definition', 'Feasibility Study', 'Timeline Planning']
+  },
+  { 
+    step: '02', title: 'Data Acquisition & Preprocessing', 
+    description: 'We collect and preprocess multi-source datasets including satellite imagery (Landsat, Sentinel), DEM data (SRTM/ALOS), field survey measurements, drone captures, and existing hydrological records for comprehensive spatial coverage.',
+    highlights: ['Satellite Imagery', 'Field Surveys', 'Drone Captures']
+  },
+  { 
+    step: '03', title: 'Analysis & Modeling', 
+    description: 'Our core phase applies industry-standard tools—HEC-RAS for hydraulic modeling, HEC-HMS for rainfall-runoff simulation, ArcGIS Pro/QGIS for spatial analysis, and Python/GEE for automated geospatial workflows and machine learning integration.',
+    highlights: ['HEC-RAS/HMS', 'GIS Analysis', 'ML Integration']
+  },
+  { 
+    step: '04', title: 'Deliverables & Reporting', 
+    description: 'We deliver publication-ready thematic maps, comprehensive technical reports with methodology documentation, interactive web maps, raw processed datasets, and actionable recommendations tailored to your project goals.',
+    highlights: ['Thematic Maps', 'Technical Reports', 'Recommendations']
+  },
 ];
 
 const testimonials = [
@@ -86,11 +104,24 @@ const testimonials = [
 
 const PravahaTattva = () => {
   const [activeService, setActiveService] = useState<string | null>(null);
+  const [isDarkMode, setIsDarkMode] = useState(() => document.documentElement.classList.contains('dark'));
   const servicesRef = useRef<HTMLDivElement>(null);
   const aboutRef = useRef<HTMLDivElement>(null);
   const processRef = useRef<HTMLDivElement>(null);
   const isAboutInView = useInView(aboutRef, { once: true, margin: "-100px" });
   const isProcessInView = useInView(processRef, { once: true, margin: "-100px" });
+
+  const toggleTheme = () => {
+    const html = document.documentElement;
+    if (isDarkMode) {
+      html.classList.remove('dark');
+      html.classList.add('light');
+    } else {
+      html.classList.remove('light');
+      html.classList.add('dark');
+    }
+    setIsDarkMode(!isDarkMode);
+  };
   
   const phoneNumber = '+919834300849';
   const whatsappUrl = `https://wa.me/${phoneNumber.replace('+', '')}?text=Hi%20Satwik,%20I'm%20interested%20in%20your%20geospatial%20consulting%20services`;
@@ -128,6 +159,14 @@ const PravahaTattva = () => {
             </nav>
 
             <div className="flex items-center gap-3">
+              <Button 
+                variant="ghost" 
+                size="icon" 
+                onClick={toggleTheme}
+                className="text-muted-foreground hover:text-foreground"
+              >
+                {isDarkMode ? <Sun className="w-5 h-5" /> : <Moon className="w-5 h-5" />}
+              </Button>
               <a href={githubUrl} target="_blank" rel="noopener noreferrer"
                 className="w-10 h-10 rounded-full border border-border/50 flex items-center justify-center hover:border-primary/40 hover:bg-primary/5 transition-all">
                 <Github className="w-4 h-4 text-muted-foreground" />
@@ -336,7 +375,12 @@ const PravahaTattva = () => {
                   className="relative p-6 rounded-2xl border border-border/30 bg-card/50 hover:border-primary/20 transition-all group">
                   <span className="text-4xl font-bold text-primary/10 group-hover:text-primary/20 transition-colors">{step.step}</span>
                   <h3 className="text-lg font-semibold text-foreground mt-3 mb-2">{step.title}</h3>
-                  <p className="text-sm text-muted-foreground leading-relaxed">{step.description}</p>
+                  <p className="text-sm text-muted-foreground leading-relaxed mb-4">{step.description}</p>
+                  <div className="flex flex-wrap gap-1.5">
+                    {step.highlights.map((h) => (
+                      <span key={h} className="px-2.5 py-1 rounded-full text-xs bg-primary/10 text-primary border border-primary/20">{h}</span>
+                    ))}
+                  </div>
                   {index < processSteps.length - 1 && (
                     <ArrowRight className="hidden lg:block absolute -right-3 top-1/2 -translate-y-1/2 w-5 h-5 text-border" />
                   )}
