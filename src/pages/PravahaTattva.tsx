@@ -1,13 +1,15 @@
 import { Helmet } from 'react-helmet-async';
 import { motion, useInView } from 'framer-motion';
 import { Link } from 'react-router-dom';
-import { useRef, useState } from 'react';
+import { useRef, useState, useEffect } from 'react';
 import {
   ArrowLeft, Waves, Mountain, Map,
   Plane, Camera, Ruler, Phone, Mail, MessageCircle, ExternalLink,
   ArrowRight, ArrowUpRight, Droplets, Layers, Satellite, FlaskConical,
-  User, Briefcase, Award, MapPin, GraduationCap, Github, Globe, CheckCircle2, Star
+  User, Briefcase, Award, MapPin, GraduationCap, Github, Globe, CheckCircle2, Star,
+  Sun, Moon
 } from 'lucide-react';
+import { Button } from '@/components/ui/button';
 
 // Service images
 import floodplainImg from '@/assets/services/floodplain-mapping.png';
