@@ -92,7 +92,7 @@ const ExperienceSection = () => {
         >
           {/* Section Header */}
           <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl font-display font-bold mb-4 text-white">
+            <h2 className="text-3xl md:text-4xl font-display font-bold mb-4 text-foreground">
               Work <span className="gradient-text">Experience</span>
             </h2>
             <div className="section-divider" />
@@ -120,11 +120,11 @@ const ExperienceSection = () => {
 
                   {/* Content Card */}
                   <div className={`flex-1 ml-12 md:ml-0 ${index % 2 === 0 ? 'md:pr-12' : 'md:pl-12'}`}>
-                    <div className="glass-card-light p-6 hover:border-primary/50 transition-all group">
+                    <div className="bg-card/30 backdrop-blur-sm border border-border/30 rounded-2xl p-6 hover:border-primary/50 transition-all group">
                       {/* Header */}
                       <div className="flex flex-wrap items-start justify-between gap-2 mb-4">
                         <div>
-                          <h3 className="text-xl font-display font-bold text-white group-hover:text-primary transition-colors">
+                          <h3 className="text-xl font-display font-bold text-foreground group-hover:text-primary transition-colors">
                             {exp.title}
                           </h3>
                           <div className="flex items-center gap-2 text-secondary font-medium">
@@ -138,7 +138,7 @@ const ExperienceSection = () => {
                       </div>
 
                       {/* Meta */}
-                      <div className="flex flex-wrap gap-4 text-sm text-white/70 mb-4">
+                      <div className="flex flex-wrap gap-4 text-sm text-muted-foreground mb-4">
                         <div className="flex items-center gap-1">
                           <Calendar className="w-4 h-4" />
                           <span>{exp.duration}</span>
@@ -159,7 +159,7 @@ const ExperienceSection = () => {
                       {/* Highlights */}
                       <ul className="space-y-2">
                         {exp.highlights.map((highlight, i) => (
-                          <li key={i} className="text-sm text-white/80 flex items-start gap-2">
+                          <li key={i} className="text-sm text-muted-foreground flex items-start gap-2">
                             <span className="text-primary mt-1">•</span>
                             <span>{highlight}</span>
                           </li>
@@ -168,9 +168,9 @@ const ExperienceSection = () => {
 
                       {/* Skills */}
                       {exp.skills && (
-                        <div className="flex flex-wrap gap-2 mt-4 pt-4 border-t border-white/10">
+                        <div className="flex flex-wrap gap-2 mt-4 pt-4 border-t border-border/30">
                           {exp.skills.map((skill, i) => (
-                            <span key={i} className="px-2 py-1 text-xs rounded bg-white/10 text-white/80">
+                            <span key={i} className="px-2 py-1 text-xs rounded bg-foreground/10 text-muted-foreground">
                               {skill}
                             </span>
                           ))}
