@@ -375,7 +375,12 @@ const PravahaTattva = () => {
                   className="relative p-6 rounded-2xl border border-border/30 bg-card/50 hover:border-primary/20 transition-all group">
                   <span className="text-4xl font-bold text-primary/10 group-hover:text-primary/20 transition-colors">{step.step}</span>
                   <h3 className="text-lg font-semibold text-foreground mt-3 mb-2">{step.title}</h3>
-                  <p className="text-sm text-muted-foreground leading-relaxed">{step.description}</p>
+                  <p className="text-sm text-muted-foreground leading-relaxed mb-4">{step.description}</p>
+                  <div className="flex flex-wrap gap-1.5">
+                    {step.highlights.map((h) => (
+                      <span key={h} className="px-2.5 py-1 rounded-full text-xs bg-primary/10 text-primary border border-primary/20">{h}</span>
+                    ))}
+                  </div>
                   {index < processSteps.length - 1 && (
                     <ArrowRight className="hidden lg:block absolute -right-3 top-1/2 -translate-y-1/2 w-5 h-5 text-border" />
                   )}
