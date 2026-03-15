@@ -73,10 +73,26 @@ const services = [
 ];
 
 const processSteps = [
-  { step: '01', title: 'Discovery', description: 'Understanding project scope, objectives, and data requirements.' },
-  { step: '02', title: 'Data Acquisition', description: 'Satellite imagery, field surveys, and existing datasets collection.' },
-  { step: '03', title: 'Analysis & Modeling', description: 'Applying industry-standard tools for precise geospatial analysis.' },
-  { step: '04', title: 'Deliverables', description: 'Maps, reports, and actionable insights tailored to your project.' },
+  { 
+    step: '01', title: 'Discovery & Consultation', 
+    description: 'We begin with in-depth discussions to understand your project scope, objectives, geographic focus, and data requirements. This includes site feasibility assessment, stakeholder mapping, and defining key deliverables and timelines.',
+    highlights: ['Scope Definition', 'Feasibility Study', 'Timeline Planning']
+  },
+  { 
+    step: '02', title: 'Data Acquisition & Preprocessing', 
+    description: 'We collect and preprocess multi-source datasets including satellite imagery (Landsat, Sentinel), DEM data (SRTM/ALOS), field survey measurements, drone captures, and existing hydrological records for comprehensive spatial coverage.',
+    highlights: ['Satellite Imagery', 'Field Surveys', 'Drone Captures']
+  },
+  { 
+    step: '03', title: 'Analysis & Modeling', 
+    description: 'Our core phase applies industry-standard tools—HEC-RAS for hydraulic modeling, HEC-HMS for rainfall-runoff simulation, ArcGIS Pro/QGIS for spatial analysis, and Python/GEE for automated geospatial workflows and machine learning integration.',
+    highlights: ['HEC-RAS/HMS', 'GIS Analysis', 'ML Integration']
+  },
+  { 
+    step: '04', title: 'Deliverables & Reporting', 
+    description: 'We deliver publication-ready thematic maps, comprehensive technical reports with methodology documentation, interactive web maps, raw processed datasets, and actionable recommendations tailored to your project goals.',
+    highlights: ['Thematic Maps', 'Technical Reports', 'Recommendations']
+  },
 ];
 
 const testimonials = [
